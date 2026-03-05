@@ -1,7 +1,7 @@
 task: classify
 mode: train
 model: yolov8n-cls.pt
-data: c:\Users\spide\OneDrive\Desktop\Mushrooms\my_project_plan\data\dataset_split
+data: c:\Users\spide\OneDrive\Desktop\Mushrooms\Mushroom\data\dataset_split
 epochs: 50
 time: null
 patience: 10
@@ -12,7 +12,7 @@ save_period: -1
 cache: false
 device: '0'
 workers: 8
-project: c:\Users\spide\OneDrive\Desktop\Mushrooms\my_project_plan\docs\yolo_runs
+project: c:\Users\spide\OneDrive\Desktop\Mushrooms\Mushroom\docs\yolo_runs
 name: mushroom_classifier_v1
 exist_ok: true
 pretrained: true
@@ -106,4 +106,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: C:\Users\spide\OneDrive\Desktop\Mushrooms\my_project_plan\docs\yolo_runs\mushroom_classifier_v1
+save_dir: C:\Users\spide\OneDrive\Desktop\Mushrooms\Mushroom\docs\yolo_runs\mushroom_classifier_v1
