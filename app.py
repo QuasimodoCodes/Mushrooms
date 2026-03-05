@@ -104,8 +104,7 @@ demo = gr.Interface(
     ],
     outputs=gr.Markdown(label="📋 Safety Report"),
     title="🍄 Mushroom Safety Classification System",
-    description="Upload a photo of a mushroom to identify it and receive a safety assessment. The system uses YOLOv8 for visual identification, an ecological database for context, and an LLM to verify the results.",
-    allow_flagging="never"
+    description="Upload a photo of a mushroom to identify it and receive a safety assessment. The system uses YOLOv8 for visual identification, an ecological database for context, and an LLM to verify the results."
 )
 
 
