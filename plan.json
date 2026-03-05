@@ -48,7 +48,7 @@
     "step_number": 4,
     "phase_name": "LLM Audit Layer Development",
     "description": "Develop the logic taking the YOLO prediction, CSV context rules, and user GPS/season data to ask an LLM for logical verification.",
-    "status": "in_progress",
+    "status": "complete",
     "detailed_tasks": [
       "Create a mock user input for testing (e.g., user_season = 'Winter', user_location = 'Norway').",
       "Write a Python function that formats a string combining the YOLO Prediction (Step 2), the CSV rules (Step 3), and the mock user input.",
@@ -61,7 +61,7 @@
     "step_number": 5,
     "phase_name": "Risk-Aware Decision Logic Implementation",
     "description": "Implement risk-aware decision logic to override YOLO predictions and warn the user if confidence is low or the LLM audit finds discrepancies.",
-    "status": "pending",
+    "status": "in_progress",
     "detailed_tasks": [
       "Write Python 'if/else' statements to act as your safety net.",
       "Rule 1: IF yolo_confidence < 0.70, THEN final_output = 'WARNING: YOLO visual identification unsafe due to low confidence. Do not eat.'",
