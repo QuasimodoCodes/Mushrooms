@@ -18,7 +18,7 @@
     "step_number": 2,
     "phase_name": "Classification Model Training and Loss Monitoring",
     "description": "Set up, train, and validate a YOLO classification model (e.g., YOLOv8 or YOLOv11), while monitoring the loss function to ensure the model is learning.",
-    "status": "in_progress",
+    "status": "complete",
     "detailed_tasks": [
       "Create a 'requirements.txt' file to log the python packages needed to replicate this environment.",
       "Initialize a 'README.md' to act as the front page of the project, tracking what each phase accomplishes.",
@@ -34,7 +34,7 @@
     "step_number": 3,
     "phase_name": "Multimodal Context Integration",
     "description": "Generate the 'Context Table (CSV)' by querying an LLM to output toxicity, habitat, and season rules for the master list of species.",
-    "status": "pending",
+    "status": "in_progress",
     "detailed_tasks": [
       "Take the list of species names you generated in Step 1.",
       "Write a prompt for an LLM: 'Generate a CSV for these species with columns: species_name, toxicity_type, habitat, season, region, key_warnings.'",

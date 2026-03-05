@@ -37,6 +37,7 @@ def main():
         epochs=3, 
         imgsz=224, 
         device=device,
+        exist_ok=True, # This tells YOLO to overwrite the 'mushroom_classifier_v1' folder instead of making v2, v3, etc.
         project=os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "docs", "yolo_runs")), 
         name="mushroom_classifier_v1"
     )
