@@ -27,8 +27,12 @@ pip install -r requirements.txt
 
 ### Run
 ```bash
-# Analyze a mushroom photo (the trained model weights are included in the repo)
+# Option A: Command line
 python main.py path/to/your/mushroom_photo.jpg
+
+# Option B: Web UI (drag & drop)
+python app.py
+# Then open http://localhost:7860 in your browser
 ```
 
 > **Note:** Demo mode (`python main.py` with no image) requires the full dataset which is not included in the repo due to its size (104k images). Pass your own image instead.

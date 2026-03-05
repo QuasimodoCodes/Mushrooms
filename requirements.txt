@@ -17,5 +17,8 @@ pandas
 # LLM Communication (Ollama uses HTTP requests, no extra package needed)
 requests
 
+# Web Interface
+gradio
+
 # Future: Uncomment for Google Gemini support
 # google-generativeai
