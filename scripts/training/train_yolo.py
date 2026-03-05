@@ -34,10 +34,23 @@ def main():
     # We pass device=device to force YOLO to use the best hardware available
     results = model.train(
         data=data_dir, 
-        epochs=3, 
+        epochs=50,              # Full training run (early stopping will cut it short if needed)
         imgsz=224, 
         device=device,
-        exist_ok=True, # This tells YOLO to overwrite the 'mushroom_classifier_v1' folder instead of making v2, v3, etc.
+        exist_ok=True,          # Overwrite the 'mushroom_classifier_v1' folder instead of making v2, v3, etc.
+        
+        # ─── EARLY STOPPING ───
+        # If val/loss doesn't improve for 10 consecutive epochs, stop training.
+        # This prevents wasting GPU time when the model has stopped learning.
+        patience=10,
+        
+        # ─── ESCAPING LOCAL OPTIMA ───
+        # Cosine LR: Instead of a flat learning rate, it oscillates like a wave.
+        # When the rate briefly increases, it can "kick" the model out of a local minimum
+        # and into a better solution. Think of it like shaking a ball out of a small dip
+        # so it can roll into a deeper valley (the global optimum).
+        cos_lr=True,
+        
         project=os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs", "yolo_runs")), 
         name="mushroom_classifier_v1"
     )
