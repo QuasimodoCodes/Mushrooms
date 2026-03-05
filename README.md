@@ -1,34 +1,78 @@
 # Mushroom Safety Classification System
 
-This repository tracks the development of a multimodal AI safety system designed to identify mushroom species visually and cross-reference them with regional and seasonal ecological context using an LLM audit layer.
+A multimodal AI safety system that identifies mushroom species visually and cross-references them with ecological context using an LLM audit layer.
+
+## Quick Start
+
+```bash
+# 1. Activate the virtual environment
+.\.venv\Scripts\Activate.ps1
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Run the full pipeline
+python main.py                              # Demo mode (uses a test image)
+python main.py path/to/mushroom_photo.jpg   # Analyze your own image
+```
+
+## How It Works
+
+```
+Image → YOLO (Vision) → CSV (Knowledge) → LLM (Reasoning) → Risk Engine (Safety) → Report
+```
+
+1. **YOLOv8 Nano** identifies the mushroom species from a photo
+2. **Pandas** looks up the species in `mushroom_context.csv` for toxicity, habitat, and season data
+3. **Ollama (Llama3)** audits whether the identification makes sense given the user's location and season
+4. **Risk Engine** applies hard-coded safety rules that _cannot_ be overridden by the LLM
 
 ## Project Structure
 
-*   `data/`: Contains the split image dataset, CSV metadata, and the `dataset.yaml` configuration.
-*   `scripts/`: Contains Python scripts for executing various phases of the pipeline.
-*   `docs/`: Contains logs, features backlogs, and YOLO training run outputs.
-*   `plan.json`: The living task list driving the development of this project.
+```
+my_project_plan/
+├── main.py                     ← Single entry point
+├── data/
+│   ├── dataset_split/          ← 169 species (80/10/10 train/val/test)
+│   ├── mushroom_context.csv    ← Ecological rules for all 169 species
+│   ├── dataset.yaml            ← YOLO configuration
+│   └── mushroom_species.json   ← Master species list
+├── scripts/
+│   ├── setup/                  ← One-time data preparation scripts
+│   ├── training/               ← YOLO model training (train_yolo.py)
+│   └── pipeline/               ← Active system modules
+│       ├── predict.py          → Vision prediction
+│       ├── integration.py      → CSV lookup
+│       ├── audit_layer.py      → LLM reasoning
+│       ├── llm_provider.py     → Ollama/Gemini provider swap
+│       └── risk_engine.py      → Safety decision rules
+└── docs/
+    └── yolo_runs/              ← Training charts, loss graphs, model weights
+```
 
 ## Development Phases
 
-### ✅ Phase 1: Dataset Preparation and Preprocessing
-We downloaded the `zlatan599/mushroom1` dataset containing 169 distinct species. The dataset was preprocessed into an 80/10/10 split specifically formatted for YOLO classification.
+| Phase | Description | Status |
+|-------|-------------|--------|
+| 1 | Dataset Preparation (169 species, 104k images) | ✅ Complete |
+| 2 | YOLOv8 Classification Training (CUDA GPU) | ✅ Complete |
+| 3 | Multimodal Context Integration (CSV + Pandas) | ✅ Complete |
+| 4 | LLM Audit Layer (Ollama/Llama3) | ✅ Complete |
+| 5 | Risk-Aware Decision Logic (4 safety rules) | ✅ Complete |
+| 6 | End-to-End Pipeline Integration | ✅ Complete |
 
-**Scripts Run:**
-*   `prepare_dataset.py` / `fix_dataset.py`: Handled downloading, class extraction, and train/val/test splitting.
+## Training Configuration
 
-### 🟡 Phase 2: Classification Model Training
-We are setting up YOLOv8 Nano (`yolov8n-cls.pt`) to act as our primary vision model for species identification. We are utilizing PyTorch with CUDA support to leverage GPU acceleration.
+- **Model**: YOLOv8n-cls (Nano, 1.65M parameters)
+- **GPU**: NVIDIA GeForce RTX 3070 Ti (CUDA 12.1)
+- **Epochs**: 50 (with early stopping, patience=10)
+- **Local Optima Defense**: Cosine LR scheduling
+- **Image Size**: 224×224
 
-**Scripts to Run:**
-*   `scripts/train_yolo.py`: Trains the classification model. Note that it requires an Nvidia GPU for reasonable training times.
+## Switching LLM Provider
 
-### 🔴 Phase 3: Multimodal Context Integration (Pending)
-### 🔴 Phase 4: LLM Audit Layer Development (Pending)
-### 🔴 Phase 5: Risk-Aware Decision Logic Implementation (Pending)
-### 🔴 Phase 6: End-to-End System Integration (Pending)
-
-## Setup Instructions
-1. Create a Python Virtual Environment.
-2. Activate the environment.
-3. Install dependencies: `pip install -r requirements.txt`
+Edit `scripts/pipeline/llm_provider.py`:
+```python
+ACTIVE_PROVIDER = "gemini"     # Change from "ollama" to "gemini"
+GEMINI_API_KEY = "your-key"    # Set your Google AI API key
+```

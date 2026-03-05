@@ -2,9 +2,9 @@ task: classify
 mode: train
 model: yolov8n-cls.pt
 data: c:\Users\spide\OneDrive\Desktop\Mushrooms\my_project_plan\data\dataset_split
-epochs: 3
+epochs: 50
 time: null
-patience: 100
+patience: 10
 batch: 16
 imgsz: 224
 save: true
@@ -22,7 +22,7 @@ seed: 0
 deterministic: true
 single_cls: false
 rect: false
-cos_lr: false
+cos_lr: true
 close_mosaic: 10
 resume: false
 amp: true

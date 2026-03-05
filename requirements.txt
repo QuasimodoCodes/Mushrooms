@@ -5,8 +5,17 @@ split-folders
 # YOLOv8 Classification
 ultralytics
 
-# PyTorch with CUDA 12.1 Support (Required for Hardware Acceleration)
+# PyTorch with CUDA 12.1 Support (GPU Acceleration)
 --extra-index-url https://download.pytorch.org/whl/cu121
 torch
 torchvision
 torchaudio
+
+# Data Processing
+pandas
+
+# LLM Communication (Ollama uses HTTP requests, no extra package needed)
+requests
+
+# Future: Uncomment for Google Gemini support
+# google-generativeai
