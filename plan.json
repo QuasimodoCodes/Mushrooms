@@ -34,20 +34,21 @@
     "step_number": 3,
     "phase_name": "Multimodal Context Integration",
     "description": "Generate the 'Context Table (CSV)' by querying an LLM to output toxicity, habitat, and season rules for the master list of species.",
-    "status": "in_progress",
+    "status": "complete",
     "detailed_tasks": [
       "Take the list of species names you generated in Step 1.",
-      "Write a prompt for an LLM: 'Generate a CSV for these species with columns: species_name, toxicity_type, habitat, season, region, key_warnings.'",
-      "Save the LLM's output as a file named 'mushroom_context.csv'.",
-      "Write a Python function using 'pandas' that can search this CSV for the species YOLO predicted and return its ecological rules."
+      "Write a prompt for an LLM: 'Generate a CSV for these species with columns: species_name, toxicity_type, habitat, season, region, key_warnings.' (Completed)",
+      "Save the LLM's output as a file named 'mushroom_context.csv'. (Completed)",
+      "Write a Python script using 'pandas' that can search this CSV for the specific species YOLO predicted. (Completed)",
+      "Combine the YOLO prediction pipeline (from Step 2) with the Pandas CSV lookup so that predicting an image outputs BOTH the YOLO confidence and the LLM's toxicity warnings. (Completed)"
     ],
-    "student_explanation": "Why are we doing this? This is your 'Background Check'. YOLO only knows what the mushroom looks like. By keeping the ecological rules in a CSV instead of trying to teach them to YOLO, you save massive amounts of time and computing power."
+    "student_explanation": "Why are we doing this? This is your 'Background Check'. YOLO only knows what the mushroom looks like. By keeping the ecological rules in a clean CSV file instead of trying to teach them to YOLO visually, you save massive amounts of time. Now, we just need to write the code that connects YOLO's visual answer to the CSV's knowledge base."
   },
   {
     "step_number": 4,
     "phase_name": "LLM Audit Layer Development",
     "description": "Develop the logic taking the YOLO prediction, CSV context rules, and user GPS/season data to ask an LLM for logical verification.",
-    "status": "pending",
+    "status": "in_progress",
     "detailed_tasks": [
       "Create a mock user input for testing (e.g., user_season = 'Winter', user_location = 'Norway').",
       "Write a Python function that formats a string combining the YOLO Prediction (Step 2), the CSV rules (Step 3), and the mock user input.",
