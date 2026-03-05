@@ -1,0 +1,12 @@
+# Dataset Downloading and Splitting
+kagglehub
+split-folders
+
+# YOLOv8 Classification
+ultralytics
+
+# PyTorch with CUDA 12.1 Support (Required for Hardware Acceleration)
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch
+torchvision
+torchaudio
