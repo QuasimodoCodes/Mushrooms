@@ -2,19 +2,36 @@
 
 A multimodal AI safety system that identifies mushroom species visually and cross-references them with ecological context using an LLM audit layer.
 
-## Quick Start
+## Clone & Run (For Friends / New Users)
 
+### Prerequisites
+- **Python 3.10+** installed
+- **Ollama** installed ([download here](https://ollama.com)) with the Llama3 model:
+  ```bash
+  ollama pull llama3
+  ```
+
+### Setup
 ```bash
-# 1. Activate the virtual environment
-.\.venv\Scripts\Activate.ps1
+# 1. Clone the repo
+git clone <your-repo-url>
+cd my_project_plan
 
-# 2. Install dependencies
+# 2. Create and activate a virtual environment
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1        # Windows PowerShell
+
+# 3. Install dependencies
 pip install -r requirements.txt
-
-# 3. Run the full pipeline
-python main.py                              # Demo mode (uses a test image)
-python main.py path/to/mushroom_photo.jpg   # Analyze your own image
 ```
+
+### Run
+```bash
+# Analyze a mushroom photo (the trained model weights are included in the repo)
+python main.py path/to/your/mushroom_photo.jpg
+```
+
+> **Note:** Demo mode (`python main.py` with no image) requires the full dataset which is not included in the repo due to its size (104k images). Pass your own image instead.
 
 ## How It Works
 
