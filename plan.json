@@ -61,7 +61,7 @@
     "step_number": 5,
     "phase_name": "Risk-Aware Decision Logic Implementation",
     "description": "Implement risk-aware decision logic to override YOLO predictions and warn the user if confidence is low or the LLM audit finds discrepancies.",
-    "status": "in_progress",
+    "status": "complete",
     "detailed_tasks": [
       "Write Python 'if/else' statements to act as your safety net.",
       "Rule 1: IF yolo_confidence < 0.70, THEN final_output = 'WARNING: YOLO visual identification unsafe due to low confidence. Do not eat.'",
@@ -74,7 +74,7 @@
     "step_number": 6,
     "phase_name": "End-to-End System Integration",
     "description": "Integrate the YOLO Pipeline, CSV Lookup, LLM Audit, and Decision Logic into one end-to-end Python application.",
-    "status": "pending",
+    "status": "complete",
     "detailed_tasks": [
       "Create a main.py file that chains all your functions together.",
       "The flow should be: Input Image -> YOLO Predicts Species -> Pandas Looks up CSV -> Check Confidence -> Pass to LLM Audit -> Run Decision Logic -> Print Final Result."
