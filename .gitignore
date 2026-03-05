@@ -1,0 +1,12 @@
+# Dataset Folders
+data/dataset_split/
+
+# Python Virtual Environments
+venv/
+.env/
+__pycache__/
+
+# IDE/System Files
+.vscode/
+.idea/
+.DS_Store
