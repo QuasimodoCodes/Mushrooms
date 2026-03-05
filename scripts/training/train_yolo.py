@@ -25,7 +25,7 @@ def main():
     model = YOLO('yolov8n-cls.pt')
 
     # 3. Define where our dataset is located
-    data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "dataset_split"))
+    data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "dataset_split"))
     
     # 4. Start the Training Process
     print(f"\nTraining on dataset located at: {data_dir}")
@@ -38,7 +38,7 @@ def main():
         imgsz=224, 
         device=device,
         exist_ok=True, # This tells YOLO to overwrite the 'mushroom_classifier_v1' folder instead of making v2, v3, etc.
-        project=os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "docs", "yolo_runs")), 
+        project=os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs", "yolo_runs")), 
         name="mushroom_classifier_v1"
     )
 

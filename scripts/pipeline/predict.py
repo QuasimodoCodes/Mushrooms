@@ -29,7 +29,7 @@ if __name__ == "__main__":
     # If the user didn't pass an image, grab a random one from the test set for demonstration
     if len(sys.argv) < 2:
         print("Usage: python predict.py <path_to_image>")
-        base_test_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "dataset_split", "test"))
+        base_test_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "dataset_split", "test"))
         
         # Grab the first species folder in the test set
         first_species = os.listdir(base_test_dir)[0]
@@ -45,8 +45,7 @@ if __name__ == "__main__":
         test_img_path = sys.argv[1]
         
     # Path to the BEST weights our model just calculated
-    # v14 is the folder that was just generated in the user's terminal log
-    model_weight_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "docs", "yolo_runs", "mushroom_classifier_v14", "weights", "best.pt"))
+    model_weight_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs", "yolo_runs", "mushroom_classifier_v1", "weights", "best.pt"))
     
     if not os.path.exists(model_weight_path):
         print(f"Error: Model not found at {model_weight_path}")

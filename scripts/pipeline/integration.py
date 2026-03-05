@@ -32,7 +32,7 @@ def main():
     print("=========================================")
     
     # 1. Setup paths
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
     csv_path = os.path.join(base_dir, "data", "mushroom_context.csv")
     model_path = os.path.join(base_dir, "docs", "yolo_runs", "mushroom_classifier_v1", "weights", "best.pt")
     
