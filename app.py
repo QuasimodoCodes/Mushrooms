@@ -31,13 +31,13 @@ def classify_mushroom(image, season, location):
     
     base_dir = os.path.dirname(__file__)
     csv_path = os.path.join(base_dir, "data", "mushroom_context.csv")
-    model_path = os.path.join(base_dir, "docs", "yolo_runs", "mushroom_classifier_v1", "weights", "best.pt")
     
-    if not os.path.exists(model_path):
-        return "❌ Error: Model weights not found. Please train the model first (scripts/training/train_yolo.py)."
+    # Step 1: YOLO Vision (via Vision API)
+    predicted_species, confidence = predict_image(image)
     
-    # Step 1: YOLO Vision
-    predicted_species, confidence = predict_image(image, model_path)
+    if predicted_species is None:
+        return "❌ Error: Could not connect to the Vision API. Please ensure it is running in another terminal."
+        
     formatted_species = predicted_species.replace("_", " ")
     
     # Step 2: CSV Knowledge Lookup
