@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # 4. Copy the requirements file into the container.
-COPY requirements.txt .
+COPY services/vision_api/requirements.txt .
 
 # 5. Install Python dependencies inside the container.
 # We use --no-cache-dir to avoid storing the downloaded zip files, keeping the image small.

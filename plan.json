@@ -126,7 +126,7 @@
     "step_number": 13,
     "phase_name": "Phase 3: Cloud Deployment",
     "description": "Data to Cloud Storage: Move dataset_split/ and CSVs to a cloud bucket. Update prepare_dataset.py to pull from bucket.",
-    "status": "in_progress"
+    "status": "complete"
   },
   {
     "step_number": 14,

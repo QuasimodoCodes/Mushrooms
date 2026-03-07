@@ -1,0 +1,21 @@
+# Cloud Build configuration for the Mushroom Vision API.
+# This file tells Google Cloud Build exactly how to build and push our Docker image.
+# We specify the Dockerfile path and the build context (project root '.')
+# so that all COPY paths in the Dockerfile resolve correctly.
+
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/vision-api:latest'
+      - '-f'
+      - 'services/vision_api/Dockerfile'
+      - '.'
+
+images:
+  - 'us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/vision-api:latest'
+
+options:
+  machineType: 'E2_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY

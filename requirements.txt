@@ -1,6 +1,6 @@
-# Dataset Downloading and Splitting
-kagglehub
-split-folders
+# Dataset Downloading and Management
+huggingface_hub
+python-dotenv
 
 # YOLOv8 Classification
 ultralytics
