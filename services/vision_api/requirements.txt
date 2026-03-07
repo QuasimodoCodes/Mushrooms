@@ -1,0 +1,10 @@
+# Core API frameworks
+fastapi==0.115.6
+uvicorn==0.34.0
+python-multipart==0.0.20
+
+# Computer Vision and ML
+ultralytics==8.3.83
+torch==2.6.0
+torchvision==0.21.0
+Pillow>=10.2.0
