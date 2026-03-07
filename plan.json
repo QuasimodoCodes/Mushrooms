@@ -175,13 +175,13 @@
     "step_number": 17,
     "phase_name": "Phase 4: MLOps and CI/CD",
     "description": "DVC Setup: Install DVC, initialize, and track 12GB dataset and .pt model weights, pointing to cloud bucket.",
-    "status": "pending"
+    "status": "complete"
   },
   {
     "step_number": 18,
     "phase_name": "Phase 4: MLOps and CI/CD",
     "description": "GitHub Actions: Write workflows in .github/workflows/ to auto-build and deploy Docker containers on main branch push.",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "step_number": 19,
