@@ -1,117 +1,100 @@
-# Mushroom Safety Classification System
+# Mushroom Guardian: Multimodal AI Classification & Safety System
 
-A multimodal AI safety system that identifies mushroom species visually and cross-references them with ecological context using an LLM audit layer.
+A production-grade, microservice-based AI safety system that identifies mushroom species visually (YOLOv8) and cross-references them with ecological context using an LLM audit layer. Built with end-to-end MLOps, CI/CD, and serverless cloud deployment.
 
-## Clone & Run (For Friends / New Users)
+---
 
-### Prerequisites
+## 🏗️ System Architecture & Workflow
 
-- **Python 3.10+** installed
-- **Ollama** installed ([download here](https://ollama.com)) with the Llama3 model:
-  ```bash
-  ollama pull llama3
-  ```
+This project has evolved from a local Python script into a robust, cloud-ready microservice architecture. Here is how the whole pipeline works end-to-end:
 
-### Setup
+### 1. The Vision API (FastAPI + YOLOv8)
 
-```bash
-# 1. Clone the repo
-git clone <your-repo-url>
-cd my_project_plan
+Instead of loading massive PyTorch models directly into the user interface, we decoupled the vision logic into its own containerized microservice: the **Vision API**.
 
-# 2. Create and activate a virtual environment
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1        # Windows PowerShell
+- A field user uploads an image of a mushroom via the web UI.
+- The UI sends a fast HTTP POST request to the Vision API (`services/vision_api/`).
+- **YOLOv8 Nano** processes the image, extracting the `Top 1 Predicted Class` (e.g., _Amanita muscaria_) and its `Confidence Score` (e.g., _0.91_ or 91%).
 
-# 3. Install dependencies
-pip install -r requirements.txt
-```
+### 2. Context Fetching (CSV Knowledge Base)
 
-### Run
+Visual identification alone is incredibly dangerous in the wild. A mushroom might look edible, but if it is growing on the wrong type of wood or in the wrong season, it is likely a toxic look-alike.
 
-```bash
-# Option A: Command line
-python main.py path/to/your/mushroom_photo.jpg
+- Instead of trying to teach YOLO abstract ecological rules, we maintain a structured **Knowledge Base (`data/mushroom_context.csv`)**.
+- We use `pandas` to take YOLO's top prediction and fetch its toxicity status, primary growing season, geographic region, and key warnings from the CSV.
 
-# Option B: Web UI (drag & drop)
-python app.py
-# Then open http://localhost:7860 in your browser
-```
+### 3. The LLM Audit Layer (Llama3 / Gemini)
 
-> **Note:** Demo mode (`python main.py` with no image) requires the full dataset which is not included in the repo due to its size (104k images). Pass your own image instead.
+This is the "Reasoning" phase of the pipeline.
 
-## How It Works
+- We merge the YOLO visual prediction, the structured CSV ecological rules, and the field user's provided metadata (GPS location & current season) into a formatted text prompt.
+- An **LLM (Large Language Model)** acts as a safety auditor. We ask it: _"Does this visual prediction logically make sense given the user's current environment?"_
+- If a user is situated in Norway in the dead of Winter, but the YOLO model predicts a Summer mushroom native to Brazil, the LLM intelligently catches the hallucination and flags the prediction as unsafe!
 
-```
-Image → YOLO (Vision) → CSV (Knowledge) → LLM (Reasoning) → Risk Engine (Safety) → Report
-```
+### 4. Risk-Aware Decision Engine
 
-1. **YOLOv8 Nano** identifies the mushroom species from a photo
-2. **Pandas** looks up the species in `mushroom_context.csv` for toxicity, habitat, and season data
-3. **Ollama (Llama3)** audits whether the identification makes sense given the user's location and season
-4. **Risk Engine** applies hard-coded safety rules that _cannot_ be overridden by the LLM
+While AI systems probabilistically hallucinate, hard-coded software rules do not. We mapped specific safety gates as a final fallback:
+
+- **Rule 1:** If the **YOLO Confidence** is below 70%, the system aborts and warns the user of an unsafe visual lock.
+- **Rule 2:** If the **LLM Audit Layer** detects an ecological mismatch, the system vetoes the prediction, regardless of how confident the Vision model was.
+
+---
+
+## ☁️ Cloud Deployment & Microservices
+
+To make the application globally accessible and horizontally scalable, the architecture is entirely containerized and deployed to the cloud:
+
+1. **Dockerization:** Both the Vision API and Brain UI have their own unique `Dockerfile`s. This decoupling allows us to isolate heavy hardware/CUDA dependencies strictly to the Vision API, while keeping the UI container extremely lightweight.
+2. **Google Cloud Run:** Using **Google Cloud Build**, the Docker containers are compiled into images and hosted serverlessly on Cloud Run, scaling instantly with user traffic.
+3. **Environment Injection:** The UI reaches the remote Vision API securely via public cloud URLs injected into the container's environment variables (`VISION_API_URL`).
+
+---
+
+## 🚀 MLOps & Production Engineering
+
+Machine Learning doesn't stop when you save a `.pt` weights file. We implemented strict MLOps principles across the repository:
+
+### Data Version Control (DVC) + Hugging Face
+
+Git was fundamentally built for code text, not 12 Gigabyte datasets of images or heavy 50MB PyTorch binaries.
+
+- We utilize **DVC (Data Version Control)** to independently track the system's massive image datasets and computed `best.pt` model weights.
+- DVC natively uploads these heavy assets to a **Hugging Face bucket (Cloud Storage)**, leaving only tiny `.dvc` text-based pointers/hashes inside this Git repository.
+- **Why?** This keeps standard `git clone` operations lightning fast, entirely avoids GitHub's harsh 100MB file limits, and massively accelerates development portability. If we ever rent a blank Cloud GPU to retrain the model, that new machine can simply run `dvc pull` to instantly restore the entire data ecosystem directly from Hugging Face!
+
+### Continuous Integration / Deployment (CI/CD)
+
+- The repository is rigged with **GitHub Actions** (`.github/workflows/deploy.yml`). Pushing a validated code update to the `main` branch automatically triggers cloud runners to spin up newly patched Docker images and roll them out live to the Google Cloud Run production environment.
+
+### Observability, Logging & Health Checks
+
+- **Centralized Logging:** Legacy monolithic `print()` logic was upgraded to Python's robust `logging` module so we can view streaming cloud outputs.
+- **API Health Endpoints:** The Vision API instances feature a root `/health` heartbeat endpoint that allows Google Cloud's load balancers to easily verify that a container is still actively resolving requests.
+
+### Model Drift Detection
+
+- Machine learning models naturally degrade in production environments when exposed to new conditions (e.g. dirty camera lenses, crushed mushroom caps).
+- The pipeline handles this using active **Drift Detection**: Any time a user submits an image and the YOLO model yields an uncertain confidence score **< 0.70**, the architecture natively intercepts the transmission and seamlessly saves the input image to an isolated `data/drift_images/` staging pool. These failure cases manually construct our next dataset for future model fine-tuning!
+
+---
 
 ## Project Structure
 
 ```text
 Mushroom/
-├── app.py                      ← Web UI entry point
-├── main.py                     ← CLI entry point
-├── plan.json                   ← Project planning data
-├── plans.md                    ← Project plans documentation
-├── README.md                   ← Project documentation
-├── requirements.txt            ← Python dependencies
+├── .github/workflows/        ← CI/CD Automations (GitHub Actions)
 ├── data/
-│   ├── dataset_split/          ← 169 species (80/10/10 train/val/test)
-│   ├── dataset.yaml            ← YOLO configuration
-│   ├── mushroom_context.csv    ← Ecological rules for all 169 species
-│   ├── mushroom_species.json   ← Master species list
-│   ├── test.csv                ← Test dataset annotations
-│   ├── train.csv               ← Train dataset annotations
-│   └── val.csv                 ← Validation dataset annotations
+│   ├── dataset.yaml          ← YOLO class mapping config
+│   ├── mushroom_context.csv  ← Ecological rules (Knowledge Base)
+│   └── drift_images/         ← Auto-saved low-confidence field data
+├── services/                 ← Containerized Microservices
+│   ├── brain_ui/             ← Gradio UI, LLM Audit, Risk Engine (app.py)
+│   │   ├── Dockerfile
+│   │   └── pipeline/         ← Core evaluation logic scripts
+│   └── vision_api/           ← FastAPI YOLO Server (main.py)
+│       └── Dockerfile
 ├── docs/
-│   ├── features_backlog.md     ← Planned features
-│   ├── problems_log.md         ← Known issues and logs
-│   └── yolo_runs/              ← Training charts, loss graphs, model weights
-└── scripts/
-    ├── pipeline/               ← Active system modules
-    │   ├── audit_layer.py      → LLM reasoning
-    │   ├── integration.py      → CSV lookup
-    │   ├── llm_provider.py     → Ollama/Gemini provider swap
-    │   ├── predict.py          → Vision prediction
-    │   └── risk_engine.py      → Safety decision rules
-    ├── setup/                  ← One-time data preparation scripts
-    │   ├── fix_dataset.py      → Dataset formatting fixes
-    │   └── prepare_dataset.py  → Initial data preparation
-    └── training/               ← YOLO model training
-        ├── train_yolo.py       → YOLO training script
-        └── yolov8n-cls.pt      → Pre-trained YOLO model
-```
-
-## Development Phases
-
-| Phase | Description                                    | Status      |
-| ----- | ---------------------------------------------- | ----------- |
-| 1     | Dataset Preparation (169 species, 104k images) | ✅ Complete |
-| 2     | YOLOv8 Classification Training (CUDA GPU)      | ✅ Complete |
-| 3     | Multimodal Context Integration (CSV + Pandas)  | ✅ Complete |
-| 4     | LLM Audit Layer (Ollama/Llama3)                | ✅ Complete |
-| 5     | Risk-Aware Decision Logic (4 safety rules)     | ✅ Complete |
-| 6     | End-to-End Pipeline Integration                | ✅ Complete |
-
-## Training Configuration
-
-- **Model**: YOLOv8n-cls (Nano, 1.65M parameters)
-- **GPU**: NVIDIA GeForce RTX 3070 Ti (CUDA 12.1)
-- **Epochs**: 50 (with early stopping, patience=10)
-- **Local Optima Defense**: Cosine LR scheduling
-- **Image Size**: 224×224
-
-## Switching LLM Provider
-
-Edit `scripts/pipeline/llm_provider.py`:
-
-```python
-ACTIVE_PROVIDER = "gemini"     # Change from "ollama" to "gemini"
-GEMINI_API_KEY = "your-key"    # Set your Google AI API key
+│   └── yolo_runs/            ← YOLO metrics, loss graphs, PR curves
+├── README.md                 ← You are here
+└── dvc.yaml                  ← Data Version Control pipelines
 ```
