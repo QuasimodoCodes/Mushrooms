@@ -33,6 +33,30 @@ services:
     networks:
       - mushroom-net             # Connect it to our custom network
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: mushroom-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - mushroom-net
+    depends_on:
+      - visionapi
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: mushroom-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - mushroom-net
+    depends_on:
+      - prometheus
+
 # Define a custom local network so the containers can securely talk to each other
 networks:
   mushroom-net:

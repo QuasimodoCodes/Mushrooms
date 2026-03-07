@@ -3,10 +3,14 @@ import io
 from fastapi import FastAPI, UploadFile, File
 from PIL import Image
 from ultralytics import YOLO
+from prometheus_fastapi_instrumentator import Instrumentator
 
 # 1. Initialize the FastAPI application
 # This 'app' object acts as our web server, listening for incoming requests.
 app = FastAPI(title="Mushroom Vision API")
+
+# Initialize and expose Prometheus metrics
+Instrumentator().instrument(app).expose(app)
 
 # 2. Define the path to our trained YOLO classification model.
 # We traverse up 3 directories from main.py (vision_api -> services -> Mushroom)
