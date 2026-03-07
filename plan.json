@@ -181,7 +181,7 @@
     "step_number": 18,
     "phase_name": "Phase 4: MLOps and CI/CD",
     "description": "GitHub Actions: Write workflows in .github/workflows/ to auto-build and deploy Docker containers on main branch push.",
-    "status": "in_progress"
+    "status": "complete"
   },
   {
     "step_number": 19,
