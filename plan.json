@@ -99,13 +99,13 @@
     "step_number": 9,
     "phase_name": "Phase 1: Decoupling into Microservices",
     "description": "Test the Bridge: Run Vision API locally on port 8000, and Gradio on port 7860. Verify successful endpoint communication.",
-    "status": "in_progress"
+    "status": "complete"
   },
   {
     "step_number": 10,
     "phase_name": "Phase 2: Containerization",
     "description": "Write Dockerfile for Vision API: Lightweight Python, PyTorch (CPU), Ultralytics, FastAPI, and .pt weights.",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "step_number": 11,
