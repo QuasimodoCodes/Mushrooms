@@ -199,6 +199,6 @@
     "step_number": 21,
     "phase_name": "Phase 5: Monitoring and Logging",
     "description": "Drift Detection: Monitor outputs for low confidence and orchestrate data pipeline to retrain model with failed images.",
-    "status": "in_progress"
+    "status": "complete"
   }
 ]
