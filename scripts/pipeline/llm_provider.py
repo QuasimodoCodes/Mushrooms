@@ -8,19 +8,20 @@ Currently active: Ollama (local)
 To switch to Gemini: Change ACTIVE_PROVIDER to "gemini" and set your API key.
 """
 
+import os
 import requests
 import json
 
 # ============================================================
 # CONFIGURATION - Change these to switch LLM providers
 # ============================================================
-ACTIVE_PROVIDER = "ollama"  # Options: "ollama" or "gemini"
+ACTIVE_PROVIDER = "gemini"  # Options: "ollama" or "gemini"
 OLLAMA_MODEL = "llama3:latest"
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
-# For future Gemini support:
-GEMINI_API_KEY = ""  # Set your Google AI API key here
-GEMINI_MODEL = "gemini-2.0-flash"
+# Gemini config — key is loaded from the GEMINI_API_KEY environment variable (set in .env)
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_MODEL = "gemini-3-flash-preview"
 
 
 def query_llm(prompt):

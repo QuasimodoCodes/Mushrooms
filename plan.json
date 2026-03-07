@@ -132,13 +132,13 @@
     "step_number": 14,
     "phase_name": "Phase 3: Cloud Deployment",
     "description": "Deploy Vision API: Push Docker image to container registry and deploy to a serverless platform (e.g., Cloud Run).",
-    "status": "pending"
+    "status": "complete"
   },
   {
     "step_number": 15,
     "phase_name": "Phase 3: Cloud Deployment",
     "description": "Update UI Target: Update predict.py in Brain UI to point to new public Vision API URL.",
-    "status": "pending"
+    "status": "complete"
   },
   {
     "step_number": 16,

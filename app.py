@@ -109,4 +109,6 @@ demo = gr.Interface(
 
 
 if __name__ == "__main__":
-    demo.launch()
+    # server_name="0.0.0.0" is required inside Docker so the app is
+    # reachable from outside the container (i.e., your browser on the host).
+    demo.launch(server_name="0.0.0.0", server_port=7860)

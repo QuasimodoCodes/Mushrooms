@@ -20,5 +20,5 @@ requests
 # Web Interface
 gradio
 
-# Future: Uncomment for Google Gemini support
-# google-generativeai
+# LLM Provider (Google Gemini)
+google-generativeai

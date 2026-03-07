@@ -11,6 +11,8 @@ services:
       - "8000:8000"              # Map your machine's port 8000 to the container's port 8000
     networks:
       - mushroom-net             # Connect it to our custom network
+    # NOTE: Local visionapi container is kept for local dev.
+    # For production, the Brain UI now targets the Cloud Run service.
 
   # This section defines the Brain UI (Gradio) container
   brainui:
@@ -23,9 +25,11 @@ services:
     depends_on:
       - visionapi                # Ensure the Vision API starts before the UI
     environment:
-      # Tell the Brain UI where to find the Vision API.
-      # Notice we use the service name 'visionapi' instead of localhost or 127.0.0.1!
-      - VISION_API_URL=http://visionapi:8000/predict
+      # Vision API URL — now points to the deployed Cloud Run service.
+      # For local-only testing, change back to: http://visionapi:8000/predict
+      - VISION_API_URL=https://vision-api-849718487429.us-central1.run.app/predict
+      # Gemini API key — loaded from your .env file
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     networks:
       - mushroom-net             # Connect it to our custom network
 
