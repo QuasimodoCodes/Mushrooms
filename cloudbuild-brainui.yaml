@@ -1,0 +1,19 @@
+# Cloud Build configuration for the Mushroom Brain UI (Gradio).
+# Build and push the Brain UI Docker image to Artifact Registry.
+
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/brain-ui:latest'
+      - '-f'
+      - 'services/brain_ui/Dockerfile'
+      - '.'
+
+images:
+  - 'us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/brain-ui:latest'
+
+options:
+  machineType: 'E2_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY

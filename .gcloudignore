@@ -16,8 +16,12 @@ __pycache__/
 # Secrets
 .env
 
-# The 11GB dataset - NOT needed to build the Docker image
-data/
+# The 11GB image dataset - NOT needed to build the Docker images
+data/dataset_split/
+# Also exclude large CSV files (only mushroom_context.csv is needed for the Brain UI)
+data/train.csv
+data/test.csv
+data/val.csv
 
 # Large YOLO training output artifacts (keep only weights/)
 docs/yolo_runs/*/train_batch*.jpg
