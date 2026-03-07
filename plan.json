@@ -119,13 +119,14 @@
     "step_number": 12,
     "phase_name": "Phase 2: Containerization",
     "description": "Docker Compose: Create docker-compose.yml to spin up both containers on a shared local network for testing.",
-    "status": "in_progress"
+    "status": "complete",
+    "student_explanation": "Why are we doing this? Docker Compose is the orchestrator. Without it, you would have to run two separate, very long Docker commands to start your containers, and you'd have to manually configure a virtual network so they could talk to each other. docker-compose.yml defines exactly how both services start, what ports they use, and ensures they exist on a shared 'mushroom-net' so the UI can securely send images to the Vision API."
   },
   {
     "step_number": 13,
     "phase_name": "Phase 3: Cloud Deployment",
     "description": "Data to Cloud Storage: Move dataset_split/ and CSVs to a cloud bucket. Update prepare_dataset.py to pull from bucket.",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "step_number": 14,
