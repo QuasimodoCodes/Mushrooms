@@ -1,0 +1,28 @@
+# Google Cloud Build ignore file
+# Prevents gcloud from uploading unnecessary/large files to Cloud Build.
+# Only the Dockerfile, source code, and model weights are needed.
+
+# Git history
+.git/
+.gitignore
+
+# Python environments
+.venv/
+__pycache__/
+*.pyc
+*.log
+*.pyo
+
+# Secrets
+.env
+
+# The 11GB dataset - NOT needed to build the Docker image
+data/
+
+# Large YOLO training output artifacts (keep only weights/)
+docs/yolo_runs/*/train_batch*.jpg
+docs/yolo_runs/*/val_batch*.jpg
+docs/yolo_runs/*/confusion_matrix*.png
+docs/yolo_runs/*/results.png
+docs/yolo_runs/*/results.csv
+docs/yolo_runs/*/args.yaml
