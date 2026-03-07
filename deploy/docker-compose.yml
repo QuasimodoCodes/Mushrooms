@@ -4,7 +4,7 @@ services:
   # This section defines the Vision API container
   visionapi:
     build:
-      context: .                 # Use the 'Mushroom' root folder as the build context
+      context: ..                 # Use the 'Mushroom' root folder as the build context
       dockerfile: services/vision_api/Dockerfile
     container_name: mushroom-vision-api
     ports:
@@ -17,7 +17,7 @@ services:
   # This section defines the Brain UI (Gradio) container
   brainui:
     build:
-      context: .
+      context: ..
       dockerfile: services/brain_ui/Dockerfile
     container_name: mushroom-brain-ui
     ports:
