@@ -19,6 +19,17 @@ MODEL_PATH = os.path.join(BASE_DIR, "docs", "yolo_runs", "mushroom_classifier_v1
 # ensuring each prediction request is fast.
 model = YOLO(MODEL_PATH)
 
+# ==========================================
+# HEALTH ENDPOINT FOR CLOUD RUN MONITORING
+# ==========================================
+@app.get("/health")
+async def health_check():
+    """
+    Health check endpoint used by Cloud Run and other orchestrators
+    to verify the container is alive and capable of responding.
+    """
+    return {"status": "healthy", "model_loaded": model is not None}
+
 # 4. Define our prediction endpoint.
 # The @app.post decorator means this function only responds to HTTP POST requests 
 # (which are used when sending data, like uploading a file).
