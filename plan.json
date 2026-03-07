@@ -144,7 +144,11 @@
     "step_number": 16,
     "phase_name": "Phase 3: Cloud Deployment",
     "description": "Deploy Brain UI: Deploy UI container to Cloud Run, Render, or GPU provider.",
-    "status": "pending"
+    "status": "complete",
+    "detailed_tasks": [
+      "Fix .gcloudignore to exclude large data files and only include exactly what Brain UI needs before build",
+      "Build the Brain UI Docker image using gcloud build command"
+    ]
   },
   {
     "step_number": 17,
@@ -175,5 +179,20 @@
     "phase_name": "Phase 5: Monitoring and Logging",
     "description": "Drift Detection: Monitor outputs for low confidence and orchestrate data pipeline to retrain model with failed images.",
     "status": "pending"
+  },
+  {
+    "step_number": 16.1,
+    "description": "Fix .gcloudignore to ensure only necessary files are uploaded to Cloud Build",
+    "status": "complete"
+  },
+  {
+    "step_number": 16.2,
+    "description": "Build the Brain UI Docker image using Google Cloud Build",
+    "status": "complete"
+  },
+  {
+    "step_number": 16.3,
+    "description": "Deploy the Brain UI image to Google Cloud Run",
+    "status": "complete"
   }
 ]
