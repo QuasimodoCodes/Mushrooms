@@ -60,15 +60,8 @@ def audit_prediction(species_name, confidence, context, user_season="Unknown", u
     logger.info("[AUDIT] Sending data to LLM for verification...")
     response = query_llm(prompt)
     logger.info(f"[AUDIT] LLM Response: {response}")
-
-# ============================================================
-# Standalone test
-# ============================================================
-if __name__ == "__main__":
-    # Mock data to test the audit layer independently
-    mock_context = {
-        "toxicity_type": "Deadly",
-        "habitat": "Deciduous forests (often under oak)",
+    
+    return response
         "season": "Summer to autumn",
         "region": "Europe, North America, Australia",
         "key_warnings": '"Death Cap". Contains fatal amatoxins. Responsible for the majority of fatal mushroom poisonings globally.'
