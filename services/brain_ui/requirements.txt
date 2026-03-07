@@ -1,0 +1,11 @@
+# Web Framework
+gradio==4.36.1
+
+# Data Processing
+pandas==2.2.3
+
+# Network Communication (for hitting our Vision API)
+requests==2.32.3
+
+# Your LLM requirements can go below here. 
+# Depending on your current 'llm_provider.py', you may need things like google-genai, openai, etc.
