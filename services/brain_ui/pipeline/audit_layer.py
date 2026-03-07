@@ -1,7 +1,7 @@
-"""
+﻿"""
 LLM Audit Layer
 ================
-This script takes YOLO's prediction + the CSV ecological context + the user's 
+This script takes YOLO's prediction + the CSV ecological context + the user's
 location/season and asks an LLM: "Does this identification make sense?"
 
 This is the 'reasoning layer' that catches mistakes the vision model makes.
@@ -46,7 +46,7 @@ Here is the evidence:
 3. If the species is toxic or deadly, issue a clear safety warning regardless of plausibility.
 4. Keep your response concise (3-5 sentences max).
 
-Begin your response with either "✅ PLAUSIBLE" or "⚠️ SUSPICIOUS" or "🚨 DANGER"."""
+Begin your response with either "✅ PLAUSIBLE" or "⚠️ SUSPICIOUS" or "🚨 DANGER""""
 
     return prompt
 
@@ -56,21 +56,30 @@ def audit_prediction(species_name, confidence, context, user_season="Unknown", u
     Runs the full audit: builds the prompt, queries the LLM, returns the verdict.
     """
     prompt = build_audit_prompt(species_name, confidence, context, user_season, user_location)
-    
+
     logger.info("[AUDIT] Sending data to LLM for verification...")
     response = query_llm(prompt)
     logger.info(f"[AUDIT] LLM Response: {response}")
-    
+
     return response
+
+# ============================================================
+# Standalone test
+# ============================================================
+if __name__ == "__main__":
+    # Mock data to test the audit layer independently
+    mock_context = {
+        "toxicity_type": "Deadly",
+        "habitat": "Deciduous forests (often under oak)",
         "season": "Summer to autumn",
         "region": "Europe, North America, Australia",
         "key_warnings": '"Death Cap". Contains fatal amatoxins. Responsible for the majority of fatal mushroom poisonings globally.'
     }
-    
+
     print("=========================================")
     print("   LLM Audit Layer - Standalone Test     ")
     print("=========================================")
-    
+
     # Test Case: A deadly mushroom found in the wrong season
     result = audit_prediction(
         species_name="Amanita phalloides",
@@ -79,9 +88,10 @@ def audit_prediction(species_name, confidence, context, user_season="Unknown", u
         user_season="Winter",
         user_location="Norway"
     )
-    
+
     print("\n==========================")
     print("   🔍 LLM AUDIT VERDICT   ")
     print("==========================")
     print(result)
     print("==========================\n")
+
