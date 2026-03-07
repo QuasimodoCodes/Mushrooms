@@ -18,7 +18,7 @@ jobs:
       id: auth
       uses: google-github-actions/auth@v1
       with:
-        credentials_json: $\{{ secrets.GCP_CREDENTIALS }}
+        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
     # 1. Build and push the Vision API image
     - name: Build Vision API Image
