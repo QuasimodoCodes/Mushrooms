@@ -13,10 +13,8 @@ COPY services/brain_ui/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 5. Copy the rest of the application code and necessary data.
-# Note how we are treating app.py (the Gradio interface) essentially as the "front door"
-# for the Brain UI service. The business logic lives in `scripts/pipeline/`.
-COPY app.py /app/app.py
-COPY scripts /app/scripts
+COPY services/brain_ui/app.py /app/app.py
+COPY services/brain_ui/pipeline /app/pipeline
 COPY data/mushroom_context.csv /app/data/mushroom_context.csv
 
 # 6. Expose port 7860 so the outside world can view the Gradio UI.

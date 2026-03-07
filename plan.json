@@ -151,6 +151,27 @@
     ]
   },
   {
+    "step_number": 16.1,
+    "description": "Fix .gcloudignore to ensure only necessary files are uploaded to Cloud Build",
+    "status": "complete"
+  },
+  {
+    "step_number": 16.2,
+    "description": "Build the Brain UI Docker image using Google Cloud Build",
+    "status": "complete"
+  },
+  {
+    "step_number": 16.3,
+    "description": "Deploy the Brain UI image to Google Cloud Run",
+    "status": "complete"
+  },
+  {
+    "step_number": 16.5,
+    "phase_name": "Architecture Refactoring",
+    "description": "Refactor root directory, move UI logic into services/brain_ui, and clean up obsolete monolithic files.",
+    "status": "complete"
+  },
+  {
     "step_number": 17,
     "phase_name": "Phase 4: MLOps and CI/CD",
     "description": "DVC Setup: Install DVC, initialize, and track 12GB dataset and .pt model weights, pointing to cloud bucket.",
@@ -179,20 +200,5 @@
     "phase_name": "Phase 5: Monitoring and Logging",
     "description": "Drift Detection: Monitor outputs for low confidence and orchestrate data pipeline to retrain model with failed images.",
     "status": "pending"
-  },
-  {
-    "step_number": 16.1,
-    "description": "Fix .gcloudignore to ensure only necessary files are uploaded to Cloud Build",
-    "status": "complete"
-  },
-  {
-    "step_number": 16.2,
-    "description": "Build the Brain UI Docker image using Google Cloud Build",
-    "status": "complete"
-  },
-  {
-    "step_number": 16.3,
-    "description": "Deploy the Brain UI image to Google Cloud Run",
-    "status": "complete"
   }
 ]

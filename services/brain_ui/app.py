@@ -13,7 +13,7 @@ import sys
 import os
 
 # Add the pipeline directory to Python's path
-pipeline_dir = os.path.join(os.path.dirname(__file__), "scripts", "pipeline")
+pipeline_dir = os.path.join(os.path.dirname(__file__), "pipeline")
 sys.path.insert(0, pipeline_dir)
 
 from predict import predict_image
@@ -28,10 +28,15 @@ def classify_mushroom(image, season, location):
     """
     if image is None:
         return "Please upload an image first."
-    
+
+    # Look for the CSV locally in data/ or in the Docker path
     base_dir = os.path.dirname(__file__)
-    csv_path = os.path.join(base_dir, "data", "mushroom_context.csv")
-    
+    if os.path.exists(os.path.join(base_dir, "data", "mushroom_context.csv")):
+        csv_path = os.path.join(base_dir, "data", "mushroom_context.csv")
+    else:
+        # Running locally in repo structure
+        csv_path = os.path.join(os.path.dirname(os.path.dirname(base_dir)), "data", "mushroom_context.csv")
+
     # Step 1: YOLO Vision (via Vision API)
     predicted_species, confidence = predict_image(image)
     
