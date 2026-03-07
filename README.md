@@ -4,6 +4,86 @@ A production-grade, microservice-based AI safety system that identifies mushroom
 
 ---
 
+## 🛠️ How to Operate the System 
+
+Whether you are retraining the vision model or spinning up the microservices locally, here is your quick-start guide:
+
+### 1. Syncing the Massive Dataset (DVC)
+Since the 12GB+ dataset and heavy Pytorch weights are stored in the cloud (Hugging Face / Google Cloud or S3) to keep this repository small, use DVC to fetch them:
+```bash
+# Pull all raw data and weights into the local workspace
+dvc pull
+```
+
+### 2. Training the YOLO Model Locally
+If you want to train the model from scratch on your own GPU:
+```bash
+# Ensure your virtual environment is active
+.\.venv\Scripts\Activate.ps1
+
+# Run the training script directly
+python scripts/training/train_yolo.py
+
+# Expected Output: A new run folder inside docs/yolo_runs/ containing fresh .pt weights and metrics
+```
+
+### 3. Running Microservices Locally (Docker)
+You can boot up the entire architecture on your local laptop using Docker Compose. This starts both the FastAPI Vision layer and the Gradio UI layer simultaneously, bridging them over an internal Docker network.
+```bash
+# Build and launch both containers
+docker-compose up --build
+
+# What to see:
+# -> The Gradio UI will be available at http://localhost:7860
+# -> The Vision API will be listening on http://localhost:8000
+```
+
+### 4. Running Microservices Locally (Python/Terminal)
+If you don't want to use Docker and prefer two raw Python terminal tabs:
+```bash
+# Terminal 1: Boot the Vision API
+cd services/vision_api/
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+# Terminal 2: Boot the Web UI
+cd services/brain_ui/
+python app.py
+```
+
+### 5. Deploying to the Cloud
+Because we set up CI/CD using GitHub Actions, deployment is completely hands-off! 
+```bash
+# Just push your code to the 'main' branch
+git add .
+git commit -m "Updated model rules"
+git push origin main
+```
+> *Behind the scenes: GitHub Actions will detect the push, trigger Google Cloud Build to compile your Docker images, and roll out the new containers serverlessly to Google Cloud Run.*
+
+---
+
+## Project Structure
+
+```text
+Mushroom/
+├── .github/workflows/        ← CI/CD Automations (GitHub Actions)
+├── data/
+│   ├── dataset.yaml          ← YOLO class mapping config
+│   ├── mushroom_context.csv  ← Ecological rules (Knowledge Base)
+│   └── drift_images/         ← Auto-saved low-confidence field data
+├── services/                 ← Containerized Microservices
+│   ├── brain_ui/             ← Gradio UI, LLM Audit, Risk Engine (app.py)
+│   │   ├── Dockerfile
+│   │   └── pipeline/         ← Core evaluation logic scripts
+│   └── vision_api/           ← FastAPI YOLO Server (main.py)
+│       └── Dockerfile
+├── docs/
+│   └── yolo_runs/            ← YOLO metrics, loss graphs, PR curves
+├── README.md                 ← You are here
+└── dvc.yaml                  ← Data Version Control pipelines
+
+---
+
 ## 🏗️ System Architecture & Workflow
 
 This project has evolved from a local Python script into a robust, cloud-ready microservice architecture. Here is how the whole pipeline works end-to-end:
@@ -75,26 +155,3 @@ Git was fundamentally built for code text, not 12 Gigabyte datasets of images or
 
 - Machine learning models naturally degrade in production environments when exposed to new conditions (e.g. dirty camera lenses, crushed mushroom caps).
 - The pipeline handles this using active **Drift Detection**: Any time a user submits an image and the YOLO model yields an uncertain confidence score **< 0.70**, the architecture natively intercepts the transmission and seamlessly saves the input image to an isolated `data/drift_images/` staging pool. These failure cases manually construct our next dataset for future model fine-tuning!
-
----
-
-## Project Structure
-
-```text
-Mushroom/
-├── .github/workflows/        ← CI/CD Automations (GitHub Actions)
-├── data/
-│   ├── dataset.yaml          ← YOLO class mapping config
-│   ├── mushroom_context.csv  ← Ecological rules (Knowledge Base)
-│   └── drift_images/         ← Auto-saved low-confidence field data
-├── services/                 ← Containerized Microservices
-│   ├── brain_ui/             ← Gradio UI, LLM Audit, Risk Engine (app.py)
-│   │   ├── Dockerfile
-│   │   └── pipeline/         ← Core evaluation logic scripts
-│   └── vision_api/           ← FastAPI YOLO Server (main.py)
-│       └── Dockerfile
-├── docs/
-│   └── yolo_runs/            ← YOLO metrics, loss graphs, PR curves
-├── README.md                 ← You are here
-└── dvc.yaml                  ← Data Version Control pipelines
-```
