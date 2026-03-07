@@ -105,13 +105,14 @@
     "step_number": 10,
     "phase_name": "Phase 2: Containerization",
     "description": "Write Dockerfile for Vision API: Lightweight Python, PyTorch (CPU), Ultralytics, FastAPI, and .pt weights.",
-    "status": "in_progress"
+    "status": "complete",
+    "student_explanation": "Why are we doing this? 'It works on my machine!' is the classic developer excuse when code breaks in production. We avoid this by using Docker. A Dockerfile is essentially a recipe that builds a tiny, self-contained virtual computer specifically designed to run our app and absolutely nothing else. By containerizing our Vision API with its exact PyTorch dependencies and .pt weights, we guarantee it will run identically on any server in the world, be it AWS, Google Cloud, or your buddy's laptop."
   },
   {
     "step_number": 11,
     "phase_name": "Phase 2: Containerization",
     "description": "Write Dockerfile for Brain UI: Gradio, Pandas, LLM requirements, app.py, scripts, and mushroom_context.csv.",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "step_number": 12,
