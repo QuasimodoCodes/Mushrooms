@@ -46,7 +46,8 @@ Here is the evidence:
 3. If the species is toxic or deadly, issue a clear safety warning regardless of plausibility.
 4. Keep your response concise (3-5 sentences max).
 
-Begin your response with either "✅ PLAUSIBLE" or "⚠️ SUSPICIOUS" or "🚨 DANGER""""
+Begin your response with either "✅ PLAUSIBLE" or "⚠️ SUSPICIOUS" or "🚨 DANGER"
+"""
 
     return prompt
 
