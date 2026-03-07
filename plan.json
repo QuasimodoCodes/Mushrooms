@@ -92,14 +92,14 @@
     "step_number": 8,
     "phase_name": "Phase 1: Decoupling into Microservices",
     "description": "Refactor the Predict Module (scripts/pipeline/predict.py): Rewrite script to send HTTP POST request to new Vision API.",
-    "status": "in_progress",
+    "status": "complete",
     "student_explanation": "Why are we doing this? Currently, your Gradio app (the Brain UI) loads the heavy .pt model file directly in scripts/pipeline/predict.py. Since we just spun up a shiny new Vision API microservice, we no longer need the UI to do the heavy lifting! We are going to rewrite predict.py so that instead of loading PyTorch, it simply takes the image and sends an HTTP POST request (like sending a package in the mail) over network port 8000 to our new Vision API. When the API responds with the JSON answer, predict.py hands it back to the UI."
   },
   {
     "step_number": 9,
     "phase_name": "Phase 1: Decoupling into Microservices",
     "description": "Test the Bridge: Run Vision API locally on port 8000, and Gradio on port 7860. Verify successful endpoint communication.",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "step_number": 10,
