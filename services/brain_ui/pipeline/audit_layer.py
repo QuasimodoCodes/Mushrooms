@@ -9,9 +9,12 @@ This is the 'reasoning layer' that catches mistakes the vision model makes.
 
 import os
 import sys
+import logging
 
 sys.path.insert(0, os.path.dirname(__file__))
 from llm_provider import query_llm
+
+logger = logging.getLogger(__name__)
 
 def build_audit_prompt(species_name, confidence, context, user_season, user_location):
     """
@@ -54,11 +57,9 @@ def audit_prediction(species_name, confidence, context, user_season="Unknown", u
     """
     prompt = build_audit_prompt(species_name, confidence, context, user_season, user_location)
     
-    print("\n[AUDIT] Sending data to LLM for verification...")
+    logger.info("[AUDIT] Sending data to LLM for verification...")
     response = query_llm(prompt)
-    
-    return response
-
+    logger.info(f"[AUDIT] LLM Response: {response}")
 
 # ============================================================
 # Standalone test

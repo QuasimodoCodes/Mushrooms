@@ -187,7 +187,7 @@
     "step_number": 19,
     "phase_name": "Phase 5: Monitoring and Logging",
     "description": "Centralize Logs: Update audit_layer.py to send logs to a cloud aggregator like AWS CloudWatch.",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "step_number": 20,

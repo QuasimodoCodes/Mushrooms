@@ -11,6 +11,11 @@ Usage:
 import gradio as gr
 import sys
 import os
+import logging
+
+# Configure centralized cloud-compatible logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # Add the pipeline directory to Python's path
 pipeline_dir = os.path.join(os.path.dirname(__file__), "pipeline")
