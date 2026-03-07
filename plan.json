@@ -80,5 +80,95 @@
       "The flow should be: Input Image -> YOLO Predicts Species -> Pandas Looks up CSV -> Check Confidence -> Pass to LLM Audit -> Run Decision Logic -> Print Final Result."
     ],
     "student_explanation": "Why are we doing this? You have built individual puzzle pieces; now you need to put the puzzle together. Connecting them into one pipeline proves that your multi-modal architecture works in practice, not just in theory."
+  },
+  {
+    "step_number": 7,
+    "phase_name": "Phase 1: Decoupling into Microservices",
+    "description": "Build the Vision API (services/vision_api/main.py): Write a FastAPI script that loads best YOLO model and creates /predict endpoint.",
+    "status": "in_progress"
+  },
+  {
+    "step_number": 8,
+    "phase_name": "Phase 1: Decoupling into Microservices",
+    "description": "Refactor the Predict Module (scripts/pipeline/predict.py): Rewrite script to send HTTP POST request to new Vision API.",
+    "status": "pending"
+  },
+  {
+    "step_number": 9,
+    "phase_name": "Phase 1: Decoupling into Microservices",
+    "description": "Test the Bridge: Run Vision API locally on port 8000, and Gradio on port 7860. Verify successful endpoint communication.",
+    "status": "pending"
+  },
+  {
+    "step_number": 10,
+    "phase_name": "Phase 2: Containerization",
+    "description": "Write Dockerfile for Vision API: Lightweight Python, PyTorch (CPU), Ultralytics, FastAPI, and .pt weights.",
+    "status": "pending"
+  },
+  {
+    "step_number": 11,
+    "phase_name": "Phase 2: Containerization",
+    "description": "Write Dockerfile for Brain UI: Gradio, Pandas, LLM requirements, app.py, scripts, and mushroom_context.csv.",
+    "status": "pending"
+  },
+  {
+    "step_number": 12,
+    "phase_name": "Phase 2: Containerization",
+    "description": "Docker Compose: Create docker-compose.yml to spin up both containers on a shared local network for testing.",
+    "status": "pending"
+  },
+  {
+    "step_number": 13,
+    "phase_name": "Phase 3: Cloud Deployment",
+    "description": "Data to Cloud Storage: Move dataset_split/ and CSVs to a cloud bucket. Update prepare_dataset.py to pull from bucket.",
+    "status": "pending"
+  },
+  {
+    "step_number": 14,
+    "phase_name": "Phase 3: Cloud Deployment",
+    "description": "Deploy Vision API: Push Docker image to container registry and deploy to a serverless platform (e.g., Cloud Run).",
+    "status": "pending"
+  },
+  {
+    "step_number": 15,
+    "phase_name": "Phase 3: Cloud Deployment",
+    "description": "Update UI Target: Update predict.py in Brain UI to point to new public Vision API URL.",
+    "status": "pending"
+  },
+  {
+    "step_number": 16,
+    "phase_name": "Phase 3: Cloud Deployment",
+    "description": "Deploy Brain UI: Deploy UI container to Cloud Run, Render, or GPU provider.",
+    "status": "pending"
+  },
+  {
+    "step_number": 17,
+    "phase_name": "Phase 4: MLOps and CI/CD",
+    "description": "DVC Setup: Install DVC, initialize, and track 12GB dataset and .pt model weights, pointing to cloud bucket.",
+    "status": "pending"
+  },
+  {
+    "step_number": 18,
+    "phase_name": "Phase 4: MLOps and CI/CD",
+    "description": "GitHub Actions: Write workflows in .github/workflows/ to auto-build and deploy Docker containers on main branch push.",
+    "status": "pending"
+  },
+  {
+    "step_number": 19,
+    "phase_name": "Phase 5: Monitoring and Logging",
+    "description": "Centralize Logs: Update audit_layer.py to send logs to a cloud aggregator like AWS CloudWatch.",
+    "status": "pending"
+  },
+  {
+    "step_number": 20,
+    "phase_name": "Phase 5: Monitoring and Logging",
+    "description": "Health Endpoints: Add a /health endpoint to FastAPI Vision API for container monitoring and auto-restart.",
+    "status": "pending"
+  },
+  {
+    "step_number": 21,
+    "phase_name": "Phase 5: Monitoring and Logging",
+    "description": "Drift Detection: Monitor outputs for low confidence and orchestrate data pipeline to retrain model with failed images.",
+    "status": "pending"
   }
 ]
