@@ -51,4 +51,4 @@ jobs:
             --port 7860 \
             --memory 2Gi \
             --cpu 1 \
-            --set-env-vars="VISION_API_URL=https://vision-api-849718487429.us-central1.run.app/predict"
+            --set-env-vars="VISION_API_URL=https://vision-api-849718487429.us-central1.run.app/predict,GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}"
