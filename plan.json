@@ -85,13 +85,15 @@
     "step_number": 7,
     "phase_name": "Phase 1: Decoupling into Microservices",
     "description": "Build the Vision API (services/vision_api/main.py): Write a FastAPI script that loads best YOLO model and creates /predict endpoint.",
-    "status": "in_progress"
+    "status": "complete",
+    "student_explanation": "Why are we doing this? By migrating our YOLO inference into a standalone Python application powered by FastAPI, we are creating a dedicated 'microservice'. An endpoint (like /predict) acts as a digital front door. Instead of our Gradio UI needing to load heavy PyTorch files itself, it simply knocks on this door, hands over an image, and gets a fast JSON answer back. This decouples our architecture, meaning we can eventually host the heavy vision model on a beefy GPU cloud server while running the lightweight UI on a cheap standard server."
   },
   {
     "step_number": 8,
     "phase_name": "Phase 1: Decoupling into Microservices",
     "description": "Refactor the Predict Module (scripts/pipeline/predict.py): Rewrite script to send HTTP POST request to new Vision API.",
-    "status": "pending"
+    "status": "in_progress",
+    "student_explanation": "Why are we doing this? Currently, your Gradio app (the Brain UI) loads the heavy .pt model file directly in scripts/pipeline/predict.py. Since we just spun up a shiny new Vision API microservice, we no longer need the UI to do the heavy lifting! We are going to rewrite predict.py so that instead of loading PyTorch, it simply takes the image and sends an HTTP POST request (like sending a package in the mail) over network port 8000 to our new Vision API. When the API responds with the JSON answer, predict.py hands it back to the UI."
   },
   {
     "step_number": 9,

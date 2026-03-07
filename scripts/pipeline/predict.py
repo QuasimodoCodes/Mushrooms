@@ -1,29 +1,46 @@
 import sys
 import os
-from ultralytics import YOLO
+import requests
 
-def predict_image(image_path, model_path):
-    print(f"Loading custom YOLO model from: {model_path}")
-    model = YOLO(model_path)
-    
+# URL of our new Vision API
+VISION_API_URL = "http://127.0.0.1:8000/predict"
+
+def predict_image(image_path):
+    print(f"Sending image to Vision API at: {VISION_API_URL}")
     print(f"Running inference on image: {image_path}")
-    # YOLO returns a list of Results objects
-    results = model(image_path)
     
-    # Extract the top prediction from the first result
-    for r in results:
-        top1_index = r.probs.top1              # The index of the highest probability class
-        top1_conf = r.probs.top1conf.item()    # The actual probability/confidence score
-        top1_name = r.names[top1_index]        # The string name of that class
+    # We open the image file in binary read mode ('rb')
+    with open(image_path, "rb") as image_file:
+        # We package the file into a dictionary that the 'requests' library understands
+        files = {"file": (os.path.basename(image_path), image_file, "image/jpeg")}
         
-        print("\n==========================")
-        print("     🏆 PREDICTION 🏆      ")
-        print("==========================")
-        print(f"Species:    {top1_name}")
-        print(f"Confidence: {top1_conf * 100:.2f}%")
-        print("==========================\n")
-        
-        return top1_name, top1_conf
+        try:
+            # We send a POST request with our image to the API
+            response = requests.post(VISION_API_URL, files=files)
+            
+            # If the API returned an error code (like 404 or 500), this will raise an exception
+            response.raise_for_status()
+            
+            # The API returns JSON like {"class": "Amanita", "confidence": 0.9}
+            # We parse that JSON into a normal Python dictionary
+            result_data = response.json()
+            
+            top1_name = result_data.get("class")
+            top1_conf = result_data.get("confidence")
+            
+            print("\n==========================")
+            print("     🏆 PREDICTION 🏆      ")
+            print("==========================")
+            print(f"Species:    {top1_name}")
+            print(f"Confidence: {top1_conf * 100:.2f}%")
+            print("==========================\n")
+            
+            return top1_name, top1_conf
+            
+        except requests.exceptions.RequestException as e:
+            print(f"\n[ERROR] Failed to connect to the Vision API: {e}")
+            print("Ensure the API is running (uvicorn services.vision_api.main:app --reload)")
+            return None, 0.0
 
 if __name__ == "__main__":
     # If the user didn't pass an image, grab a random one from the test set for demonstration
@@ -44,10 +61,4 @@ if __name__ == "__main__":
     else:
         test_img_path = sys.argv[1]
         
-    # Path to the BEST weights our model just calculated
-    model_weight_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs", "yolo_runs", "mushroom_classifier_v1", "weights", "best.pt"))
-    
-    if not os.path.exists(model_weight_path):
-        print(f"Error: Model not found at {model_weight_path}")
-    else:
-        predict_image(test_img_path, model_weight_path)
+    predict_image(test_img_path)
