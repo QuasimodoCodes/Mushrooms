@@ -1,0 +1,6 @@
+.venv/
+.git/
+__pycache__/
+dataset_split/
+data/
+!data/mushroom_context.csv

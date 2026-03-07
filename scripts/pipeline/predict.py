@@ -3,7 +3,8 @@ import os
 import requests
 
 # URL of our new Vision API
-VISION_API_URL = "http://127.0.0.1:8000/predict"
+# We default to localhost for local testing, but Docker Compose will override this!
+VISION_API_URL = os.environ.get("VISION_API_URL", "http://127.0.0.1:8000/predict")
 
 def predict_image(image_path):
     print(f"Sending image to Vision API at: {VISION_API_URL}")

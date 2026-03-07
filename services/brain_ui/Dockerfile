@@ -17,7 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # for the Brain UI service. The business logic lives in `scripts/pipeline/`.
 COPY app.py /app/app.py
 COPY scripts /app/scripts
-COPY data /app/data
+COPY data/mushroom_context.csv /app/data/mushroom_context.csv
 
 # 6. Expose port 7860 so the outside world can view the Gradio UI.
 EXPOSE 7860
