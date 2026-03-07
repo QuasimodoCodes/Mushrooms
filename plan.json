@@ -187,18 +187,18 @@
     "step_number": 19,
     "phase_name": "Phase 5: Monitoring and Logging",
     "description": "Centralize Logs: Update audit_layer.py to send logs to a cloud aggregator like AWS CloudWatch.",
-    "status": "in_progress"
+    "status": "complete"
   },
   {
     "step_number": 20,
     "phase_name": "Phase 5: Monitoring and Logging",
     "description": "Health Endpoints: Add a /health endpoint to FastAPI Vision API for container monitoring and auto-restart.",
-    "status": "pending"
+    "status": "complete"
   },
   {
     "step_number": 21,
     "phase_name": "Phase 5: Monitoring and Logging",
     "description": "Drift Detection: Monitor outputs for low confidence and orchestrate data pipeline to retrain model with failed images.",
-    "status": "pending"
+    "status": "in_progress"
   }
 ]

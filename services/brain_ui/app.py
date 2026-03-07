@@ -12,6 +12,8 @@ import gradio as gr
 import sys
 import os
 import logging
+import shutil
+from datetime import datetime
 
 # Configure centralized cloud-compatible logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -26,6 +28,37 @@ from integration import get_mushroom_context
 from audit_layer import audit_prediction
 from risk_engine import assess_risk
 
+
+def log_drift_image(image_path, confidence, predicted_species):
+    """
+    MLOps Drift Detection:
+    If the model's confidence is very low, we save the image to a 'drift_images' folder.
+    This allows data scientists to manually review and retrain the model later.
+    """
+    if confidence >= 0.70:
+        return # Skip, confidence is high enough
+        
+    logger.warning(f"[DRIFT DETECTED] Low confidence ({confidence:.2f}) for species '{predicted_species}'. Saving image for manual review.")
+    
+    # Try to resolve path whether we are locally testing or in Docker
+    base_dir = os.path.dirname(__file__)
+    drift_dir = os.path.join(os.path.dirname(os.path.dirname(base_dir)), "data", "drift_images")
+    if not os.path.exists(drift_dir):
+        # Fallback to local data dir if in Docker
+        drift_dir = os.path.join(base_dir, "data", "drift_images")
+        
+    os.makedirs(drift_dir, exist_ok=True)
+    
+    # Create a unique filename with timestamp and prediction
+    timestamp = datetime.now().strftime("%Y%md_%H%M%S")
+    safe_species = predicted_species.replace(" ", "_").replace("/", "-")
+    file_name = f"drift_{timestamp}_{safe_species}_conf{int(confidence*100)}.jpg"
+    
+    dest_path = os.path.join(drift_dir, file_name)
+    try:
+        shutil.copy2(image_path, dest_path)
+    except Exception as e:
+        logger.error(f"Failed to log drift image: {e}")
 
 def classify_mushroom(image, season, location):
     """
@@ -48,9 +81,10 @@ def classify_mushroom(image, season, location):
     if predicted_species is None:
         return "❌ Error: Could not connect to the Vision API. Please ensure it is running in another terminal."
         
-    formatted_species = predicted_species.replace("_", " ")
-    
-    # Step 2: CSV Knowledge Lookup
+    # Step 1.5: Trigger Drift Detection Logic (MLOps)
+    # Background save if confidence is too low
+    log_drift_image(image, confidence, predicted_species)
+
     context = get_mushroom_context(formatted_species, csv_path)
     if "error" in context:
         context = {
