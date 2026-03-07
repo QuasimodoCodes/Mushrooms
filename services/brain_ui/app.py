@@ -60,13 +60,14 @@ def log_drift_image(image_path, confidence, predicted_species):
     except Exception as e:
         logger.error(f"Failed to log drift image: {e}")
 
-def classify_mushroom(image, season, location):
+def classify_mushroom(image, season, location, progress=gr.Progress()):
     """
     Main function called by Gradio when the user submits an image.
     """
     if image is None:
         return "Please upload an image first."
 
+    progress(0.1, desc="Locating Context Database...")
     # Look for the CSV locally in data/ or in the Docker path
     base_dir = os.path.dirname(__file__)
     if os.path.exists(os.path.join(base_dir, "data", "mushroom_context.csv")):
@@ -76,15 +77,21 @@ def classify_mushroom(image, season, location):
         csv_path = os.path.join(os.path.dirname(os.path.dirname(base_dir)), "data", "mushroom_context.csv")
 
     # Step 1: YOLO Vision (via Vision API)
+    progress(0.2, desc="Uploading image to Vision API...")
     predicted_species, confidence = predict_image(image)
     
     if predicted_species is None:
         return "❌ Error: Could not connect to the Vision API. Please ensure it is running in another terminal."
         
+    # Format the species name nicely if it has underscores
+    formatted_species = predicted_species.replace("_", " ").title() if predicted_species else "Unknown"
+
     # Step 1.5: Trigger Drift Detection Logic (MLOps)
     # Background save if confidence is too low
+    progress(0.4, desc="Checking classification confidence & data drift...")
     log_drift_image(image, confidence, predicted_species)
 
+    progress(0.6, desc="Fetching ecological context from Knowledge Base...")
     context = get_mushroom_context(formatted_species, csv_path)
     if "error" in context:
         context = {
@@ -94,11 +101,14 @@ def classify_mushroom(image, season, location):
         }
     
     # Step 3: LLM Audit
+    progress(0.7, desc="Requesting Safety Audit from LLM (Llama3/Gemini)...")
     llm_verdict = audit_prediction(formatted_species, confidence, context, season, location)
     
     # Step 4: Risk Decision
+    progress(0.9, desc="Calculating final risk level...")
     decision = assess_risk(formatted_species, confidence, context, llm_verdict)
     
+    progress(1.0, desc="Generating Safety Report...")
     # Build the output report
     risk_emoji = {"CRITICAL": "🚨", "HIGH": "⚠️", "MODERATE": "⚠️", "LOW": "✅"}
     
