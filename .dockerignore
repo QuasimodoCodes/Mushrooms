@@ -5,3 +5,4 @@ dataset_split/
 data/
 !data/mushroom_context.csv
 .env
+gen-lang-client-0851180379-877349e9f4fd.json

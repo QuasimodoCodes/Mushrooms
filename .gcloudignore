@@ -30,3 +30,6 @@ docs/yolo_runs/*/confusion_matrix*.png
 docs/yolo_runs/*/results.png
 docs/yolo_runs/*/results.csv
 docs/yolo_runs/*/args.yaml
+
+
+gen-lang-client-0851180379-877349e9f4fd.json

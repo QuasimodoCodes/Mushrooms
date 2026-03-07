@@ -3,52 +3,52 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     branches:
-      - master  # Only runs when code is pushed directly/merged to master
+      - master # Only runs when code is pushed directly/merged to master
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    # Authenticate via a secret you'll add to GitHub later
-    - name: Auth via Google Credentials
-      id: auth
-      uses: google-github-actions/auth@v1
-      with:
-        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      # Authenticate via a secret you'll add to GitHub later
+      - name: Auth via Google Credentials
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
 
-    # 1. Build and push the Vision API image
-    - name: Build Vision API Image
-      run: gcloud builds submit --config services/vision_api/cloudbuild.yaml .
-      
-    # 2. Deploy Vision API Image
-    - name: Deploy Vision API to Cloud Run
-      run: |
-        gcloud run deploy vision-api \
-          --image us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/vision-api:latest \
-          --region us-central1 \
-          --platform managed \
-          --allow-unauthenticated \
-          --port 8000 \
-          --memory 4Gi \
-          --cpu 1
+      # 1. Build and push the Vision API image
+      - name: Build Vision API Image
+        run: gcloud builds submit --config services/vision_api/cloudbuild.yaml .
 
-    # 3. Build and push the Brain UI image
-    - name: Build Brain UI Image
-      run: gcloud builds submit --config services/brain_ui/cloudbuild.yaml .
-      
-    # 4. Deploy Brain UI Image with Env Var
-    - name: Deploy Brain UI to Cloud Run
-      run: |
-        gcloud run deploy brain-ui \
-          --image us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/brain-ui:latest \
-          --region us-central1 \
-          --platform managed \
-          --allow-unauthenticated \
-          --port 7860 \
-          --memory 2Gi \
-          --cpu 1 \
-          --set-env-vars="VISION_API_URL=https://vision-api-849718487429.us-central1.run.app/predict"
+      # 2. Deploy Vision API Image
+      - name: Deploy Vision API to Cloud Run
+        run: |
+          gcloud run deploy vision-api \
+            --image us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/vision-api:latest \
+            --region us-central1 \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 8000 \
+            --memory 4Gi \
+            --cpu 1
+
+      # 3. Build and push the Brain UI image
+      - name: Build Brain UI Image
+        run: gcloud builds submit --config services/brain_ui/cloudbuild.yaml .
+
+      # 4. Deploy Brain UI Image with Env Var
+      - name: Deploy Brain UI to Cloud Run
+        run: |
+          gcloud run deploy brain-ui \
+            --image us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/brain-ui:latest \
+            --region us-central1 \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 7860 \
+            --memory 2Gi \
+            --cpu 1 \
+            --set-env-vars="VISION_API_URL=https://vision-api-849718487429.us-central1.run.app/predict"
