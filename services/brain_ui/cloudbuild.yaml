@@ -5,6 +5,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
+      - '--no-cache'
       - '-t'
       - 'us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/brain-ui:latest'
       - '-f'
