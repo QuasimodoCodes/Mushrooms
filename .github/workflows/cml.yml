@@ -5,6 +5,11 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   model-report:
     runs-on: ubuntu-latest
@@ -28,21 +33,21 @@ jobs:
           # Training Analysis (loss + accuracy curves with overfitting annotation)
           if [ -f "$RESULTS_DIR/training_analysis.png" ]; then
             echo "### 📉 Training Analysis (Loss & Accuracy)" >> report.md
-            cml-publish "$RESULTS_DIR/training_analysis.png" --md >> report.md
+            cml publish "$RESULTS_DIR/training_analysis.png" --md >> report.md
             echo "" >> report.md
           fi
 
           # YOLO's built-in results chart
           if [ -f "$RESULTS_DIR/results.png" ]; then
             echo "### 📊 Training Metrics (YOLO Results)" >> report.md
-            cml-publish "$RESULTS_DIR/results.png" --md >> report.md
+            cml publish "$RESULTS_DIR/results.png" --md >> report.md
             echo "" >> report.md
           fi
 
           # Confusion Matrix
           if [ -f "$RESULTS_DIR/confusion_matrix_normalized.png" ]; then
             echo "### 🔢 Normalized Confusion Matrix" >> report.md
-            cml-publish "$RESULTS_DIR/confusion_matrix_normalized.png" --md >> report.md
+            cml publish "$RESULTS_DIR/confusion_matrix_normalized.png" --md >> report.md
             echo "" >> report.md
           fi
 
