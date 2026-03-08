@@ -2,4 +2,4 @@ stages:
   train_metrics:
     cmd: cmd "echo tracking metrics"
     metrics:
-    - docs/yolo_runs/mushroom_classifier_v1/results.csv
+      - docs/yolo_runs/yolo26_classifier_v1/results.csv
