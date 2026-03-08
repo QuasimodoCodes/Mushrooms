@@ -31,7 +31,81 @@ python scripts/training/train_yolo.py
 # Expected Output: A new run folder inside docs/yolo_runs/ containing fresh .pt weights and metrics
 ```
 
-### 3. Running Microservices Locally (Docker)
+### 3. Experimenting with Your Own Model (Contributors)
+
+Want to train your own version of YOLOv26 with different hyperparameters? Follow these steps:
+
+**Step 1: Clone & Setup**
+
+```bash
+git clone https://github.com/QuasimodoCodes/Mushrooms.git
+cd Mushrooms
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1          # Windows (use source .venv/bin/activate on Mac/Linux)
+pip install -r requirements.txt
+dvc pull                               # Download the 12GB+ dataset from cloud storage
+```
+
+**Step 2: Create a new branch**
+
+```bash
+git checkout -b my-experiment
+```
+
+**Step 3: Edit the training parameters**
+
+Open `scripts/training/train_yolo.py` and tweak the hyperparameters in `model.train(...)`:
+
+| Parameter  | Default                  | What it controls                                                |
+| :--------- | :----------------------- | :-------------------------------------------------------------- |
+| `epochs`   | 50                       | Maximum training epochs                                         |
+| `imgsz`    | 224                      | Input image resolution (higher = more detail, slower)           |
+| `patience` | 10                       | Early stopping — halts if val/loss doesn't improve for N epochs |
+| `cos_lr`   | True                     | Cosine learning rate schedule                                   |
+| `name`     | `"yolo26_classifier_v1"` | **You must change this** to avoid overwriting the baseline run  |
+
+> ⚠️ **Important:** Always set a unique `name` (e.g., `"yolo26_experiment_v2"`) so your run saves to its own folder under `docs/yolo_runs/`.
+
+Example with adjusted parameters:
+
+```python
+results = model.train(
+    data=data_dir,
+    epochs=100,           # Train longer
+    imgsz=320,            # Higher resolution
+    device=device,
+    exist_ok=True,
+    patience=15,          # More patience before early stop
+    cos_lr=True,
+    lr0=0.005,            # Lower starting learning rate
+    project=...,
+    name="yolo26_experiment_v2"
+)
+```
+
+**Step 4: Train**
+
+```bash
+python scripts/training/train_yolo.py
+```
+
+> Requires an Nvidia GPU with CUDA. CPU training on 169 mushroom classes would take an extremely long time.
+
+**Step 5: Push & Open a Pull Request**
+
+```bash
+git add .
+git commit -m "Trained YOLOv26 with new hyperparameters"
+git push origin my-experiment
+```
+
+Then open a Pull Request on GitHub (or run `gh pr create`). The **CML bot will automatically post** your training graphs, confusion matrix, and final metrics as a comment on the PR — no extra work needed.
+
+From there, the team reviews your metrics against the baseline and merges if the model improves.
+
+---
+
+### 4. Running Microservices Locally (Docker)
 
 You can boot up the entire architecture on your local laptop using Docker Compose. This starts the FastAPI Vision layer, Gradio UI layer, and the MLOps monitoring stack simultaneously, bridging them over an internal Docker network.
 
@@ -47,7 +121,7 @@ docker-compose -f deploy/docker-compose.yml up --build -d
 # -> Grafana Dashboards will be available at http://localhost:3000 (admin/admin)
 ```
 
-### 4. Running Microservices Locally (Python/Terminal)
+### 5. Running Microservices Locally (Python/Terminal)
 
 If you don't want to use Docker and prefer two raw Python terminal tabs:
 
@@ -61,7 +135,7 @@ cd services/brain_ui/
 python app.py
 ```
 
-### 5. Deploying to the Cloud & Reviewing Models
+### 6. Deploying to the Cloud & Reviewing Models
 
 Because we set up CI/CD using GitHub Actions, deployment and model evaluation are completely hands-off!
 
