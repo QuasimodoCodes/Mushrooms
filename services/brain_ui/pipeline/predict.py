@@ -17,7 +17,7 @@ def predict_image(image_path):
         
         try:
             # We send a POST request with our image to the API
-            response = requests.post(VISION_API_URL, files=files)
+            response = requests.post(VISION_API_URL, files=files, timeout=30)
             
             # If the API returned an error code (like 404 or 500), this will raise an exception
             response.raise_for_status()

@@ -9,3 +9,6 @@ requests==2.32.3
 
 # LLM Provider
 google-generativeai
+
+# Telemetry
+prometheus_client

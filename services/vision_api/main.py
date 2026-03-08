@@ -16,7 +16,7 @@ Instrumentator().instrument(app).expose(app)
 # We traverse up 3 directories from main.py (vision_api -> services -> Mushroom)
 # to find the 'docs/yolo_runs/...' folder where our weights are stored.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-MODEL_PATH = os.path.join(BASE_DIR, "docs", "yolo_runs", "mushroom_classifier_v1", "weights", "best.pt")
+MODEL_PATH = os.path.join(BASE_DIR, "docs", "yolo_runs", "yolo26_classifier_v1", "weights", "best.pt")
 
 # 3. Load the YOLO model into memory.
 # We do this OUTSIDE the endpoint function so it only loads once when the server starts,

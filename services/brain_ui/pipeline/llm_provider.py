@@ -15,9 +15,9 @@ import json
 # ============================================================
 # CONFIGURATION - Change these to switch LLM providers
 # ============================================================
-ACTIVE_PROVIDER = "gemini"  # Options: "ollama" or "gemini"
+ACTIVE_PROVIDER = "ollama"  # Options: "ollama" or "gemini"
 OLLAMA_MODEL = "llama3:latest"
-OLLAMA_URL = "http://localhost:11434/api/generate"
+OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
 
 # Gemini config — key is loaded from the GEMINI_API_KEY environment variable (set in .env)
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")

@@ -23,6 +23,15 @@ logger = logging.getLogger(__name__)
 pipeline_dir = os.path.join(os.path.dirname(__file__), "pipeline")
 sys.path.insert(0, pipeline_dir)
 
+import prometheus_client
+from prometheus_client import Counter
+
+# Define a Prometheus Counter for our MLOps drift metric
+DRIFT_EVENTS = Counter('mushroom_drift_events_total', 'Total number of classification events resulting in low confidence (drift)', ['species'])
+
+# Start the Prometheus metrics server on port 8001
+prometheus_client.start_http_server(8001)
+
 from predict import predict_image
 from integration import get_mushroom_context
 from audit_layer import audit_prediction
@@ -57,6 +66,8 @@ def log_drift_image(image_path, confidence, predicted_species):
     dest_path = os.path.join(drift_dir, file_name)
     try:
         shutil.copy2(image_path, dest_path)
+        # Increment Prometheus Drift Metric explicitly
+        DRIFT_EVENTS.labels(species=safe_species).inc()
     except Exception as e:
         logger.error(f"Failed to log drift image: {e}")
 
@@ -65,9 +76,13 @@ def classify_mushroom(image, season, location, progress=gr.Progress()):
     Main function called by Gradio when the user submits an image.
     """
     if image is None:
-        return "Please upload an image first."
+        yield "Please upload an image first."
+        return
 
-    progress(0.1, desc="Locating Context Database...")
+    progress(0.0, desc="🍄 Initializing...")
+    yield "### 🍄 Initializing classification process..."
+
+    progress(0.1, desc="🍄 Locating Context Database...")
     # Look for the CSV locally in data/ or in the Docker path
     base_dir = os.path.dirname(__file__)
     if os.path.exists(os.path.join(base_dir, "data", "mushroom_context.csv")):
@@ -76,22 +91,26 @@ def classify_mushroom(image, season, location, progress=gr.Progress()):
         # Running locally in repo structure
         csv_path = os.path.join(os.path.dirname(os.path.dirname(base_dir)), "data", "mushroom_context.csv")
 
+    yield "### 🍄 Uploading image to Vision API for identification..."
     # Step 1: YOLO Vision (via Vision API)
-    progress(0.2, desc="Uploading image to Vision API...")
+    progress(0.2, desc="🍄 Uploading image to Vision API...")
     predicted_species, confidence = predict_image(image)
     
     if predicted_species is None:
-        return "❌ Error: Could not connect to the Vision API. Please ensure it is running in another terminal."
+        yield "❌ Error: Could not connect to the Vision API. Please ensure it is running in another terminal."
+        return
         
     # Format the species name nicely if it has underscores
     formatted_species = predicted_species.replace("_", " ").title() if predicted_species else "Unknown"
 
+    yield f"### 🍄 Identified as **{formatted_species}**. Checking data drift..."
     # Step 1.5: Trigger Drift Detection Logic (MLOps)
     # Background save if confidence is too low
-    progress(0.4, desc="Checking classification confidence & data drift...")
+    progress(0.4, desc="🍄 Checking classification confidence & data drift...")
     log_drift_image(image, confidence, predicted_species)
 
-    progress(0.6, desc="Fetching ecological context from Knowledge Base...")
+    yield f"### 🍄 Fetching ecological context for **{formatted_species}**..."
+    progress(0.6, desc="🍄 Fetching ecological context from Knowledge Base...")
     context = get_mushroom_context(formatted_species, csv_path)
     if "error" in context:
         context = {
@@ -101,14 +120,17 @@ def classify_mushroom(image, season, location, progress=gr.Progress()):
         }
     
     # Step 3: LLM Audit
-    progress(0.7, desc="Requesting Safety Audit from LLM (Llama3/Gemini)...")
+    yield f"### 🍄 Requesting Safety Audit from LLM for **{formatted_species}**..."
+    progress(0.7, desc="🍄 Requesting Safety Audit from LLM (Llama3/Gemini)...")
     llm_verdict = audit_prediction(formatted_species, confidence, context, season, location)
     
     # Step 4: Risk Decision
-    progress(0.9, desc="Calculating final risk level...")
+    yield "### 🍄 Calculating final risk level..."
+    progress(0.9, desc="🍄 Calculating final risk level...")
     decision = assess_risk(formatted_species, confidence, context, llm_verdict)
     
-    progress(1.0, desc="Generating Safety Report...")
+    yield "### 🍄 Generating Safety Report..."
+    progress(1.0, desc="🍄 Generating Safety Report...")
     # Build the output report
     risk_emoji = {"CRITICAL": "🚨", "HIGH": "⚠️", "MODERATE": "⚠️", "LOW": "✅"}
     
@@ -138,7 +160,7 @@ def classify_mushroom(image, season, location, progress=gr.Progress()):
     if context.get('key_warnings'):
         report += f"\n### Key Warnings\n⚠️ {context['key_warnings']}\n"
     
-    return report
+    yield report
 
 
 # Build the Gradio interface
@@ -158,11 +180,11 @@ demo = gr.Interface(
     ],
     outputs=gr.Markdown(label="📋 Safety Report"),
     title="🍄 Mushroom Safety Classification System",
-    description="Upload a photo of a mushroom to identify it and receive a safety assessment. The system uses YOLOv8 for visual identification, an ecological database for context, and an LLM to verify the results."
+    description="Upload a photo of a mushroom to identify it and receive a safety assessment. The system uses YOLOv26 for visual identification, an ecological database for context, and an LLM to verify the results."
 )
 
 
 if __name__ == "__main__":
     # server_name="0.0.0.0" is required inside Docker so the app is
     # reachable from outside the container (i.e., your browser on the host).
-    demo.launch(server_name="0.0.0.0", server_port=7860)
+    demo.queue().launch(server_name="0.0.0.0", server_port=7860)

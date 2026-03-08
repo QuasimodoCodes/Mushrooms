@@ -20,9 +20,9 @@ def main():
         print(">> WARNING: No Nvidia GPU detected or PyTorch isn't configured for CUDA. Falling back to slow CPU training.")
 
     # 2. Load a pre-trained YOLO Nano classification model
-    # Why Nano (n)? It is the smallest and fastest model in the YOLOv8 family. 
-    print("Loading YOLOv8n-cls model...")
-    model = YOLO('yolov8n-cls.pt')
+    # Why Nano (n)? It is the smallest and fastest model in the YOLOv26 family. 
+    print("Loading yolo26n-cls...")
+    model = YOLO('yolo26n-cls.pt')
 
     # 3. Define where our dataset is located
     data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "dataset_split"))
@@ -37,22 +37,17 @@ def main():
         epochs=50,              # Full training run (early stopping will cut it short if needed)
         imgsz=224, 
         device=device,
-        exist_ok=True,          # Overwrite the 'mushroom_classifier_v1' folder instead of making v2, v3, etc.
+        exist_ok=True,          # Overwrite the folder if we restart THIS specific training run.
         
         # ─── EARLY STOPPING ───
-        # If val/loss doesn't improve for 10 consecutive epochs, stop training.
-        # This prevents wasting GPU time when the model has stopped learning.
         patience=10,
         
         # ─── ESCAPING LOCAL OPTIMA ───
         # Cosine LR: Instead of a flat learning rate, it oscillates like a wave.
-        # When the rate briefly increases, it can "kick" the model out of a local minimum
-        # and into a better solution. Think of it like shaking a ball out of a small dip
-        # so it can roll into a deeper valley (the global optimum).
         cos_lr=True,
         
         project=os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs", "yolo_runs")), 
-        name="mushroom_classifier_v1"
+        name="yolo26_classifier_v1"
     )
 
     print("\nTraining Complete!")

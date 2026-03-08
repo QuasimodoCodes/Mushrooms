@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+      
+  # Scrape MLOps drift metrics from the Gradio UI
+  - job_name: 'brainui'
+    static_configs:
+      - targets: ['brainui:8001']

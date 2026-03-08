@@ -26,7 +26,7 @@ RUN pip install --no-cache-dir --extra-index-url https://download.pytorch.org/wh
 
 # 6. Copy the model weights into the container.
 # We place this in the exact folder structure that our main.py expects.
-COPY docs/yolo_runs/mushroom_classifier_v1/weights/best.pt /app/docs/yolo_runs/mushroom_classifier_v1/weights/best.pt
+COPY docs/yolo_runs/yolo26_classifier_v1/weights/best.pt /app/docs/yolo_runs/yolo26_classifier_v1/weights/best.pt
 
 # 7. Copy the actual FastAPI script into the container.
 COPY services/vision_api/main.py /app/services/vision_api/main.py

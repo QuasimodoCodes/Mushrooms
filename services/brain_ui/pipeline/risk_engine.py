@@ -26,7 +26,7 @@ def assess_risk(species_name, confidence, context, llm_verdict):
         llm_verdict (str): The raw text response from the LLM audit
     
     Returns:
-        dict: A structured decision with 'risk_level', 'recommendation', and 'reasoning'
+        # dict: A structured decision with 'risk_level', 'recommendation', and 'reasoning'
     """
     
     risk_factors = []

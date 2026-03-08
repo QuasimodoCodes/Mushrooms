@@ -1,22 +1,26 @@
 # Mushroom Guardian: Multimodal AI Classification & Safety System
 
-A production-grade, microservice-based AI safety system that identifies mushroom species visually (YOLOv8) and cross-references them with ecological context using an LLM audit layer. Built with end-to-end MLOps, CI/CD, and serverless cloud deployment.
+A production-grade, microservice-based AI safety system that identifies mushroom species visually (YOLOv26) and cross-references them with ecological context using an LLM audit layer. Built with end-to-end MLOps, CI/CD, and serverless cloud deployment.
 
 ---
 
-## 🛠️ How to Operate the System 
+## 🛠️ How to Operate the System
 
 Whether you are retraining the vision model or spinning up the microservices locally, here is your quick-start guide:
 
 ### 1. Syncing the Massive Dataset (DVC)
+
 Since the 12GB+ dataset and heavy Pytorch weights are stored in the cloud (Hugging Face / Google Cloud or S3) to keep this repository small, use DVC to fetch them:
+
 ```bash
 # Pull all raw data and weights into the local workspace
 dvc pull
 ```
 
 ### 2. Training the YOLO Model Locally
+
 If you want to train the model from scratch on your own GPU:
+
 ```bash
 # Ensure your virtual environment is active
 .\.venv\Scripts\Activate.ps1
@@ -28,7 +32,9 @@ python scripts/training/train_yolo.py
 ```
 
 ### 3. Running Microservices Locally (Docker)
+
 You can boot up the entire architecture on your local laptop using Docker Compose. This starts the FastAPI Vision layer, Gradio UI layer, and the MLOps monitoring stack simultaneously, bridging them over an internal Docker network.
+
 ```bash
 # Build and launch all containers using the orchestration file in the deploy folder
 docker-compose -f deploy/docker-compose.yml up --build -d
@@ -42,7 +48,9 @@ docker-compose -f deploy/docker-compose.yml up --build -d
 ```
 
 ### 4. Running Microservices Locally (Python/Terminal)
+
 If you don't want to use Docker and prefer two raw Python terminal tabs:
+
 ```bash
 # Terminal 1: Boot the Vision API
 cd services/vision_api/
@@ -54,9 +62,11 @@ python app.py
 ```
 
 ### 5. Deploying to the Cloud & Reviewing Models
-Because we set up CI/CD using GitHub Actions, deployment and model evaluation are completely hands-off! 
+
+Because we set up CI/CD using GitHub Actions, deployment and model evaluation are completely hands-off!
 
 **To review model metrics (CML):**
+
 ```bash
 # Push your code to any new branch to open a Pull Request
 git checkout -b new-model-update
@@ -64,16 +74,19 @@ git add .
 git commit -m "Trained a new YOLO model"
 git push origin new-model-update
 ```
-> *Behind the scenes: CML will automatically run and post the new model's confusion matrices and training graphs directly to your GitHub PR so your team can review the accuracy.*
+
+> _Behind the scenes: CML will automatically run and post the new model's confusion matrices and training graphs directly to your GitHub PR so your team can review the accuracy._
 
 **To deploy the live application:**
+
 ```bash
 # Merge your PR or push directly to the 'master' branch
 git checkout master
 git merge new-model-update
 git push origin master
 ```
-> *Behind the scenes: GitHub Actions will detect the push to master, trigger Google Cloud Build to compile your Docker images, and roll out the new containers serverlessly to Google Cloud Run.*
+
+> _Behind the scenes: GitHub Actions will detect the push to master, trigger Google Cloud Build to compile your Docker images, and roll out the new containers serverlessly to Google Cloud Run._
 
 ---
 
@@ -86,13 +99,13 @@ Mushroom/
 │   ├── dataset.yaml          ← YOLO class mapping config
 │   ├── mushroom_context.csv  ← Ecological rules (Knowledge Base)
 │   └── drift_images/         ← Auto-saved low-confidence field data
-├── deploy/                   ← Infrastructure as Code 
+├── deploy/                   ← Infrastructure as Code
 │   ├── docker-compose.yml    ← Local multi-container orchestration
 │   └── prometheus.yml        ← Prometheus metrics scraping config
 ├── docs/
 │   ├── planning/             ← Brainstorms and schema planners
 │   └── yolo_runs/            ← YOLO metrics, loss graphs, PR curves
-├── scripts/                  
+├── scripts/
 │   ├── setup/                ← Scripts for scraping data & managing HF uploads
 │   └── training/             ← YOLO model training logic
 ├── services/                 ← Containerized Microservices
@@ -110,13 +123,13 @@ Mushroom/
 
 This project has evolved from a local Python script into a robust, cloud-ready microservice architecture. Here is how the whole pipeline works end-to-end:
 
-### 1. The Vision API (FastAPI + YOLOv8)
+### 1. The Vision API (FastAPI + YOLOv26)
 
 Instead of loading massive PyTorch models directly into the user interface, we decoupled the vision logic into its own containerized microservice: the **Vision API**.
 
 - A field user uploads an image of a mushroom via the web UI.
 - The UI sends a fast HTTP POST request to the Vision API (`services/vision_api/`).
-- **YOLOv8 Nano** processes the image, extracting the `Top 1 Predicted Class` (e.g., _Amanita muscaria_) and its `Confidence Score` (e.g., _0.91_ or 91%).
+- **YOLOv26 Nano** processes the image, extracting the `Top 1 Predicted Class` (e.g., _Amanita muscaria_) and its `Confidence Score` (e.g., _0.91_ or 91%) trained on the mushroom dataset(50 epochs).
 
 ### 2. Context Fetching (CSV Knowledge Base)
 
@@ -187,3 +200,4 @@ Git was fundamentally built for code text, not 12 Gigabyte datasets of images or
 - Production insights are gathered at the microservice level. We instrumented the FastAPI application to natively expose real-time metrics on a `/metrics` endpoint using `prometheus-fastapi-instrumentator`.
 - This automatically tracks standard HTTP metrics like `http_requests_total`, `http_request_duration_seconds`, and error counts without any custom application code.
 - Our local `docker-compose` architecture spins up **Prometheus** (configured via `prometheus.yml` to actively scrape the Vision API every 15 seconds) and **Grafana** (to construct flexible, visual dashboards over the Prometheus timeseries data). This allows us to track API latency, usage spikes, and system health in a centralized visualization layer.
+```

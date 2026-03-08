@@ -24,10 +24,13 @@ services:
       - "7860:7860"              # Map your machine's port 7860 to the container's port 7860
     depends_on:
       - visionapi                # Ensure the Vision API starts before the UI
+    env_file:
+      - ../.env
     environment:
       # Vision API URL — now points to the deployed Cloud Run service.
       # For local-only testing, change back to: http://visionapi:8000/predict
-      - VISION_API_URL=https://vision-api-849718487429.us-central1.run.app/predict
+      - VISION_API_URL=http://visionapi:8000/predict
+      - PYTHONUNBUFFERED=1
       # Gemini API key — loaded from your .env file
       - GEMINI_API_KEY=${GEMINI_API_KEY}
     networks:
@@ -39,7 +42,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ../prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - mushroom-net
     depends_on:

@@ -2,7 +2,7 @@
 huggingface_hub
 python-dotenv
 
-# YOLOv8 Classification
+# YOLOv26 Classification
 ultralytics
 
 # PyTorch with CUDA 12.1 Support (GPU Acceleration)

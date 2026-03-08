@@ -17,13 +17,13 @@
   {
     "step_number": 2,
     "phase_name": "Classification Model Training and Loss Monitoring",
-    "description": "Set up, train, and validate a YOLO classification model (e.g., YOLOv8 or YOLOv11), while monitoring the loss function to ensure the model is learning.",
+    "description": "Set up, train, and validate a YOLO classification model (e.g., YOLOv26), while monitoring the loss function to ensure the model is learning.",
     "status": "complete",
     "detailed_tasks": [
       "Create a 'requirements.txt' file to log the python packages needed to replicate this environment.",
       "Initialize a 'README.md' to act as the front page of the project, tracking what each phase accomplishes.",
       "Install the YOLO library in Python by running: 'pip install ultralytics' alongside CUDA-enabled PyTorch.",
-      "Write a Python script to import YOLO and load a pre-trained classification model ('yolov8n-cls.pt').",
+      "Write a Python script to import YOLO and load a pre-trained classification model ('yolo26n-cls.pt').",
       "Train the model using a command like: 'model.train(data=\"path/to/dataset\", epochs=3, device=\"cuda\")'.",
       "Monitor the training and validation 'loss' metrics to ensure the model learns.",
       "Write a prediction function that takes a new image and extracts BOTH the 'top1' predicted class (e.g., 'Amanita_muscaria') and its 'top1 confidence' score."
