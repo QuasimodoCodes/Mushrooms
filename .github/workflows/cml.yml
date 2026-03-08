@@ -1,0 +1,71 @@
+name: CML Model Report
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  model-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup CML
+        uses: iterative/setup-cml@v2
+
+      - name: Generate Model Report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RESULTS_DIR="docs/yolo_runs/yolo26_classifier_v1"
+
+          echo "## 🍄 YOLOv26-cls Model Evaluation Report" > report.md
+          echo "" >> report.md
+
+          # Training Analysis (loss + accuracy curves with overfitting annotation)
+          if [ -f "$RESULTS_DIR/training_analysis.png" ]; then
+            echo "### 📉 Training Analysis (Loss & Accuracy)" >> report.md
+            cml-publish "$RESULTS_DIR/training_analysis.png" --md >> report.md
+            echo "" >> report.md
+          fi
+
+          # YOLO's built-in results chart
+          if [ -f "$RESULTS_DIR/results.png" ]; then
+            echo "### 📊 Training Metrics (YOLO Results)" >> report.md
+            cml-publish "$RESULTS_DIR/results.png" --md >> report.md
+            echo "" >> report.md
+          fi
+
+          # Confusion Matrix
+          if [ -f "$RESULTS_DIR/confusion_matrix_normalized.png" ]; then
+            echo "### 🔢 Normalized Confusion Matrix" >> report.md
+            cml-publish "$RESULTS_DIR/confusion_matrix_normalized.png" --md >> report.md
+            echo "" >> report.md
+          fi
+
+          # Key metrics summary from the last epoch of results.csv
+          if [ -f "$RESULTS_DIR/results.csv" ]; then
+            echo "### 📋 Final Epoch Metrics" >> report.md
+            echo "" >> report.md
+            echo "| Metric | Value |" >> report.md
+            echo "| :--- | :--- |" >> report.md
+
+            LAST_LINE=$(tail -1 "$RESULTS_DIR/results.csv")
+            EPOCH=$(echo "$LAST_LINE" | cut -d',' -f1)
+            TRAIN_LOSS=$(echo "$LAST_LINE" | cut -d',' -f3)
+            TOP1=$(echo "$LAST_LINE" | cut -d',' -f4)
+            TOP5=$(echo "$LAST_LINE" | cut -d',' -f5)
+            VAL_LOSS=$(echo "$LAST_LINE" | cut -d',' -f6)
+
+            echo "| **Epochs Trained** | $EPOCH |" >> report.md
+            echo "| **Train Loss** | $TRAIN_LOSS |" >> report.md
+            echo "| **Val Loss** | $VAL_LOSS |" >> report.md
+            echo "| **Top-1 Accuracy** | $TOP1 |" >> report.md
+            echo "| **Top-5 Accuracy** | $TOP5 |" >> report.md
+            echo "" >> report.md
+          fi
+
+          cml comment create report.md
