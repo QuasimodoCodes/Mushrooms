@@ -16,12 +16,22 @@ Instrumentator().instrument(app).expose(app)
 # We traverse up 3 directories from main.py (vision_api -> services -> Mushroom)
 # to find the 'docs/yolo_runs/...' folder where our weights are stored.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-MODEL_PATH = os.path.join(BASE_DIR, "docs", "yolo_runs", "yolo26_classifier_v1", "weights", "best.pt")
+WEIGHTS_DIR = os.path.join(BASE_DIR, "docs", "yolo_runs", "yolo26_classifier_v1", "weights")
+
+# Toggle between PyTorch and TFLite via environment variable.
+# Set MODEL_FORMAT=tflite to use the lightweight TFLite model.
+# Default: "pt" (PyTorch)
+MODEL_FORMAT = os.environ.get("MODEL_FORMAT", "pt").lower()
+if MODEL_FORMAT == "tflite":
+    MODEL_PATH = os.path.join(WEIGHTS_DIR, "best_float16.tflite")
+else:
+    MODEL_PATH = os.path.join(WEIGHTS_DIR, "best.pt")
 
 # 3. Load the YOLO model into memory.
 # We do this OUTSIDE the endpoint function so it only loads once when the server starts,
 # ensuring each prediction request is fast.
-model = YOLO(MODEL_PATH)
+model = YOLO(MODEL_PATH, task="classify")
+print(f"Loaded model: {os.path.basename(MODEL_PATH)} (format={MODEL_FORMAT})")
 
 # ==========================================
 # HEALTH ENDPOINT FOR CLOUD RUN MONITORING
