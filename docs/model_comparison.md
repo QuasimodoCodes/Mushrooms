@@ -1,10 +1,10 @@
-# 🍄 Mushroom Classifier: Model Comparison Log
+﻿# ðŸ„ Mushroom Classifier: Model Comparison Log
 
 This document tracks and compares the training metrics, performance, and hardware requirements between different YOLO classification models.
 
 When you train a new model, fill in the **[TBD]** fields below to compare it against the baseline YOLOv8n model.
 
-## 📊 High-Level Overview
+## ðŸ“Š High-Level Overview
 
 | Metric                     | YOLOv8n-cls (Baseline) | YOLOv26-cls (New)      | Winner  |
 | :------------------------- | :--------------------- | :--------------------- | :------ |
@@ -18,7 +18,7 @@ When you train a new model, fill in the **[TBD]** fields below to compare it aga
 
 ---
 
-## 📈 Detailed Breakdown
+## ðŸ“ˆ Detailed Breakdown
 
 ### 1. YOLOv8n-cls (Baseline)
 
@@ -33,15 +33,15 @@ The smallest and fastest model from the YOLOv8 generation. Excellent for real-ti
 
 #### Training Results
 
-![YOLOv8n Training Results](../yolo_runs/mushroom_classifier_v1/results.png)
+![YOLOv8n Training Results](yolo_runs/mushroom_classifier_v1/results.png)
 
 #### Confusion Matrix
 
-![YOLOv8n Confusion Matrix](../yolo_runs/mushroom_classifier_v1/confusion_matrix.png)
+![YOLOv8n Confusion Matrix](yolo_runs/mushroom_classifier_v1/confusion_matrix.png)
 
 #### Normalized Confusion Matrix
 
-![YOLOv8n Normalized Confusion Matrix](../yolo_runs/mushroom_classifier_v1/confusion_matrix_normalized.png)
+![YOLOv8n Normalized Confusion Matrix](yolo_runs/mushroom_classifier_v1/confusion_matrix_normalized.png)
 
 ### 2. YOLOv26-cls (New Architecture)
 
@@ -52,59 +52,59 @@ _Note: Make sure to document any changes to hyper-parameters (like learning rate
 - **Starting Learning Rate (`lr0`):** `0.01`
 - **Training Hardware:** `NVIDIA GeForce RTX 3070 Ti (8GB)`
 - **Notable Observations:**
-  - _Training loss decreased steadily alongside validation loss until the very final epoch (Epoch 50), where validation loss ticked up slightly (0.41535 → 0.41565), indicating a perfect, well-timed stop right before overfitting began._
-  - _Epoch 49 achieved the lowest validation loss (0.41535). Epoch 50 is the inflection point — the moment the model began memorizing training data instead of generalizing._
+  - _Training loss decreased steadily alongside validation loss until the very final epoch (Epoch 50), where validation loss ticked up slightly (0.41535 â†’ 0.41565), indicating a perfect, well-timed stop right before overfitting began._
+  - _Epoch 49 achieved the lowest validation loss (0.41535). Epoch 50 is the inflection point â€” the moment the model began memorizing training data instead of generalizing._
 
 #### Training Analysis
 
-![YOLOv26 Training Analysis](../yolo_runs/yolo26_classifier_v1/training_analysis.png)
+![YOLOv26 Training Analysis](yolo_runs/yolo26_classifier_v1/training_analysis.png)
 
 | Key Observation          | Detail                                             |
 | :----------------------- | :------------------------------------------------- |
 | **Best Epoch**           | 49 (val/loss = 0.41535)                            |
-| **Overfit Epoch**        | 50 (val/loss = 0.41565, Δ +0.0003)                 |
+| **Overfit Epoch**        | 50 (val/loss = 0.41565, Î” +0.0003)                 |
 | **Final Top-1 Accuracy** | 88.1%                                              |
 | **Final Top-5 Accuracy** | 98.4%                                              |
 | **Train Loss (final)**   | 0.247                                              |
-| **Convergence Pattern**  | Smooth, consistent decline — no plateaus or spikes |
+| **Convergence Pattern**  | Smooth, consistent decline â€” no plateaus or spikes |
 
 #### Training Results
 
-![YOLOv26 Training Results](../yolo_runs/yolo26_classifier_v1/results.png)
+![YOLOv26 Training Results](yolo_runs/yolo26_classifier_v1/results.png)
 
 #### Confusion Matrix
 
-![YOLOv26 Confusion Matrix](../yolo_runs/yolo26_classifier_v1/confusion_matrix.png)
+![YOLOv26 Confusion Matrix](yolo_runs/yolo26_classifier_v1/confusion_matrix.png)
 
 #### Normalized Confusion Matrix
 
-![YOLOv26 Normalized Confusion Matrix](../yolo_runs/yolo26_classifier_v1/confusion_matrix_normalized.png)
+![YOLOv26 Normalized Confusion Matrix](yolo_runs/yolo26_classifier_v1/confusion_matrix_normalized.png)
 
 ---
 
-## 🔍 Side-by-Side Visual Comparison
+## ðŸ” Side-by-Side Visual Comparison
 
 ### Training Results
 
 |                          YOLOv8n-cls                           |                          YOLOv26-cls                          |
 | :------------------------------------------------------------: | :-----------------------------------------------------------: |
-| ![v8 results](../yolo_runs/mushroom_classifier_v1/results.png) | ![v26 results](../yolo_runs/yolo26_classifier_v1/results.png) |
+| ![v8 results](yolo_runs/mushroom_classifier_v1/results.png) | ![v26 results](yolo_runs/yolo26_classifier_v1/results.png) |
 
 ### Confusion Matrices (Normalized)
 
 |                                     YOLOv8n-cls                                      |                                     YOLOv26-cls                                     |
 | :----------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
-| ![v8 confusion](../yolo_runs/mushroom_classifier_v1/confusion_matrix_normalized.png) | ![v26 confusion](../yolo_runs/yolo26_classifier_v1/confusion_matrix_normalized.png) |
+| ![v8 confusion](yolo_runs/mushroom_classifier_v1/confusion_matrix_normalized.png) | ![v26 confusion](yolo_runs/yolo26_classifier_v1/confusion_matrix_normalized.png) |
 
 ### Training Analysis
 
 |              YOLOv8n-cls               |                                    YOLOv26-cls                                    |
 | :------------------------------------: | :-------------------------------------------------------------------------------: |
-| _(no training_analysis.png generated)_ | ![v26 training analysis](../yolo_runs/yolo26_classifier_v1/training_analysis.png) |
+| _(no training_analysis.png generated)_ | ![v26 training analysis](yolo_runs/yolo26_classifier_v1/training_analysis.png) |
 
 ---
 
-## 💡 How to update the training script for the new model
+## ðŸ’¡ How to update the training script for the new model
 
 To swap you training script over to the new model, just open `scripts/training/train_yolo.py` and change line 25:
 
