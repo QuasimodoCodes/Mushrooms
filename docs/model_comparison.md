@@ -4,7 +4,7 @@ This document tracks and compares the training metrics, performance, and hardwar
 
 When you train a new model, fill in the **[TBD]** fields below to compare it against the baseline YOLOv8n model.
 
-## ðŸ“Š High-Level Overview
+## High-Level Overview
 
 | Metric                     | YOLOv8n-cls (Baseline) | YOLOv26-cls (New)      | Winner  |
 | :------------------------- | :--------------------- | :--------------------- | :------ |
@@ -18,7 +18,7 @@ When you train a new model, fill in the **[TBD]** fields below to compare it aga
 
 ---
 
-## ðŸ“ˆ Detailed Breakdown
+## Detailed Breakdown
 
 ### 1. YOLOv8n-cls (Baseline)
 
@@ -82,7 +82,7 @@ _Note: Make sure to document any changes to hyper-parameters (like learning rate
 
 ---
 
-## ðŸ” Side-by-Side Visual Comparison
+## Side-by-Side Visual Comparison
 
 ### Training Results
 
@@ -104,7 +104,7 @@ _Note: Make sure to document any changes to hyper-parameters (like learning rate
 
 ---
 
-## ðŸ’¡ How to update the training script for the new model
+## How to update the training script for the new model
 
 To swap you training script over to the new model, just open `scripts/training/train_yolo.py` and change line 25:
 
