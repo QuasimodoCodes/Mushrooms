@@ -15,7 +15,7 @@ import json
 # ============================================================
 # CONFIGURATION - Change these to switch LLM providers
 # ============================================================
-ACTIVE_PROVIDER = "ollama"  # Options: "ollama" or "gemini"
+ACTIVE_PROVIDER = "gemini"  # Options: "ollama" or "gemini"
 OLLAMA_MODEL = "llama3:latest"
 OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
 
