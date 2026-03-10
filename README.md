@@ -107,19 +107,21 @@ From there, the team reviews your metrics against the baseline and merges if the
 
 ### 4. Running Microservices Locally (Docker)
 
-You can boot up the entire architecture on your local laptop using Docker Compose. This starts the FastAPI Vision layer, Gradio UI layer, and the MLOps monitoring stack simultaneously, bridging them over an internal Docker network.
+You can boot up the entire architecture on your local laptop using Docker Compose. This starts the TFLite Vision API (slim), Gradio UI layer, and the MLOps monitoring stack simultaneously, bridging them over an internal Docker network.
 
 ```bash
-# Build and launch all containers using the orchestration file in the deploy folder
+# Build and launch all containers (uses TFLite slim image by default)
 docker-compose -f deploy/docker-compose.yml up --build -d
 
 # What to see:
 # -> The Gradio UI will be available at http://localhost:7860
-# -> The Vision API will be listening on http://localhost:8000
+# -> The Vision API (TFLite) will be listening on http://localhost:8000
 # -> The API Metrics will be scraping at http://localhost:8000/metrics
 # -> Prometheus will be available at http://localhost:9090
 # -> Grafana Dashboards will be available at http://localhost:3000 (admin/admin)
 ```
+
+> To switch back to the full PyTorch image, change the `dockerfile` path in `deploy/docker-compose.yml` from `services/vision_api/slim/Dockerfile` to `services/vision_api/Dockerfile`.
 
 ### 5. Running Microservices Locally (Python/Terminal)
 
@@ -186,8 +188,13 @@ Mushroom/
 │   ├── brain_ui/             ← Gradio UI, LLM Audit, Risk Engine (app.py)
 │   │   ├── Dockerfile
 │   │   └── pipeline/         ← Core evaluation logic scripts
-│   └── vision_api/           ← FastAPI YOLO Server (main.py)
-│       └── Dockerfile
+│   └── vision_api/           ← FastAPI Vision Server
+│       ├── main.py           ← PyTorch inference (ultralytics)
+│       ├── Dockerfile        ← Full-size PyTorch image
+│       └── slim/             ← TFLite-only deployment (no PyTorch)
+│           ├── main.py       ← Standalone TFLite inference
+│           ├── Dockerfile    ← Lightweight image (~200MB vs ~1.5GB)
+│           └── requirements.txt
 ├── README.md                 ← You are here
 └── dvc.yaml                  ← Data Version Control pipelines
 
@@ -203,7 +210,16 @@ Instead of loading massive PyTorch models directly into the user interface, we d
 
 - A field user uploads an image of a mushroom via the web UI.
 - The UI sends a fast HTTP POST request to the Vision API (`services/vision_api/`).
-- **YOLOv26 Nano** processes the image, extracting the `Top 1 Predicted Class` (e.g., _Amanita muscaria_) and its `Confidence Score` (e.g., _0.91_ or 91%) trained on the mushroom dataset(50 epochs).
+- **YOLOv26 Nano** processes the image, extracting the `Top 1 Predicted Class` (e.g., _Amanita muscaria_) and its `Confidence Score` (e.g., _0.91_ or 91%) trained on the mushroom dataset (50 epochs).
+
+**Deployment modes:**
+
+| Mode | Path | Runtime | Docker Image |
+|:-----|:-----|:--------|:-------------|
+| **Full (PyTorch)** | `services/vision_api/` | ultralytics + torch | ~1.5 GB |
+| **Slim (TFLite)** | `services/vision_api/slim/` | ai-edge-litert only | ~200 MB |
+
+Both produce identical predictions (Top-1: 88.09%, Top-5: 98.37%). The slim deployment is the default for Docker and Google Cloud — it drops PyTorch entirely and runs the exported `best_float16.tflite` model directly, cutting the image size by ~7x.
 
 ### 2. Context Fetching (CSV Knowledge Base)
 
@@ -233,8 +249,8 @@ While AI systems probabilistically hallucinate, hard-coded software rules do not
 
 To make the application globally accessible and horizontally scalable, the architecture is entirely containerized and deployed to the cloud:
 
-1. **Dockerization:** Both the Vision API and Brain UI have their own unique `Dockerfile`s. This decoupling allows us to isolate heavy hardware/CUDA dependencies strictly to the Vision API, while keeping the UI container extremely lightweight.
-2. **Google Cloud Run:** Using **Google Cloud Build**, the Docker containers are compiled into images and hosted serverlessly on Cloud Run, scaling instantly with user traffic.
+1. **Dockerization:** Both the Vision API and Brain UI have their own unique `Dockerfile`s. The Vision API ships with a **TFLite slim image** by default (~200MB), eliminating the ~1.5GB PyTorch dependency entirely while maintaining identical accuracy. The original PyTorch Dockerfile is preserved for local development or GPU workflows.
+2. **Google Cloud Run:** Using **Google Cloud Build**, the Docker containers are compiled into images and hosted serverlessly on Cloud Run, scaling instantly with user traffic. The slim TFLite image starts faster and costs less per instance.
 3. **Environment Injection:** The UI reaches the remote Vision API securely via public cloud URLs injected into the container's environment variables (`VISION_API_URL`).
 
 ---
