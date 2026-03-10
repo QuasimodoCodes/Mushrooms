@@ -1,16 +1,16 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # This section defines the Vision API container
   visionapi:
     build:
-      context: ..                 # Use the 'Mushroom' root folder as the build context
-      dockerfile: services/vision_api/Dockerfile
+      context: .. # Use the 'Mushroom' root folder as the build context
+      dockerfile: services/vision_api/slim/Dockerfile
     container_name: mushroom-vision-api
     ports:
-      - "8000:8000"              # Map your machine's port 8000 to the container's port 8000
+      - "8000:8000" # Map your machine's port 8000 to the container's port 8000
     networks:
-      - mushroom-net             # Connect it to our custom network
+      - mushroom-net # Connect it to our custom network
     # NOTE: Local visionapi container is kept for local dev.
     # For production, the Brain UI now targets the Cloud Run service.
 
@@ -21,9 +21,9 @@ services:
       dockerfile: services/brain_ui/Dockerfile
     container_name: mushroom-brain-ui
     ports:
-      - "7860:7860"              # Map your machine's port 7860 to the container's port 7860
+      - "7860:7860" # Map your machine's port 7860 to the container's port 7860
     depends_on:
-      - visionapi                # Ensure the Vision API starts before the UI
+      - visionapi # Ensure the Vision API starts before the UI
     env_file:
       - ../.env
     environment:
@@ -34,7 +34,7 @@ services:
       # Gemini API key — loaded from your .env file
       - GEMINI_API_KEY=${GEMINI_API_KEY}
     networks:
-      - mushroom-net             # Connect it to our custom network
+      - mushroom-net # Connect it to our custom network
 
   prometheus:
     image: prom/prometheus:latest

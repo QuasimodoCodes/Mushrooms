@@ -1,0 +1,14 @@
+# Core API frameworks
+fastapi==0.115.6
+uvicorn==0.34.0
+python-multipart==0.0.20
+
+# TFLite runtime (~2MB — replaces PyTorch + ultralytics ~330MB)
+ai-edge-litert>=1.2.0
+
+# Image processing
+Pillow>=10.2.0
+numpy>=1.26.0
+
+# Monitoring
+prometheus-fastapi-instrumentator==7.0.0

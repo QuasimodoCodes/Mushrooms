@@ -4,18 +4,18 @@
 # so that all COPY paths in the Dockerfile resolve correctly.
 
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: "gcr.io/cloud-builders/docker"
     args:
-      - 'build'
-      - '-t'
-      - 'us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/vision-api:latest'
-      - '-f'
-      - 'services/vision_api/Dockerfile'
-      - '.'
+      - "build"
+      - "-t"
+      - "us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/vision-api:latest"
+      - "-f"
+      - "services/vision_api/slim/Dockerfile"
+      - "."
 
 images:
-  - 'us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/vision-api:latest'
+  - "us-central1-docker.pkg.dev/gen-lang-client-0851180379/mushroom-repo/vision-api:latest"
 
 options:
-  machineType: 'E2_HIGHCPU_8'
+  machineType: "E2_HIGHCPU_8"
   logging: CLOUD_LOGGING_ONLY
