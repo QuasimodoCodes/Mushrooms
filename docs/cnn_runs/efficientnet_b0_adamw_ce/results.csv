@@ -1,0 +1,1 @@
+epoch,time,train/loss,train/top1,train/top5,train/grad_norm,val/loss,metrics/accuracy_top1,metrics/accuracy_top5,lr/pg0
