@@ -1,0 +1,1 @@
+epoch,time,train/total_loss,train/genus_loss,train/species_loss,train/genus_top1,train/species_top1,train/grad_norm,val/total_loss,val/genus_loss,val/species_loss,val/genus_top1,metrics/species_top1,lr/pg0
