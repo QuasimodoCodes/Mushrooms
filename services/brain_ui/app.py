@@ -13,7 +13,14 @@ import sys
 import os
 import logging
 import shutil
+import subprocess
 from datetime import datetime
+
+# Load central config
+_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+sys.path.insert(0, _ROOT)
+from config import DRIFT_CONFIDENCE_THRESHOLD, PROMETHEUS_PORT, CONTEXT_CSV_PATH, ACTIVE_LLM_PROVIDER
+
 
 # Configure centralized cloud-compatible logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -29,8 +36,8 @@ from prometheus_client import Counter
 # Define a Prometheus Counter for our MLOps drift metric
 DRIFT_EVENTS = Counter('mushroom_drift_events_total', 'Total number of classification events resulting in low confidence (drift)', ['species'])
 
-# Start the Prometheus metrics server on port 8001
-prometheus_client.start_http_server(8001)
+# Start the Prometheus metrics server
+prometheus_client.start_http_server(PROMETHEUS_PORT)
 
 from predict import predict_image
 from integration import get_mushroom_context
@@ -44,7 +51,7 @@ def log_drift_image(image_path, confidence, predicted_species):
     If the model's confidence is very low, we save the image to a 'drift_images' folder.
     This allows data scientists to manually review and retrain the model later.
     """
-    if confidence >= 0.70:
+    if confidence >= DRIFT_CONFIDENCE_THRESHOLD:
         return # Skip, confidence is high enough
         
     logger.warning(f"[DRIFT DETECTED] Low confidence ({confidence:.2f}) for species '{predicted_species}'. Saving image for manual review.")

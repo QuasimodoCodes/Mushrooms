@@ -2,9 +2,10 @@ import sys
 import os
 import requests
 
-# URL of our new Vision API
-# We default to localhost for local testing, but Docker Compose will override this!
-VISION_API_URL = os.environ.get("VISION_API_URL", "http://127.0.0.1:8000/predict")
+# URL loaded from config.py — override with VISION_API_URL env var (Docker / Cloud Run does this automatically)
+_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+sys.path.insert(0, _ROOT)
+from config import VISION_API_URL
 
 def predict_image(image_path):
     print(f"Sending image to Vision API at: {VISION_API_URL}")
@@ -30,7 +31,7 @@ def predict_image(image_path):
             top1_conf = result_data.get("confidence")
             
             print("\n==========================")
-            print("     🏆 PREDICTION 🏆      ")
+            print("     PREDICTION           ")
             print("==========================")
             print(f"Species:    {top1_name}")
             print(f"Confidence: {top1_conf * 100:.2f}%")

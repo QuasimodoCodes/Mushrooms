@@ -12,7 +12,8 @@ COPY services/brain_ui/requirements.txt .
 # 4. Install Python dependencies inside the container.
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 5. Copy the rest of the application code and necessary data.
+# 5. Copy config.py (runtime switches), application code, and necessary data.
+COPY config.py /app/config.py
 COPY services/brain_ui/app.py /app/app.py
 COPY services/brain_ui/pipeline /app/pipeline
 COPY data/mushroom_context.csv /app/data/mushroom_context.csv

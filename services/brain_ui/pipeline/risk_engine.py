@@ -9,10 +9,12 @@ The philosophy: the LLM provides *explanations*, but Python provides *guarantees
 """
 
 # ============================================================
-# SAFETY THRESHOLDS (Tunable)
+# SAFETY THRESHOLDS — loaded from config.py at the project root
 # ============================================================
-CONFIDENCE_THRESHOLD = 0.70       # Below this, YOLO's guess is considered unreliable
-DEADLY_KEYWORDS = ["deadly", "fatal", "death", "highly toxic"]  # Auto-reject if CSV toxicity contains these
+import os, sys
+_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+sys.path.insert(0, _ROOT)
+from config import CONFIDENCE_THRESHOLD, DEADLY_KEYWORDS
 
 
 def assess_risk(species_name, confidence, context, llm_verdict):

@@ -31,8 +31,11 @@ services:
       # For local-only testing, change back to: http://visionapi:8000/predict
       - VISION_API_URL=http://visionapi:8000/predict
       - PYTHONUNBUFFERED=1
-      # Gemini API key — loaded from your .env file
+      # LLM provider — override in .env to switch between ollama and gemini
+      - ACTIVE_LLM_PROVIDER=${ACTIVE_LLM_PROVIDER:-gemini}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
+      # Ollama URL when running locally via Docker (host.docker.internal reaches your machine)
+      - OLLAMA_URL=http://host.docker.internal:11434/api/generate
     networks:
       - mushroom-net # Connect it to our custom network
 

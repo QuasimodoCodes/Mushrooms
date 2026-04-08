@@ -55,6 +55,8 @@ The raw Kaggle download was restructured into `data/dataset_split/` using `scrip
 
 ## 3. System Architecture
 
+All runtime switches — which LLM to use, which vision model to load, confidence thresholds — live in a single file: **`config.py`** at the project root. Nothing else needs to be edited to change how the system behaves.
+
 ```
 User uploads image + season + location
               │
@@ -391,6 +393,8 @@ The FastAPI Vision API exposes a `/metrics` endpoint via `prometheus-fastapi-ins
 
 ```
 Mushroom/
+├── config.py                          Runtime switches: LLM provider/model, vision model, thresholds
+│
 ├── data/
 │   ├── dataset.yaml                   YOLO class config (169 species)
 │   ├── dataset_info.md                Dataset source and split notes

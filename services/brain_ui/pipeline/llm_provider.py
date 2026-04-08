@@ -1,27 +1,21 @@
 """
 LLM Provider Abstraction Layer
 ===============================
-This module provides a clean interface to swap between LLM backends 
-(Ollama for local, Gemini for cloud) without changing any other code.
-
-Currently active: Ollama (local)
-To switch to Gemini: Change ACTIVE_PROVIDER to "gemini" and set your API key.
+This module provides a clean interface to swap between LLM backends.
+All configuration lives in config.py at the project root — edit there.
 """
 
 import os
+import sys
 import requests
-import json
 
-# ============================================================
-# CONFIGURATION - Change these to switch LLM providers
-# ============================================================
-ACTIVE_PROVIDER = "gemini"  # Options: "ollama" or "gemini"
-OLLAMA_MODEL = "llama3:latest"
-OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
+# Resolve project root and import central config
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_ROOT = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
+sys.path.insert(0, _ROOT)
+from config import ACTIVE_LLM_PROVIDER, OLLAMA_MODEL, OLLAMA_URL, GEMINI_MODEL, GEMINI_API_KEY
 
-# Gemini config — key is loaded from the GEMINI_API_KEY environment variable (set in .env)
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-GEMINI_MODEL = "gemini-3-flash-preview"
+ACTIVE_PROVIDER = ACTIVE_LLM_PROVIDER
 
 
 def query_llm(prompt):
