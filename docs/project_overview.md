@@ -325,6 +325,8 @@ Risk levels escalate: LOW → MODERATE → HIGH → CRITICAL. Multiple rules can
 ### MLOps — Drift Detection
 Any prediction with confidence < 70% triggers automatic drift logging: the image is saved to `data/drift_images/` with a timestamped filename containing the predicted species and confidence level. A Prometheus counter (`mushroom_drift_events_total`) is incremented per species so drift rate can be graphed in Grafana over time. These low-confidence images form the retraining dataset for future model versions.
 
+> **Production limitation:** Cloud Run containers have an ephemeral filesystem — drift images written to `data/drift_images/` are lost on every container restart or scale event. The intended solution would be to write to a Google Cloud Storage bucket instead, but this was intentionally skipped due to cost. Drift detection is fully functional when running locally (`launch.py`) or via local Docker Compose, where images persist on disk for manual review and retraining.
+
 ---
 
 ## 6. MLOps & Deployment

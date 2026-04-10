@@ -1,156 +1,127 @@
-# Mushroom Guardian: Multimodal AI Classification & Safety System
+# Mushroom Guardian — Multimodal AI Safety System
 
-A production-grade, microservice-based AI safety system that identifies mushroom species from photos and cross-references them with ecological context using a multimodal LLM visual audit layer. Built with multiple vision model architectures, end-to-end MLOps, CI/CD, and serverless cloud deployment.
+A production-grade AI system that identifies mushroom species from a photo and delivers a safety verdict using two independent AI layers: a fast vision model for identification and a multimodal LLM that visually verifies the result. Built with a full MLOps stack, CI/CD pipeline, and serverless cloud deployment.
 
-> For a full technical deep-dive into every model and design decision, see [docs/project_overview.md](docs/project_overview.md).
+> **Live demo:** [brain-ui-849718487429.us-central1.run.app](https://brain-ui-849718487429.us-central1.run.app)
+
+> For the full technical write-up, see [docs/project_overview.md](docs/project_overview.md).
 
 ---
 
-## Quick Start
+## Live Services
 
-### 1. Configuration — the only file you need to touch
-
-All runtime switches live in **`config.py`** at the project root. You never need to edit any other file to change the LLM, swap the vision model, or adjust safety thresholds.
-
-```python
-# ── Switch your vision model ──────────────────────────────────
-YOLO_RUN_NAME = "yolo26_classifier_v1"   # folder name under docs/yolo_runs/
-
-MODEL_FORMAT = "pt"      # "pt"     → full PyTorch (~1.5 GB Docker image)
-                         # "tflite" → lightweight export (~200 MB, no PyTorch)
-
-# ── Switch your LLM ──────────────────────────────────────────
-ACTIVE_LLM_PROVIDER = "ollama"   # "ollama" → local via Ollama  |  "gemini" → cloud API
-
-# Ollama — multimodal models (gemma4) automatically receive the photo too
-OLLAMA_MODEL = "gemma4:e2b"      # swap to "llama3:latest" for text-only
-
-# Gemini — cloud API, also supports multimodal (image + text)
-GEMINI_MODEL = "gemma-4-26b-a4b-it"   # or "gemini-2.0-flash", "gemini-3-flash-preview"
-
-# ── Safety threshold ─────────────────────────────────────────
-CONFIDENCE_THRESHOLD = 0.70   # below this → risk escalates to HIGH
-```
-
-### 2. Pull dataset and weights (DVC)
-
-```bash
-dvc pull   # downloads the 12 GB+ dataset and trained .pt weights from cloud storage
-```
-
-### 3. Run locally with Docker
-
-```bash
-docker-compose -f deploy/docker-compose.yml up --build
-```
-
-| Service | URL | Purpose |
+| Service | URL | Description |
 |---|---|---|
-| Brain UI (Gradio) | http://localhost:7860 | Upload a photo, get a safety report |
-| Vision API (FastAPI) | http://localhost:8000 | YOLO inference endpoint |
-| Prometheus | http://localhost:9090 | Metrics collection |
-| Grafana | http://localhost:3000 | Dashboards (admin / admin) |
-
-> To use the lightweight TFLite image instead of PyTorch, set `MODEL_FORMAT = "tflite"` in `config.py` and change the dockerfile path in `deploy/docker-compose.yml` to `services/vision_api/slim/Dockerfile`.
-
-### 4. Run locally without Docker
-
-```bash
-python launch.py
-```
-
-`launch.py` handles everything in one command:
-- Clears ports 8000 and 7860 if they are already occupied
-- Auto-starts Ollama (if `ACTIVE_LLM_PROVIDER = "ollama"` in `config.py`)
-- Starts the Vision API on port 8000
-- Starts the Brain UI on port 7860
-
-Open **http://localhost:7860** in your browser. Press `Ctrl+C` to stop both services.
-
-> **API keys:** Create a `.env` file in the project root (never committed) before running:
-> ```
-> GEMINI_API_KEY=your_key_here
-> ```
-> `launch.py` loads this automatically so subprocesses inherit the keys.
+| **Brain UI** | [brain-ui-849718487429.us-central1.run.app](https://brain-ui-849718487429.us-central1.run.app) | Main interface — upload a photo, get a safety report |
+| **Vision API** | [vision-api-849718487429.us-central1.run.app](https://vision-api-849718487429.us-central1.run.app) | YOLO inference REST API |
+| **API Docs** | [vision-api-849718487429.us-central1.run.app/docs](https://vision-api-849718487429.us-central1.run.app/docs) | Interactive Swagger UI for the Vision API |
 
 ---
 
-## How the Pipeline Works
+## How It Works
 
-Every image goes through four stages before a safety verdict is produced:
+Every submitted photo goes through four stages before a safety verdict is produced:
 
 ```
 Photo + season + location
         │
         ▼
-1. YOLOv26 Vision API        →  (species_name, confidence)
+1. YOLOv26 Vision API        →  species name + confidence score
         │
         ▼
 2. Ecological JSON lookup    →  toxicity / habitat / cap / gills / stem / lookalikes
         │
         ▼
 3. LLM Visual Audit          →  AGREE / DISAGREE / DANGER
-   (Gemma 4 / Gemini sees    →  "Does this photo actually look like X?"
-    the actual photo)             + specific field checks for the forager
+   (Gemma 4 / Gemini sees        "Does this photo actually look like X?"
+    the actual photo)             + field checks the forager should perform
         │
         ▼
 4. Risk Engine (Python rules) →  CRITICAL / HIGH / MODERATE / LOW
 ```
 
-**The philosophy:** YOLO identifies fast and precisely. The LLM visually verifies — it sees the same photo and either agrees or disagrees with YOLO's answer. Python provides the final safety guarantee via hard-coded rules that the LLM cannot override.
-
-**Two independent systems must agree** before a low-risk verdict is given. If YOLO says edible but the LLM says the photo doesn't match, risk escalates to HIGH automatically.
+**The key insight:** YOLO identifies fast at 88.1% accuracy. The LLM sees the same photo and independently verifies — if they disagree, risk escalates automatically. Python hard-coded rules provide a final safety guarantee that no AI can override.
 
 ---
 
 ## Models
 
-Four architectures were trained on the same 169-species dataset (`zlatan599/mushroom1` on Kaggle, 80/10/10 split, ~689k images).
+Four architectures trained on the same 169-species dataset (`zlatan599/mushroom1` on Kaggle, ~689k images, 80/10/10 split).
 
-| Model | Params | Size | Top-1 | Top-5 | Key difference |
-|---|---|---|---|---|---|
-| YOLOv8n-cls | ~2.7M | ~6.2 MB | TBD | TBD | Baseline — detection backbone repurposed for classification |
-| **YOLOv26n-cls** | **1.74M** | **3.6 MB** | **88.1%** | **98.4%** | **Production model — smaller and more accurate than v8** |
-| EfficientNet-B0 | ~5.3M | ~5 MB | TBD | TBD | Classification-native architecture (compound scaling law) |
-| TaxonomicYOLO26 | ~2M+ | ~4 MB | TBD | TBD | Dual-head: predicts genus + species simultaneously |
+| Model | Params | Top-1 | Top-5 | Notes |
+|---|---|---|---|---|
+| YOLOv8n-cls | 2.7M | TBD | TBD | Baseline |
+| **YOLOv26n-cls** | **1.74M** | **88.1%** | **98.4%** | **Production — faster and smaller than v8** |
+| EfficientNet-B0 | 5.3M | TBD | TBD | Classification-native architecture |
+| TaxonomicYOLO26 | ~2M | TBD | TBD | Dual-head: genus + species simultaneously |
 
-**YOLOv26 training result:** Loss decreased smoothly for all 50 epochs. Epoch 49 hit the lowest validation loss (0.41535). Epoch 50 ticked up by +0.0003 — a perfect stop right at the overfitting boundary. Inference speed: 0.2 ms/image on an RTX 3070 Ti.
-
-**EfficientNet-B0** replaces the stock 1000-class head with `Dropout(0.3) → Linear(1280 → 169)`. It was built as a direct comparison to YOLO since EfficientNet was designed from the ground up for classification, not detection.
-
-**TaxonomicYOLO26** strips the YOLO26n-cls head and adds two parallel heads — one for genus, one for species. The genus head acts as a regularizer on the shared backbone, encouraging it to learn features that generalize across the taxonomic tree. Loss: `0.3 × genus_CE + 0.7 × species_CE` with label smoothing 0.1.
+Production uses YOLOv26n exported to **TFLite float16** — 0.2 ms inference, ~200 MB Docker image (vs ~1.5 GB for PyTorch).
 
 ---
 
-## Training
+## Quick Start
 
-Each model has its own script. Hyperparameters are at the top of each file.
+### Configuration — one file controls everything
 
-```bash
-# YOLOv26 classifier
-python scripts/training/yolo/train_yolo.py
+All runtime switches live in **`config.py`**. No other file needs editing to swap the LLM, vision model, or safety thresholds.
 
-# EfficientNet-B0  (supports --optimizer and --loss flags)
-python scripts/training/cnn/train.py
-python scripts/training/cnn/train.py --optimizer sgd --loss focal_smooth
+```python
+# ── Vision model ─────────────────────────────────────────────
+YOLO_RUN_NAME = "yolo26_tflite"      # folder under docs/yolo_runs/
+MODEL_FORMAT  = "tflite"             # "pt" → PyTorch  |  "tflite" → lightweight
 
-# TaxonomicYOLO26 (dual-head franken model)
-python scripts/training/franken/train.py
+# ── LLM provider ─────────────────────────────────────────────
+ACTIVE_LLM_PROVIDER = "ollama"       # "ollama" → local  |  "gemini" → cloud API
+OLLAMA_MODEL        = "gemma4:e2b"   # multimodal models receive the photo automatically
+GEMINI_MODEL        = "gemma-4-26b-a4b-it"   # or "gemini-2.0-flash"
+
+# ── Safety threshold ─────────────────────────────────────────
+CONFIDENCE_THRESHOLD = 0.70          # below this → risk escalates to HIGH
 ```
 
-> Requires an NVIDIA GPU with CUDA. CPU training on 169 classes is impractically slow.
+### Run locally with Docker
 
-**To experiment with a new YOLO run:**
-1. Open `scripts/training/yolo/train_yolo.py` and change `name` to a new folder name (e.g. `"yolo26_experiment_v2"`)
-2. Train — results save to `docs/yolo_runs/<name>/`
-3. Update `YOLO_RUN_NAME` in `config.py` to point at your new run
-4. Restart the Vision API — it loads the new weights automatically
+```bash
+docker-compose -f deploy/docker-compose.yml up --build
+```
+
+| Service | URL |
+|---|---|
+| Brain UI | http://localhost:7860 |
+| Vision API | http://localhost:8000 |
+| API Docs | http://localhost:8000/docs |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3000 (admin / admin) |
+
+### Run locally without Docker
+
+```bash
+python launch.py
+```
+
+`launch.py` handles everything automatically:
+- Frees ports 8000 and 7860 if occupied
+- Auto-starts Ollama (when `ACTIVE_LLM_PROVIDER = "ollama"`)
+- Starts Vision API on port 8000
+- Starts Brain UI on port 7860
+
+> **API keys:** Add a `.env` file in the project root before running:
+> ```
+> GEMINI_API_KEY=your_key_here
+> HF_TOKEN=your_token_here
+> ```
+
+### Pull dataset and weights (DVC)
+
+```bash
+dvc pull   # downloads dataset and trained weights from Hugging Face
+```
 
 ---
 
 ## Cloud Deployment
 
-Push to `master` and everything deploys automatically:
+Push to `master` and everything deploys automatically via GitHub Actions:
 
 ```
 git push origin master
@@ -159,38 +130,58 @@ git push origin master
 GitHub Actions  →  authenticates with GCP
         │
         ▼
-Cloud Build     →  builds Docker image from Dockerfile
+Cloud Build     →  builds Docker images
         │
         ▼
 Artifact Registry  →  stores vision-api:latest + brain-ui:latest
         │
         ▼
-Cloud Run       →  serves live HTTPS endpoint, auto-scales to zero
+Cloud Run       →  live HTTPS endpoints, auto-scales to zero
 ```
 
-**Vision API spec on Cloud Run:** 4 GiB RAM, 1 CPU, public HTTPS, scale-to-zero billing.
-
-The slim TFLite image (`services/vision_api/slim/`) is used by default on Cloud Run — it produces identical predictions at ~200 MB vs ~1.5 GB for the full PyTorch image.
-
-**Secrets** are stored in GitHub repo settings (never in code):
+**Secrets** stored in GitHub repo settings (never in code):
 - `GCP_CREDENTIALS` — service account JSON for Cloud Build + Cloud Run
-- `GEMINI_API_KEY` — passed into the Brain UI container at runtime
+- `GEMINI_API_KEY` — injected into the Brain UI container at runtime
 
 ---
 
 ## MLOps
 
 ### Drift Detection
-Any prediction with confidence below `DRIFT_CONFIDENCE_THRESHOLD` (set in `config.py`) is automatically saved to `data/drift_images/` with a timestamped filename. A Prometheus counter tracks drift events per species — visible in Grafana. These images become the retraining dataset for future model versions.
+Predictions below the 70% confidence threshold are automatically saved to `data/drift_images/` and tracked via a Prometheus counter (`mushroom_drift_events_total`). These images form the retraining dataset for future versions.
 
-### CML — Automatic Model Reports
-Opening a pull request triggers `.github/workflows/cml.yml`, which generates a model evaluation report (confusion matrices, loss curves) and posts it as a PR comment. Model review happens inside the normal code review flow.
+> **Note:** Drift image saving is functional locally and in Docker. Cloud Run containers have an ephemeral filesystem, so images are not persisted in production (GCS integration skipped due to cost).
 
-### Monitoring
-The FastAPI Vision API exposes `/metrics` via `prometheus-fastapi-instrumentator`. Prometheus scrapes it every 15 seconds. Grafana builds dashboards over the time-series data for latency, error rates, and drift counts.
+### Automated Model Reports (CML)
+Opening a pull request triggers `.github/workflows/cml.yml`, which runs model evaluation and posts confusion matrices and loss curves directly as a PR comment.
+
+### Monitoring (Prometheus + Grafana)
+The Vision API exposes `/metrics` via `prometheus-fastapi-instrumentator`. Prometheus scrapes it every 15 seconds. Grafana dashboards track latency, error rates, and drift counts. Available locally via Docker Compose.
 
 ### Data Versioning (DVC + Hugging Face)
-The 12 GB+ image dataset and `.pt` weights are tracked by DVC and stored in a Hugging Face bucket. `dvc pull` restores everything on any machine. Git only stores the tiny `.dvc` pointer files.
+The 12 GB+ dataset and `.pt` weights are tracked by DVC and stored on Hugging Face. `dvc pull` restores everything on any machine — Git only stores the `.dvc` pointer files.
+
+---
+
+## Training
+
+```bash
+# YOLOv26 classifier
+python scripts/training/yolo/train_yolo.py
+
+# EfficientNet-B0
+python scripts/training/cnn/train.py
+
+# TaxonomicYOLO26 (dual-head)
+python scripts/training/franken/train.py
+```
+
+> Requires an NVIDIA GPU with CUDA.
+
+To experiment with a new YOLO run:
+1. Change `name` in `train_yolo.py` to a new folder (e.g. `"yolo26_v2"`)
+2. Train — results save to `docs/yolo_runs/<name>/`
+3. Update `YOLO_RUN_NAME` in `config.py`
 
 ---
 
@@ -198,14 +189,12 @@ The 12 GB+ image dataset and `.pt` weights are tracked by DVC and stored in a Hu
 
 ```
 Mushroom/
-├── config.py                          ← Runtime switches (LLM, model, thresholds)
+├── config.py                          ← Single control file (LLM, model, thresholds)
 ├── launch.py                          ← One command to start everything locally
 │
 ├── data/
 │   ├── dataset.yaml                   YOLO class config (169 species)
-│   ├── mushroom_context.json          AI-enriched ecological knowledge base (169 species, 12 fields)
-│   └── dataset_split/
-│       ├── train/  val/  test/        80 / 10 / 10 split
+│   └── mushroom_context.json          AI-enriched ecological database (169 species, 12 fields)
 │
 ├── scripts/
 │   ├── setup/
@@ -218,34 +207,32 @@ Mushroom/
 │
 ├── services/
 │   ├── vision_api/
-│   │   ├── main.py                    FastAPI — serves YOLO predictions
+│   │   ├── main.py                    FastAPI — YOLO inference endpoint
 │   │   ├── Dockerfile                 Full PyTorch image (~1.5 GB)
-│   │   └── slim/                      TFLite-only image (~200 MB)
+│   │   └── slim/                      TFLite image (~200 MB) — used in production
 │   └── brain_ui/
 │       ├── app.py                     Gradio UI — orchestrates the pipeline
 │       └── pipeline/
 │           ├── predict.py             Calls Vision API
-│           ├── integration.py         JSON ecological context lookup (in-memory cache)
-│           ├── audit_layer.py         Visual + text LLM audit (Gemma 4 / Gemini see the actual photo)
-│           ├── llm_provider.py        Multimodal LLM router (Ollama /api/chat + Gemini)
+│           ├── integration.py         JSON ecological context lookup (cached)
+│           ├── audit_layer.py         Visual + text LLM audit (sees the actual photo)
+│           ├── llm_provider.py        Multimodal LLM router (Ollama + Gemini)
 │           └── risk_engine.py         Deterministic safety rules
 │
 ├── deploy/
 │   └── docker-compose.yml             Local multi-container orchestration
 │
 ├── .github/workflows/
-│   ├── deploy.yml                     CI/CD: build + deploy on push to master
-│   └── cml.yml                        ML report generation on pull requests
+│   ├── deploy.yml                     CI/CD — build + deploy on push to master
+│   └── cml.yml                        Automatic model reports on pull requests
 │
 └── docs/
-    ├── project_overview.md            Full technical write-up of every model
+    ├── project_overview.md            Full technical write-up
     ├── model_comparison.md            Training metrics log
     ├── cloud_deployment_pipeline.md   Deployment walkthrough
-    ├── yolo_runs/                     YOLO training artifacts + weights
-    ├── cnn_runs/                      EfficientNet experiment results
-    └── franken_runs/                  TaxonomicYOLO26 experiment results
+    └── yolo_runs/                     Training artifacts + weights
 ```
 
 ---
 
-*Dataset: `zlatan599/mushroom1` (Kaggle) — 169 species, ~689k images. Primary production model: YOLOv26n-cls, 88.1% Top-1 accuracy, 0.2 ms inference.*
+*Dataset: `zlatan599/mushroom1` (Kaggle) — 169 species, ~689k images. Primary model: YOLOv26n-cls, 88.1% Top-1, 0.2 ms inference.*
