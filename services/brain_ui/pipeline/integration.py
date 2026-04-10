@@ -1,28 +1,48 @@
-import pandas as pd
+import json
 import os
 import sys
 
-# Add the scripts directory to Python's path so we can import our other scripts directly
 sys.path.insert(0, os.path.dirname(__file__))
 from predict import predict_image
 
+# Cache the loaded database in memory so we only read the file once per session
+_DB_CACHE = {}
+
 def get_mushroom_context(species_name, csv_path):
     """
-    Searches the context CSV for a specific mushroom species and returns its ecological rules.
+    Looks up a species in the mushroom context database (JSON or CSV).
+    Accepts either a .json or .csv path — prefers JSON if a .json equivalent exists.
     """
+    global _DB_CACHE
+
+    # Prefer JSON version if it exists alongside the CSV
+    json_path = os.path.splitext(csv_path)[0] + ".json"
+    if os.path.exists(json_path):
+        db_path = json_path
+    else:
+        db_path = csv_path
+
     try:
-        # Load the CSV
-        df = pd.read_csv(csv_path)
-        
-        # Search for the specific species (case-insensitive)
-        match = df[df['species_name'].str.lower() == species_name.lower()]
-        
-        if not match.empty:
-            # We found it! Extract the row data as a dictionary
-            return match.iloc[0].to_dict()
+        if db_path not in _DB_CACHE:
+            if db_path.endswith(".json"):
+                with open(db_path, encoding="utf-8") as f:
+                    records = json.load(f)
+                _DB_CACHE[db_path] = {r["species_name"].lower(): r for r in records}
+            else:
+                import pandas as pd
+                df = pd.read_csv(db_path)
+                _DB_CACHE[db_path] = {
+                    row["species_name"].lower(): row.to_dict()
+                    for _, row in df.iterrows()
+                }
+
+        db = _DB_CACHE[db_path]
+        match = db.get(species_name.lower())
+        if match:
+            return match
         else:
             return {"error": f"Species '{species_name}' not found in context database."}
-            
+
     except Exception as e:
         return {"error": f"Failed to read context database: {str(e)}"}
 

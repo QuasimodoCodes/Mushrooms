@@ -1,6 +1,6 @@
 # Mushroom Guardian: Multimodal AI Classification & Safety System
 
-A production-grade, microservice-based AI safety system that identifies mushroom species from photos and cross-references them with ecological context using an LLM audit layer. Built with multiple vision model architectures, end-to-end MLOps, CI/CD, and serverless cloud deployment.
+A production-grade, microservice-based AI safety system that identifies mushroom species from photos and cross-references them with ecological context using a multimodal LLM visual audit layer. Built with multiple vision model architectures, end-to-end MLOps, CI/CD, and serverless cloud deployment.
 
 > For a full technical deep-dive into every model and design decision, see [docs/project_overview.md](docs/project_overview.md).
 
@@ -20,10 +20,13 @@ MODEL_FORMAT = "pt"      # "pt"     → full PyTorch (~1.5 GB Docker image)
                          # "tflite" → lightweight export (~200 MB, no PyTorch)
 
 # ── Switch your LLM ──────────────────────────────────────────
-ACTIVE_LLM_PROVIDER = "ollama"   # "ollama" → local/free  |  "gemini" → cloud
+ACTIVE_LLM_PROVIDER = "ollama"   # "ollama" → local via Ollama  |  "gemini" → cloud API
 
-OLLAMA_MODEL = "llama3:latest"
-GEMINI_MODEL = "gemini-3-flash-preview"
+# Ollama — multimodal models (gemma4) automatically receive the photo too
+OLLAMA_MODEL = "gemma4:e2b"      # swap to "llama3:latest" for text-only
+
+# Gemini — cloud API, also supports multimodal (image + text)
+GEMINI_MODEL = "gemma-4-26b-a4b-it"   # or "gemini-2.0-flash", "gemini-3-flash-preview"
 
 # ── Safety threshold ─────────────────────────────────────────
 CONFIDENCE_THRESHOLD = 0.70   # below this → risk escalates to HIGH
@@ -80,19 +83,23 @@ Every image goes through four stages before a safety verdict is produced:
 Photo + season + location
         │
         ▼
-1. YOLOv26 Vision API      →  (species_name, confidence)
+1. YOLOv26 Vision API        →  (species_name, confidence)
         │
         ▼
-2. Ecological CSV lookup   →  toxicity / habitat / season / region
+2. Ecological JSON lookup    →  toxicity / habitat / cap / gills / stem / lookalikes
         │
         ▼
-3. LLM Audit (Gemini/Ollama) →  PLAUSIBLE / SUSPICIOUS / DANGER
+3. LLM Visual Audit          →  AGREE / DISAGREE / DANGER
+   (Gemma 4 / Gemini sees    →  "Does this photo actually look like X?"
+    the actual photo)             + specific field checks for the forager
         │
         ▼
 4. Risk Engine (Python rules) →  CRITICAL / HIGH / MODERATE / LOW
 ```
 
-**The philosophy:** the LLM provides explanations, Python provides guarantees. The risk engine uses hard-coded `if/else` rules that the LLM cannot override — if the CSV says a species is deadly, the verdict is CRITICAL regardless of anything else.
+**The philosophy:** YOLO identifies fast and precisely. The LLM visually verifies — it sees the same photo and either agrees or disagrees with YOLO's answer. Python provides the final safety guarantee via hard-coded rules that the LLM cannot override.
+
+**Two independent systems must agree** before a low-risk verdict is given. If YOLO says edible but the LLM says the photo doesn't match, risk escalates to HIGH automatically.
 
 ---
 
@@ -196,7 +203,7 @@ Mushroom/
 │
 ├── data/
 │   ├── dataset.yaml                   YOLO class config (169 species)
-│   ├── mushroom_context.csv           Ecological knowledge base
+│   ├── mushroom_context.json          AI-enriched ecological knowledge base (169 species, 12 fields)
 │   └── dataset_split/
 │       ├── train/  val/  test/        80 / 10 / 10 split
 │
@@ -218,8 +225,9 @@ Mushroom/
 │       ├── app.py                     Gradio UI — orchestrates the pipeline
 │       └── pipeline/
 │           ├── predict.py             Calls Vision API
-│           ├── integration.py         CSV ecological context lookup
-│           ├── audit_layer.py         LLM prompt + Gemini/Ollama call
+│           ├── integration.py         JSON ecological context lookup (in-memory cache)
+│           ├── audit_layer.py         Visual + text LLM audit (Gemma 4 / Gemini see the actual photo)
+│           ├── llm_provider.py        Multimodal LLM router (Ollama /api/chat + Gemini)
 │           └── risk_engine.py         Deterministic safety rules
 │
 ├── deploy/

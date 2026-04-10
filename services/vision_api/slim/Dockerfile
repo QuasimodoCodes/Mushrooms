@@ -16,9 +16,9 @@ RUN apt-get update && apt-get install -y \
 COPY services/vision_api/slim/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy only what we need: TFLite model + class names
-COPY docs/yolo_runs/yolo26_classifier_v1/weights/best_float16.tflite /app/docs/yolo_runs/yolo26_classifier_v1/weights/best_float16.tflite
-COPY docs/yolo_runs/yolo26_classifier_v1/weights/class_names.json /app/docs/yolo_runs/yolo26_classifier_v1/weights/class_names.json
+# Copy config (controls which run to load) + all tflite weights (.pt files excluded via .dockerignore)
+COPY config.py /app/config.py
+COPY docs/yolo_runs/ /app/docs/yolo_runs/
 
 # Copy the slim API script
 COPY services/vision_api/slim/main.py /app/services/vision_api/slim/main.py

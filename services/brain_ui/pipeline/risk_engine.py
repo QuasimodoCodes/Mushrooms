@@ -51,11 +51,14 @@ def assess_risk(species_name, confidence, context, llm_verdict):
         risk_factors.append(f"⚠️ LOW CONFIDENCE: YOLO is only {confidence*100:.1f}% sure. This is below the {CONFIDENCE_THRESHOLD*100:.0f}% safety threshold.")
     
     # ─── RULE 3: Did the LLM flag a mismatch? ───
-    # If the LLM said "SUSPICIOUS" or "DANGER", escalate.
+    # Handles both text-only verdicts (SUSPICIOUS) and visual verdicts (DISAGREE).
     llm_lower = llm_verdict.lower()
     if "suspicious" in llm_lower or "danger" in llm_lower or "unlikely" in llm_lower:
         risk_level = max_risk(risk_level, "HIGH")
         risk_factors.append("⚠️ CONTEXT MISMATCH: The LLM audit found the environmental conditions don't match this species' known habitat/season.")
+    elif "disagree" in llm_lower:
+        risk_level = max_risk(risk_level, "HIGH")
+        risk_factors.append("⚠️ VISUAL MISMATCH: The visual AI audit disagrees with YOLO's identification — this mushroom may not be what YOLO thinks it is.")
     
     # ─── RULE 4: Is it toxic but not deadly? ───
     if "toxic" in toxicity and not is_deadly:

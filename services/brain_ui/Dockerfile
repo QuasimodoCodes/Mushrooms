@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY config.py /app/config.py
 COPY services/brain_ui/app.py /app/app.py
 COPY services/brain_ui/pipeline /app/pipeline
-COPY data/mushroom_context.csv /app/data/mushroom_context.csv
+COPY data/mushroom_context.json /app/data/mushroom_context.json
 
 # 6. Expose port 7860 so the outside world can view the Gradio UI.
 EXPOSE 7860

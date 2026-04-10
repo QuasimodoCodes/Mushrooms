@@ -3,6 +3,9 @@
 __pycache__/
 dataset_split/
 data/
-!data/mushroom_context.csv
+!data/mushroom_context.json
 .env
 gen-lang-client-0851180379-877349e9f4fd.json
+
+# Exclude heavy PyTorch weights from build context (slim image only needs tflite)
+docs/yolo_runs/**/*.pt

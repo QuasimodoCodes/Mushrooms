@@ -16,7 +16,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 #  The name must match a folder inside docs/yolo_runs/.
 # ─────────────────────────────────────────────────────────────────────────────
 
-YOLO_RUN_NAME = "yolo26_classifier_v1"
+YOLO_RUN_NAME = "yolo26_tflite"
 # Other options already trained:  "mushroom_classifier_v1"  (YOLOv8n baseline)
 
 # "pt"     → full PyTorch weights  (~1.5 GB Docker image, requires torch)
@@ -34,14 +34,17 @@ MODEL_PATH = (os.path.join(_weights, "best_float16.tflite")
 #  Set ACTIVE_LLM_PROVIDER to switch between local and cloud inference.
 # ─────────────────────────────────────────────────────────────────────────────
 
-ACTIVE_LLM_PROVIDER = "ollama"   # "ollama"  →  local (free, private)
+ACTIVE_LLM_PROVIDER = "gemini"   # "ollama"  →  local via Ollama (any model below)
                                   # "gemini"  →  Google cloud (needs API key)
 
-# Ollama — runs on your machine via `ollama serve`
-OLLAMA_MODEL = "llama3:latest"
+# Ollama — change OLLAMA_MODEL to swap models.
+# Multimodal models (e.g. gemma4:e4b) will automatically receive the image too.
+# Text-only models (e.g. llama3) will just get the text prompt.
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "gemma4:e2b")  # options: "llama3:latest", "gemma4:e2b", "gemma3:12b"
 OLLAMA_URL   = os.environ.get("OLLAMA_URL", "http://localhost:11434/api/generate")
 
-# Gemini — API key read from the GEMINI_API_KEY environment variable
+# Gemini — API key read from the GEMINI_API_KEY environment variable 
+# Models "gemini-3-flash-preview" "gemma-4-26b-a4b-it"
 GEMINI_MODEL   = "gemini-3-flash-preview"
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
@@ -61,6 +64,6 @@ DEADLY_KEYWORDS = ["deadly", "fatal", "death", "highly toxic"]
 # ─────────────────────────────────────────────────────────────────────────────
 
 VISION_API_URL   = os.environ.get("VISION_API_URL", "http://127.0.0.1:8000/predict")
-CONTEXT_CSV_PATH = os.path.join(PROJECT_ROOT, "data", "mushroom_context.csv")
+CONTEXT_CSV_PATH = os.path.join(PROJECT_ROOT, "data", "mushroom_context.json")
 DRIFT_IMAGES_DIR = os.path.join(PROJECT_ROOT, "data", "drift_images")
 PROMETHEUS_PORT  = 8001
