@@ -48,12 +48,14 @@ Photo + season + location
 
 Four architectures trained on the same 169-species dataset (`zlatan599/mushroom1` on Kaggle, ~689k images, 80/10/10 split).
 
-| Model | Params | Top-1 | Top-5 | Notes |
-|---|---|---|---|---|
-| YOLOv8n-cls | 2.7M | TBD | TBD | Baseline |
-| **YOLOv26n-cls** | **1.74M** | **88.1%** | **98.4%** | **Production — faster and smaller than v8** |
-| EfficientNet-B0 | 5.3M | TBD | TBD | Classification-native architecture |
-| TaxonomicYOLO26 | ~2M | TBD | TBD | Dual-head: genus + species simultaneously |
+| Model | Params | Top-1 | Top-5 | File size | Notes |
+|---|---|---|---|---|---|
+| YOLOv8n-cls | 2.7M | 86.8% | 97.9% | 3.4 MB | Baseline |
+| **YOLOv26n-cls** | **1.74M** | **88.1%** | **98.4%** | **3.6 MB** | **Production — best size/accuracy balance** |
+| EfficientNet-B0 | 5.3M | 89.5% | 97.9% | 17.2 MB | Highest top-1, but 5× larger |
+| TaxonomicYOLO26 | ~2M | 79.7%† | — | 25.0 MB | Dual-head: genus (81.6%) + species simultaneously |
+
+† Lower species accuracy is expected — the shared backbone solves a harder dual task than single-head models.
 
 Production uses YOLOv26n exported to **TFLite float16** — 0.2 ms inference, ~200 MB Docker image (vs ~1.5 GB for PyTorch).
 

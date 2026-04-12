@@ -254,15 +254,18 @@ Training artifacts: `docs/franken_runs/taxonomic_yolo26/`
 | | YOLOv8n-cls | YOLOv26n-cls | EfficientNet-B0 | TaxonomicYOLO26 |
 |---|---|---|---|---|
 | **Parameters** | ~2.7M | 1.74M | ~5.3M | ~2M+ |
-| **Model size** | ~6.2 MB | 3.6 MB | ~5 MB | ~4 MB |
-| **Top-1 accuracy** | TBD | **88.1%** | TBD | TBD |
-| **Top-5 accuracy** | TBD | **98.4%** | TBD | TBD |
-| **Inference speed** | TBD | 0.2 ms/img | TBD | TBD |
+| **Model size (.pt)** | 3.4 MB | **3.6 MB** | 17.2 MB | 25.0 MB |
+| **Top-1 accuracy** | 86.8% | **88.1%** | 89.5% | 79.7% (species)† |
+| **Top-5 accuracy** | 97.9% | **98.4%** | 97.9% | 81.6% (genus top-1)† |
+| **Inference (PyTorch GPU)** | 5.78 ms/img | 7.65 ms/img | 13.84 ms/img | ~8 ms/img |
+| **Inference (TFLite export)** | — | **0.2 ms/img** | — | — |
 | **Architecture origin** | Detection-adapted | Detection-adapted | Classification-native | Detection-adapted + dual head |
 | **Outputs** | Species only | Species only | Species only | Genus + Species |
 | **Pretrain source** | COCO | COCO | ImageNet | COCO (fine-tuned) |
-| **Key strength** | Proven, fast | Smallest + best accuracy so far | Purpose-built for classification | Taxonomic regularization |
+| **Key strength** | Fastest GPU, smallest file | Best size/accuracy balance | Highest top-1 accuracy | Taxonomic regularization |
 | **Script** | `scripts/training/yolo/train_yolo.py` | same | `scripts/training/cnn/train.py` | `scripts/training/franken/train.py` |
+
+† TaxonomicYOLO26 solves a harder dual task: species top-1 79.7%, genus top-1 81.6%. Lower species accuracy vs single-head models is expected — the shared backbone must serve both heads simultaneously.
 
 **The core architectural difference — YOLO vs EfficientNet:**
 
