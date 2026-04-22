@@ -2,7 +2,7 @@
 Evaluate a trained ConvNeXt-Tiny on the held-out test set.
 
 Run from the project root AFTER training:
-    python Herman/convnext/evaluate.py --run convnext_tiny_adamw_ce_smooth
+    python scripts/training/convnext/evaluate.py --run convnext_tiny_adamw_ce_smooth
 
 --run must match a folder name inside docs/herman_runs/.
 
@@ -23,7 +23,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-_ROOT = os.path.abspath(os.path.join(_HERE, "..", ".."))
+_ROOT = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
 
 sys.path.insert(0, _HERE)
 

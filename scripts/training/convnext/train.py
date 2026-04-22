@@ -1,32 +1,25 @@
 """
-Train ViT-S/16 on the mushroom dataset.
+Train ConvNeXt-Tiny on the mushroom dataset.
 
 Run from the project root:
-    python Herman/vit/train.py
-    python Herman/vit/train.py --optimizer adamw --loss ce_smooth   # explicit defaults
+    python scripts/training/convnext/train.py
+    python scripts/training/convnext/train.py --optimizer adamw --loss ce_smooth   # explicit defaults
 
 Optimizer options : adamw | sgd | radam
 Loss options      : ce | ce_smooth | focal | focal_smooth
 
-Results are saved to docs/herman_runs/vit_<run_name>/ so multiple experiments
+Results are saved to docs/herman_runs/convnext_<run_name>/ so multiple experiments
 coexist without overwriting each other.
 
-ViT-specific training notes
----------------------------
-ViTs are more sensitive to learning rate than CNNs. Two key differences
-from the EfficientNet-B0 training script:
-
-  1. Lower base LR (1e-4 vs 1e-3) — ViT fine-tuning diverges at CNN-style LRs.
-
-  2. Linear warmup for the first WARMUP_EPOCHS epochs, followed by cosine decay.
-     Without warmup, the randomly-initialised classification head generates
-     large gradients in early steps that corrupt the pretrained backbone weights.
-
-  3. Separate LR for backbone vs head (layer-wise LR):
-     - Backbone: lr * BACKBONE_LR_SCALE  (default 0.1x — gentle fine-tuning)
-     - Head:     lr                       (full LR — head is randomly initialised)
-     This prevents the backbone from being updated too aggressively while the
-     head is still learning from scratch.
+ConvNeXt training notes
+-----------------------
+ConvNeXt behaves similarly to EfficientNet for fine-tuning:
+  - AdamW works well with lr=4e-4 (slightly lower than EfficientNet's 1e-3 due
+    to larger model capacity — prevents overshooting)
+  - No warmup required (unlike ViT)
+  - CosineAnnealingLR schedule, same as the existing CNN baseline
+  - Weight decay 1e-4 (same as EfficientNet)
+  - Gradient clipping at max_norm=1.0 (standard practice)
 """
 
 import argparse
@@ -41,23 +34,21 @@ from tqdm import tqdm
 
 # ─── Resolve project root ─────────────────────────────────────────────────────
 _HERE = os.path.dirname(os.path.abspath(__file__))
-_ROOT = os.path.abspath(os.path.join(_HERE, "..", ".."))
+_ROOT = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
 
 sys.path.insert(0, _HERE)
 
 from dataset import get_dataloaders
 from losses  import build_criterion, build_optimizer
-from model   import build_vit_small
+from model   import build_convnext_tiny
 
 # ─── Hyperparameters ──────────────────────────────────────────────────────────
 
-EPOCHS           = 50
-BATCH_SIZE       = 32
-LR               = 1e-4       # ViTs need a smaller LR than CNNs
-WEIGHT_DECAY     = 0.05       # Higher weight decay is standard for ViT (AdamW)
-PATIENCE         = 10
-WARMUP_EPOCHS    = 5          # Linear LR warmup — critical for stable ViT fine-tuning
-BACKBONE_LR_SCALE = 0.1       # Backbone updated at 10% of the head LR
+EPOCHS       = 50
+BATCH_SIZE   = 32
+LR           = 4e-4      # Slightly lower than EfficientNet (1e-3) for larger model
+WEIGHT_DECAY = 1e-4
+PATIENCE     = 10
 
 # ─── Paths ────────────────────────────────────────────────────────────────────
 
@@ -117,75 +108,23 @@ def run_epoch(model, loader, criterion, optimizer, device, training: bool, desc:
     return total_loss / n, total_top1 / n, total_top5 / n, total_gnorm / n
 
 
-def build_vit_optimizer(model, optimizer_name, lr, weight_decay):
-    """
-    Split parameters into backbone and head groups with different LRs.
-
-    ViTs benefit from a lower LR on the pretrained backbone to avoid
-    catastrophic forgetting of ImageNet features.
-    """
-    head_params     = list(model.head.parameters())
-    head_param_ids  = {id(p) for p in head_params}
-    backbone_params = [p for p in model.parameters() if id(p) not in head_param_ids]
-
-    param_groups = [
-        {"params": backbone_params, "lr": lr * BACKBONE_LR_SCALE},
-        {"params": head_params,     "lr": lr},
-    ]
-
-    if optimizer_name == "adamw":
-        return torch.optim.AdamW(param_groups, weight_decay=weight_decay)
-    elif optimizer_name == "sgd":
-        return torch.optim.SGD(param_groups, momentum=0.9,
-                                weight_decay=weight_decay, nesterov=True)
-    elif optimizer_name == "radam":
-        return torch.optim.RAdam(param_groups, weight_decay=weight_decay)
-    else:
-        raise ValueError(f"Unknown optimizer '{optimizer_name}'")
-
-
-def build_scheduler(optimizer, warmup_epochs, total_epochs):
-    """
-    Linear warmup for warmup_epochs, then cosine decay to near-zero.
-
-    Using SequentialLR to chain two schedulers:
-      Phase 1: LinearLR  (start_factor=0.01 → 1.0 over warmup_epochs steps)
-      Phase 2: CosineAnnealingLR (T_max = remaining epochs)
-    """
-    warmup = torch.optim.lr_scheduler.LinearLR(
-        optimizer,
-        start_factor=0.01,
-        end_factor=1.0,
-        total_iters=warmup_epochs,
-    )
-    cosine = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer,
-        T_max=total_epochs - warmup_epochs,
-    )
-    return torch.optim.lr_scheduler.SequentialLR(
-        optimizer,
-        schedulers=[warmup, cosine],
-        milestones=[warmup_epochs],
-    )
-
-
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
 def main(optimizer_name: str, loss_name: str):
-    run_name    = f"vit_small_{optimizer_name}_{loss_name}"
+    run_name    = f"convnext_tiny_{optimizer_name}_{loss_name}"
     output_dir  = os.path.join(_ROOT, "docs", "herman_runs", run_name)
     weights_dir = os.path.join(output_dir, "weights")
     results_csv = os.path.join(output_dir, "results.csv")
 
     print("=========================================")
-    print(f"  ViT-S/16 | {optimizer_name.upper()} + {loss_name.upper()}")
+    print(f"  ConvNeXt-Tiny | {optimizer_name.upper()} + {loss_name.upper()}")
     print("=========================================")
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     if device == "cuda":
         print(f">> GPU: {torch.cuda.get_device_name(0)}")
     else:
-        print(">> WARNING: No GPU — training will be extremely slow on CPU.")
+        print(">> WARNING: No GPU — training will be very slow on CPU.")
 
     os.makedirs(weights_dir, exist_ok=True)
 
@@ -197,21 +136,18 @@ def main(optimizer_name: str, loss_name: str):
           f"{len(val_loader.dataset):,} val")
 
     # Model
-    print("\nBuilding ViT-S/16 (ImageNet-21k pretrained via timm)...")
-    model = build_vit_small(num_classes=len(class_names)).to(device)
+    print("\nBuilding ConvNeXt-Tiny (ImageNet-1k pretrained)...")
+    model = build_convnext_tiny(num_classes=len(class_names)).to(device)
     print(f">> Parameters: {sum(p.numel() for p in model.parameters()):,}")
 
-    # Optimiser (split backbone / head LRs)
+    # Loss + optimiser + scheduler (same pattern as EfficientNet-B0 baseline)
     criterion = build_criterion(loss_name)
-    optimizer = build_vit_optimizer(model, optimizer_name, LR, WEIGHT_DECAY)
-    scheduler = build_scheduler(optimizer, WARMUP_EPOCHS, EPOCHS)
-
-    print(f">> Backbone LR: {LR * BACKBONE_LR_SCALE:.1e}  |  Head LR: {LR:.1e}")
-    print(f">> Warmup: {WARMUP_EPOCHS} epochs  |  Cosine decay: {EPOCHS - WARMUP_EPOCHS} epochs\n")
+    optimizer = build_optimizer(optimizer_name, model.parameters(), LR, WEIGHT_DECAY)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS)
 
     # CSV log
     csv_fields = ["epoch", "time", "train/loss", "train/top1", "train/top5", "train/grad_norm",
-                  "val/loss", "metrics/accuracy_top1", "metrics/accuracy_top5", "lr/backbone", "lr/head"]
+                  "val/loss", "metrics/accuracy_top1", "metrics/accuracy_top5", "lr/pg0"]
     with open(results_csv, "w", newline="") as f:
         csv.DictWriter(f, fieldnames=csv_fields).writeheader()
 
@@ -219,7 +155,7 @@ def main(optimizer_name: str, loss_name: str):
     best_top1         = 0.0
     epochs_no_improve = 0
 
-    print(f"Training up to {EPOCHS} epochs (patience={PATIENCE})...\n")
+    print(f"\nTraining up to {EPOCHS} epochs (patience={PATIENCE})...\n")
 
     for epoch in range(1, EPOCHS + 1):
         t0 = time.time()
@@ -231,9 +167,7 @@ def main(optimizer_name: str, loss_name: str):
             training=False, desc=f"Epoch {epoch:>3}/{EPOCHS} val  ")
         epoch_time = time.time() - t0
 
-        # Read LRs before stepping
-        lr_backbone = optimizer.param_groups[0]["lr"]
-        lr_head     = optimizer.param_groups[1]["lr"]
+        current_lr = scheduler.get_last_lr()[0]
         scheduler.step()
 
         print(
@@ -241,7 +175,7 @@ def main(optimizer_name: str, loss_name: str):
             f"time: {epoch_time:.0f}s | "
             f"train_loss: {train_loss:.4f} | train_top1: {train_top1:.1f}% | gnorm: {grad_norm:.3f} | "
             f"val_loss: {val_loss:.4f} | top1: {val_top1:.2f}% | top5: {val_top5:.2f}% | "
-            f"lr_backbone: {lr_backbone:.2e} | lr_head: {lr_head:.2e}"
+            f"lr: {current_lr:.2e}"
         )
 
         with open(results_csv, "a", newline="") as f:
@@ -255,8 +189,7 @@ def main(optimizer_name: str, loss_name: str):
                 "val/loss":                 round(val_loss, 6),
                 "metrics/accuracy_top1":    round(val_top1, 4),
                 "metrics/accuracy_top5":    round(val_top5, 4),
-                "lr/backbone":              round(lr_backbone, 8),
-                "lr/head":                  round(lr_head, 8),
+                "lr/pg0":                   round(current_lr, 8),
             })
 
         torch.save(model.state_dict(), os.path.join(weights_dir, "last.pt"))
@@ -279,7 +212,7 @@ def main(optimizer_name: str, loss_name: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train ViT-S/16 mushroom classifier")
+    parser = argparse.ArgumentParser(description="Train ConvNeXt-Tiny mushroom classifier")
     parser.add_argument("--optimizer", default="adamw", choices=["adamw", "sgd", "radam"])
     parser.add_argument("--loss",      default="ce_smooth",
                         choices=["ce", "ce_smooth", "focal", "focal_smooth"])

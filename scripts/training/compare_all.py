@@ -14,7 +14,7 @@ import os
 import glob
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-_ROOT = os.path.abspath(os.path.join(_HERE, ".."))
+_ROOT = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
 
 # Known YOLO results (hard-coded from docs since YOLO uses a different CSV format)
 YOLO_KNOWN = {
