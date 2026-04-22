@@ -36,12 +36,11 @@ from tqdm import tqdm
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.abspath(os.path.join(_HERE, "..", ".."))
 
-sys.path.insert(0, os.path.join(_ROOT, "Herman"))
 sys.path.insert(0, _HERE)
 
-from shared.dataset import get_dataloaders
-from shared.losses  import build_criterion, build_optimizer
-from model          import build_convnext_tiny
+from dataset import get_dataloaders
+from losses  import build_criterion, build_optimizer
+from model   import build_convnext_tiny
 
 # ─── Hyperparameters ──────────────────────────────────────────────────────────
 
