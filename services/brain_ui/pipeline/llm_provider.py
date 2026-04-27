@@ -15,16 +15,14 @@ import json
 # ============================================================
 # CONFIGURATION - Change these to switch LLM providers
 # ============================================================
-# ACTIVE_PROVIDER = "gemini"  # Options: "ollama" or "gemini"
-ACTIVE_PROVIDER = "ollama"
+ACTIVE_PROVIDER = "gemini"  # Options: "ollama" or "gemini"
 OLLAMA_MODEL = "llama3:latest"
-# OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
-OLLAMA_URL = "http://localhost:11434/api/generate"
+OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
 
 # Gemini config — key is loaded from the GEMINI_API_KEY environment variable (set in .env)
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyCCrWg90wl2f8MMXPihWPBX0_1JnrlYp0c")
-# GEMINI_MODEL = "gemini-3-flash-preview"
-model="gemini-2.0-flash-lite"
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_MODEL = "gemini-3-flash-preview"
+
 
 def query_llm(prompt):
     """
@@ -59,37 +57,18 @@ def _query_ollama(prompt):
         return f"Error querying Ollama: {str(e)}"
 
 
-# def _query_gemini(prompt):
-#     """Sends a prompt to Google Gemini API. (For future use)"""
-#     if not GEMINI_API_KEY:
-#         return "Error: GEMINI_API_KEY is not set in llm_provider.py"
-#
-#     try:
-#         import google.generativeai as genai
-#         genai.configure(api_key=GEMINI_API_KEY)
-#         model = genai.GenerativeModel(GEMINI_MODEL)
-#         response = model.generate_content(prompt)
-#         return response.text
-#     except ImportError:
-#         return "Error: 'google-generativeai' package not installed. Run: pip install google-generativeai"
-#     except Exception as e:
-#         return f"Error querying Gemini: {str(e)}"
-
-# New
 def _query_gemini(prompt):
-    """Sends a prompt to Google Gemini API."""
+    """Sends a prompt to Google Gemini API. (For future use)"""
     if not GEMINI_API_KEY:
         return "Error: GEMINI_API_KEY is not set in llm_provider.py"
-
+    
     try:
-        from google import genai
-        client = genai.Client(api_key=GEMINI_API_KEY)
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=prompt
-        )
+        import google.generativeai as genai
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel(GEMINI_MODEL)
+        response = model.generate_content(prompt)
         return response.text
     except ImportError:
-        return "Error: 'google-genai' package not installed. Run: pip install google-genai"
+        return "Error: 'google-generativeai' package not installed. Run: pip install google-generativeai"
     except Exception as e:
         return f"Error querying Gemini: {str(e)}"

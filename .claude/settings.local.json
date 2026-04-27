@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(code tunnel:*)",
+      "Bash(where code:*)",
+      "Bash(where code-tunnel:*)",
+      "Bash(\"/c/Users/spide/AppData/Local/Programs/Microsoft VS Code/bin/code-tunnel.exe\" status)",
+      "Bash(\"/c/Users/spide/AppData/Local/Programs/Microsoft VS Code/bin/code-tunnel.exe\" --help)",
+      "Bash(\"/c/Users/spide/AppData/Local/Programs/Microsoft VS Code/bin/code-tunnel.exe\" tunnel status)"
+    ]
+  }
+}

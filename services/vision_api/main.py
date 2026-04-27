@@ -1,31 +1,21 @@
 import os
+import sys
 import io
 from fastapi import FastAPI, UploadFile, File
 from PIL import Image
 from ultralytics import YOLO
 from prometheus_fastapi_instrumentator import Instrumentator
 
+# Load central config
+_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, _ROOT)
+from config import MODEL_PATH, MODEL_FORMAT
+
 # 1. Initialize the FastAPI application
-# This 'app' object acts as our web server, listening for incoming requests.
 app = FastAPI(title="Mushroom Vision API")
 
 # Initialize and expose Prometheus metrics
 Instrumentator().instrument(app).expose(app)
-
-# 2. Define the path to our trained YOLO classification model.
-# We traverse up 3 directories from main.py (vision_api -> services -> Mushroom)
-# to find the 'docs/yolo_runs/...' folder where our weights are stored.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-WEIGHTS_DIR = os.path.join(BASE_DIR, "docs", "yolo_runs", "yolo26_classifier_v1", "weights")
-
-# Toggle between PyTorch and TFLite via environment variable.
-# Set MODEL_FORMAT=tflite to use the lightweight TFLite model.
-# Default: "pt" (PyTorch)
-MODEL_FORMAT = os.environ.get("MODEL_FORMAT", "pt").lower()
-if MODEL_FORMAT == "tflite":
-    MODEL_PATH = os.path.join(WEIGHTS_DIR, "best_float16.tflite")
-else:
-    MODEL_PATH = os.path.join(WEIGHTS_DIR, "best.pt")
 
 # 3. Load the YOLO model into memory.
 # We do this OUTSIDE the endpoint function so it only loads once when the server starts,

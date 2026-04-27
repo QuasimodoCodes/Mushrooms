@@ -68,7 +68,7 @@ Open `scripts/training/train_yolo.py` and tweak the hyperparameters in `model.tr
 
 Example with adjusted parameters:
 
-```python
+```bash
 results = model.train(
     data=data_dir,
     epochs=100,           # Train longer

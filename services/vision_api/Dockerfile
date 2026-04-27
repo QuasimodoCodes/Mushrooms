@@ -32,7 +32,8 @@ COPY docs/yolo_runs/yolo26_classifier_v1/weights/best_float16.tflite /app/docs/y
 # Default to PyTorch model. Set MODEL_FORMAT=tflite to switch.
 ENV MODEL_FORMAT=pt
 
-# 7. Copy the actual FastAPI script into the container.
+# 7. Copy config.py (runtime switches) and the FastAPI script into the container.
+COPY config.py /app/config.py
 COPY services/vision_api/main.py /app/services/vision_api/main.py
 
 # 8. Expose port 8000 so the outside world (like our Brain UI) can talk to this container.

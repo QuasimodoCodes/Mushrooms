@@ -14,8 +14,11 @@ app = FastAPI(title="Mushroom Vision API (TFLite)")
 Instrumentator().instrument(app).expose(app)
 
 # 2. Paths — inside the container everything lives under /app
+import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-WEIGHTS_DIR = os.path.join(BASE_DIR, "docs", "yolo_runs", "yolo26_classifier_v1", "weights")
+sys.path.insert(0, BASE_DIR)
+from config import YOLO_RUN_NAME
+WEIGHTS_DIR = os.path.join(BASE_DIR, "docs", "yolo_runs", YOLO_RUN_NAME, "weights")
 MODEL_PATH = os.path.join(WEIGHTS_DIR, "best_float16.tflite")
 CLASS_NAMES_PATH = os.path.join(WEIGHTS_DIR, "class_names.json")
 
