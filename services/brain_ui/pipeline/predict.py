@@ -1,11 +1,13 @@
 import sys
 import os
 import requests
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # URL of our new Vision API
 # We default to localhost for local testing, but Docker Compose will override this!
-VISION_API_URL = os.environ.get("VISION_API_URL", "http://127.0.0.1:8000/predict")
-
+# VISION_API_URL = os.environ.get("VISION_API_URL", "http://127.0.0.1:8000/predict")
+VISION_API_URL = os.environ.get("VISION_API_URL", "http://localhost:5001/predict")
 def predict_image(image_path):
     print(f"Sending image to Vision API at: {VISION_API_URL}")
     print(f"Running inference on image: {image_path}")
@@ -17,7 +19,7 @@ def predict_image(image_path):
         
         try:
             # We send a POST request with our image to the API
-            response = requests.post(VISION_API_URL, files=files, timeout=30)
+            response = requests.post(VISION_API_URL, files=files, timeout=30, verify=False)
             
             # If the API returned an error code (like 404 or 500), this will raise an exception
             response.raise_for_status()
