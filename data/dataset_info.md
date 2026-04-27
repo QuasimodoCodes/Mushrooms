@@ -20,3 +20,4 @@ The downloaded dataset also included three CSV files:
 *   `test.csv`
 
 **Current Usage**: We are currently using the `split-folders` approach because YOLO reads class names directly from folder structures (e.g., `train/Amanita_muscaria/image.jpg`). The CSV files are redundant for basic YOLO image classification, but they are preserved here in case they contain additional metadata or we want to switch to a custom PyTorch DataLoader later.
+
