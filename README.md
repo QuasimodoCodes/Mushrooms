@@ -1,10 +1,10 @@
-# Mushroom Guardian: Multimodal AI Classification & Safety System
+# A Multimodal Mushroom Classification System
 
 A production-grade, microservice-based AI safety system that identifies mushroom species visually (YOLOv26) and cross-references them with ecological context using an LLM audit layer. Built with end-to-end MLOps, CI/CD, and serverless cloud deployment.
 
 ---
 
-## 🛠️ How to Operate the System
+## How to Operate the System
 
 Whether you are retraining the vision model or spinning up the microservices locally, here is your quick-start guide:
 
