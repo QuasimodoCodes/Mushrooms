@@ -15,7 +15,7 @@ classification tasks this means:
   - Same Ultralytics API — drop-in replacement for YOLOv8
 
 Run from the project root:
-    python scripts/training/yolo10/train_yolo10.py
+    python scripts/training/yolo10/train_yolo11.py
 
 Results are saved to docs/yolo10_runs/yolo10_classifier_v1/
 """

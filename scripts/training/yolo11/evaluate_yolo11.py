@@ -2,7 +2,7 @@
 Evaluate a trained YOLOv10n-cls on the held-out test set.
 
 Run from the project root AFTER training:
-    python scripts/training/yolo10/evaluate_yolo10.py
+    python scripts/training/yolo10/evaluate_yolo11.py
 
 Mirrors scripts/training/yolo/compare_pt_vs_tflite.py structure
 but focuses on top-1/top-5 reporting against YOLOv26 baseline.
