@@ -55,7 +55,7 @@
       "Use an LLM API to send this formatted string and ask: 'Does this visual prediction match the environmental rules? Reply YES or NO, and explain why.'",
       "Capture the text response from the LLM."
     ],
-    "student_explanation": "Why are we doing this? This gives your system 'Reasoning-Based Explainability'. Instead of just outputting YOLO's guess, the system audits itself. If YOLO predicts a summer mushroom in the middle of winter, the LLM will catch YOLO's mistake."
+    "student_explanation"s: "Why are we doing this? This gives your system 'Reasoning-Based Explainability'. Instead of just outputting YOLO's guess, the system audits itself. If YOLO predicts a summer mushroom in the middle of winter, the LLM will catch YOLO's mistake."
   },
   {
     "step_number": 5,
