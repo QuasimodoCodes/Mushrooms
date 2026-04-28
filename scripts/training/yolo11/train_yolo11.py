@@ -68,7 +68,7 @@ def main():
         exist_ok=True,
 
         # ── Regularisation (same as YOLOv26 run for fair comparison) ─────────
-        patience=1,
+        patience=10,
         cos_lr=True,           # Cosine LR decay — helps escape local optima
         dropout=0.0,           # YOLOv11 cls head already has BN; no extra dropout
 
