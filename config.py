@@ -16,7 +16,8 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 #  The name must match a folder inside docs/yolo_runs/.
 # ─────────────────────────────────────────────────────────────────────────────
 
-YOLO_RUN_NAME = "yolo26_tflite"
+# YOLO_RUN_NAME = "yolo26_tflite"
+YOLO_RUN_NAME = "yolo11_classifier_v1"
 # Other options already trained:  "mushroom_classifier_v1"  (YOLOv8n baseline)
 
 # "pt"     → full PyTorch weights  (~1.5 GB Docker image, requires torch)
