@@ -1,8 +1,8 @@
 """
-Evaluate a trained YOLOv10n-cls on the held-out test set.
+Evaluate a trained YOLOv11n-cls on the held-out test set.
 
 Run from the project root AFTER training:
-    python scripts/training/yolo10/evaluate_yolo10.py
+    python scripts/training/yolo11/evaluate_yolo11.py
 
 Mirrors scripts/training/yolo/compare_pt_vs_tflite.py structure
 but focuses on top-1/top-5 reporting against YOLOv26 baseline.
@@ -21,7 +21,7 @@ def evaluate(model_path: str, data_dir: str, label: str) -> dict:
     print(f"{'='*50}")
 
     if not os.path.exists(model_path):
-        raise FileNotFoundError(f"Model not found: {model_path}\nTrain first with train_yolo10.py")
+        raise FileNotFoundError(f"Model not found: {model_path}\nTrain first with train_yolo11.py")
 
     model = YOLO(model_path, task="classify")
     t0 = time.time()
@@ -45,10 +45,10 @@ def main():
     _ROOT = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
 
     data_dir    = os.path.join(_ROOT, "data", "dataset_split")
-    weights_dir = os.path.join(_ROOT, "docs", "yolo10_runs", "yolo10_classifier_v1", "weights")
+    weights_dir = os.path.join(_ROOT, "docs", "yolo11_runs", "yolo11_classifier_v1", "weights")
     best_pt     = os.path.join(weights_dir, "best.pt")
 
-    stats = evaluate(best_pt, data_dir, "YOLOv10n-cls")
+    stats = evaluate(best_pt, data_dir, "YOLOv11n-cls")
 
     print("\n" + "="*50)
     print("  SUMMARY")
