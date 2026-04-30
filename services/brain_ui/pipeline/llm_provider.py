@@ -8,9 +8,13 @@ Currently active: Ollama (local)
 To switch to Gemini: Change ACTIVE_PROVIDER to "gemini" and set your API key.
 """
 
+
+
 import os
 import requests
 import json
+from dotenv import load_dotenv
+load_dotenv()
 
 # ============================================================
 # CONFIGURATION - Change these to switch LLM providers
@@ -22,9 +26,10 @@ OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
 # Gemini config — key is loaded from the GEMINI_API_KEY environment variable (set in .env)
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_MODEL = "gemini-3-flash-preview"
+_MULTIMODAL_OLLAMA_MODELS = {"gemma4:e2b", "gemma4:e4b", "llava", "bakllava"}
 
 
-def query_llm(prompt):
+def query_llm(prompt, image_path=None):
     """
     Sends a prompt to whichever LLM backend is currently active.
     Returns the LLM's text response as a string.
