@@ -50,7 +50,7 @@ sys.path.insert(0, os.path.join(_HERE, "..", "vit"))
 
 from Mushrooms.scripts.training.dinov2.dataset import get_dataloaders
 from losses  import build_criterion
-from model   import build_dinov2_small
+from dinov2_model import build_dinov2_small
 
 # ── Hyperparameters (identical to vit/train.py for fair comparison) ───────────
 EPOCHS            = 50
