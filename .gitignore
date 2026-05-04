@@ -1,0 +1,44 @@
+# Benchmark datasets (large files — tracked via DVC or downloaded locally)
+benchmarks/df24_mini/data/images/
+benchmarks/df24_mini/data/yolo_ready/
+benchmarks/df24_mini/data/metadata/DanishFungi2024-Mini.zip
+benchmarks/df24_mini/runs/**/events.out.tfevents.*
+DanishFungiDataset/
+
+# Dataset Folders
+data/dataset_split/
+merged_dataset/
+
+# Large model weights in herman_runs (tracked via Git LFS where needed)
+docs/herman_runs/**/weights/*.pt
+
+# Python Virtual Environments
+venv/
+.env/
+__pycache__/
+
+# IDE/System Files
+.vscode/
+.idea/
+.DS_Store
+.env
+
+# YOLO auto-generated run outputs
+runs/
+
+# TFLite export intermediates
+*.onnx
+*_saved_model/
+calibration_image_sample_data_*.npy
+
+# Diffusion model training (not ready for production)
+scripts/training/diffusion/
+docs/diffusion_runs/
+docs/diffusion_model.md
+docs/pending_work.md
+
+# Enrichment temp files
+data/enrich_progress.json
+
+# Ablation results (generated outputs)
+ablation/results/
