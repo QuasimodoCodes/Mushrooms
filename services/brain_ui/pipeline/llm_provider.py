@@ -17,7 +17,8 @@ import json
 # ============================================================
 ACTIVE_PROVIDER = "gemini"  # Options: "ollama" or "gemini"
 OLLAMA_MODEL = "llama3:latest"
-OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434/api/generate")
+_MULTIMODAL_OLLAMA_MODELS = ("gemma", "llava", "bakllava")
 
 # Gemini config — key is loaded from the GEMINI_API_KEY environment variable (set in .env)
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
@@ -45,7 +46,8 @@ def _query_ollama(prompt):
             json={
                 "model": OLLAMA_MODEL,
                 "prompt": prompt,
-                "stream": False  # Get the full response at once
+                "stream": False,
+                "options": {"num_predict": 80}  # limit output tokens for speed
             },
             timeout=120  # LLMs can be slow locally
         )
