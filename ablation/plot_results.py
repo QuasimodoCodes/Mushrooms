@@ -1,12 +1,15 @@
 """
-Ablation Study — Figure Generator
-===================================
-Reads ablation/results/ablation_raw.csv and produces a 3-panel figure:
-  Panel 1 — Safety Recall per model (vision-only vs +Gemini LLM)
-  Panel 2 — High-Confidence Misclassification Recall (Gemini only, primary metric)
-  Panel 3 — Median inference time per model (vision model only)
+Ablation Study — Figure Generator (v2)
+=========================================
+Produces two publication-quality figures from ablation/results/ablation_raw.csv:
 
-Output: ablation/results/ablation_figure.png
+  Figure 1 — ablation_performance.png
+    Panel A: Safety Recall on dangerous species   (all 7 conditions)
+    Panel B: Precision                            (all 7 conditions)
+    Panel C: F1 Score                             (all 7 conditions)
+
+  Figure 2 — ablation_speed.png
+    Vision model inference speed (ms) — LLM excluded (cloud API, model-independent)
 """
 
 import sys
@@ -15,207 +18,236 @@ import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 
 ROOT        = Path(__file__).parent.parent
 RESULTS_DIR = Path(__file__).parent / "results"
 CSV_PATH    = RESULTS_DIR / "ablation_raw.csv"
-CONTEXT_CSV = ROOT / "data" / "mushroom_context.csv"
-OUT_PATH    = RESULTS_DIR / "ablation_figure.png"
+OUT_PERF    = RESULTS_DIR / "ablation_performance.png"
+OUT_SPEED   = RESULTS_DIR / "ablation_speed.png"
 
 DANGEROUS_KEYWORDS = ["deadly", "highly toxic", "toxic", "hallucinogenic", "pathogenic"]
 
-MODEL_ORDER = ["YOLOv26n", "ConvNeXt-Tiny", "DINOv2-Small"]
-MODEL_LABELS = {
-    "YOLOv26n":      "YOLOv26n\n(edge/mobile)",
-    "ConvNeXt-Tiny": "ConvNeXt-Tiny\n(PEFT)",
-    "DINOv2-Small":  "DINOv2-Small\n(ViT-S/14)",
-}
+# (model, llm, display_label, color)  — order defines bar order left→right
+CONDITIONS = [
+    ("YOLOv26n",      "none",   "YOLO\n(vision only)",    "#4C72B0"),
+    ("ConvNeXt-Tiny", "none",   "ConvNeXt\n(vision only)","#5B8DB8"),
+    ("DINOv2-Small",  "none",   "DINOv2\n(vision only)",  "#6AACD4"),
+    ("LLM Only",      "gemini", "Gemini\n(LLM only)",     "#9B59B6"),
+    ("YOLOv26n",      "gemini", "YOLO\n+ Gemini",         "#DD8452"),
+    ("ConvNeXt-Tiny", "gemini", "ConvNeXt\n+ Gemini",     "#E8905A"),
+    ("DINOv2-Small",  "gemini", "DINOv2\n+ Gemini",       "#C44E52"),
+]
 
-COLOR_NONE   = "#4C72B0"   # blue   — vision only
-COLOR_GEMINI = "#DD8452"   # orange — +Gemini
-COLOR_M2     = "#C44E52"   # red    — primary metric (HC misclassification)
-COLOR_SPEED  = "#55A868"   # green  — speed bars
+SPEED_MODELS  = ["YOLOv26n", "ConvNeXt-Tiny", "DINOv2-Small"]
+SPEED_COLORS  = {"YOLOv26n": "#4C72B0", "ConvNeXt-Tiny": "#5B8DB8", "DINOv2-Small": "#6AACD4"}
+GROUP_LABELS  = {("vision", 0): "Vision only", ("llm", 3): "LLM only", ("combined", 4): "Vision + Gemini"}
 
 
 def is_dangerous(toxicity: str) -> bool:
-    t = str(toxicity).lower()
-    return any(k in t for k in DANGEROUS_KEYWORDS)
+    return any(k in str(toxicity).lower() for k in DANGEROUS_KEYWORDS)
 
-
-def load_context():
-    ctx = pd.read_csv(CONTEXT_CSV)
-    ctx["species_key"] = ctx["species_name"].str.replace(" ", "_").str.lower()
-    return ctx.set_index("species_key")["toxicity_type"].to_dict()
 
 def load_data():
     if not CSV_PATH.exists():
-        sys.exit(f"No results found at {CSV_PATH}. Run ablation/run_ablation.py first.")
+        sys.exit(f"No results at {CSV_PATH}. Run run_ablation.py first.")
     df = pd.read_csv(CSV_PATH)
-    # Filter to dangerous-only rows for Metric 1 & 2
-    if "dangerous" in df.columns:
-        df = df[df["dangerous"] == True].copy()
-    print(f"Loaded {len(df)} dangerous-species rows, {df['image'].nunique()} unique images.")
+    if "dangerous" not in df.columns:
+        df["dangerous"] = df["true_toxicity"].apply(lambda t: is_dangerous(str(t)))
+    print(f"Loaded {len(df)} rows — "
+          f"{df[df['dangerous']]['image'].nunique()} dangerous images, "
+          f"{df[~df['dangerous']]['image'].nunique()} safe images.")
     return df
 
 
-def compute_recall(df):
+def compute_metrics(df):
+    danger_df = df[df["dangerous"] == True]
+    safe_df   = df[df["dangerous"] == False]
+    has_safe  = len(safe_df) > 0
+
     rows = []
-    for model in MODEL_ORDER:
-        sub = df[df["model"] == model]
-        if sub.empty:
+    for model, llm, label, color in CONDITIONS:
+        d = danger_df[(danger_df["model"] == model) & (danger_df["llm"] == llm)]
+        s = safe_df[(safe_df["model"] == model) & (safe_df["llm"] == llm)] if has_safe else pd.DataFrame()
+
+        if d.empty:
             continue
-        for llm in ("none", "gemini"):
-            g = sub[sub["llm"] == llm]
-            if g.empty:
-                continue
-            recall = g["flagged"].mean() * 100
-            rows.append({"model": model, "llm": llm, "recall": recall, "n": len(g)})
+
+        tp = int(d["flagged"].sum())
+        fn = int((~d["flagged"]).sum())
+        fp = int(s["flagged"].sum())  if not s.empty else None
+        tn = int((~s["flagged"]).sum()) if not s.empty else None
+
+        recall    = tp / (tp + fn) * 100 if (tp + fn) > 0 else 0.0
+        precision = tp / (tp + fp) * 100 if (fp is not None and (tp + fp) > 0) else None
+        f1        = (2 * precision * recall / (precision + recall)) \
+                    if (precision is not None and (precision + recall) > 0) else None
+        fpr       = fp / (fp + tn) * 100 if (fp is not None and tn is not None and (fp + tn) > 0) else None
+
+        rows.append({
+            "model": model, "llm": llm, "label": label, "color": color,
+            "recall": recall, "precision": precision, "f1": f1, "fpr": fpr,
+            "n_danger": len(d), "n_safe": len(s) if not s.empty else 0,
+        })
     return pd.DataFrame(rows)
 
 
 def compute_speed(df):
     rows = []
-    for model in MODEL_ORDER:
-        g = df[(df["model"] == model) & (df["llm"] == "none")]
-        if g.empty or "inference_ms" not in g.columns:
-            continue
-        # Drop warmup outliers: exclude values > 3× the median
-        med = g["inference_ms"].median()
-        g_clean = g[g["inference_ms"] <= med * 3]
-        rows.append({
-            "model":  model,
-            "median": g_clean["inference_ms"].median(),
-            "mean":   g_clean["inference_ms"].mean(),
-            "n_dropped": len(g) - len(g_clean),
-        })
-    return pd.DataFrame(rows)
-
-
-def compute_metric2(df, toxicity_map):
-    """High-confidence misclassification recall — the primary clean metric."""
-    rows = []
-    pred_key = df["pred_class"].str.lower().str.replace(" ", "_")
-    pred_dangerous = pred_key.map(lambda x: is_dangerous(toxicity_map.get(x, "")))
-    hc_miss = df[(df["confidence"] >= 0.70) & (~pred_dangerous)]
-
-    for model in MODEL_ORDER:
-        g = hc_miss[(hc_miss["model"] == model) & (hc_miss["llm"] == "gemini")]
+    for model in SPEED_MODELS:
+        g = df[(df["model"] == model) & (df["llm"] == "none") & (df["inference_ms"] > 0)]
         if g.empty:
             continue
-        recall = g["flagged"].mean() * 100
-        rows.append({"model": model, "recall": recall, "n": len(g)})
+        med     = g["inference_ms"].median()
+        g_clean = g[g["inference_ms"] <= med * 3]
+        rows.append({"model": model, "median": g_clean["inference_ms"].median()})
     return pd.DataFrame(rows)
 
 
-def plot(recall_df, speed_df, m2_df):
-    has_speed = len(speed_df) > 0
-    n_panels  = 2 if has_speed else 1
-    ratios    = [1.6, 1] if has_speed else None
+def _add_group_dividers(ax, metrics_df):
+    """Draw dashed vertical lines between vision-only / LLM-only / combined groups."""
+    models = metrics_df["model"].tolist()
+    llms   = metrics_df["llm"].tolist()
 
-    fig, axes = plt.subplots(1, n_panels, figsize=(13, 5.5),
-                             gridspec_kw={"width_ratios": ratios} if ratios else None)
+    def group(m, l):
+        if m == "LLM Only":  return "llm"
+        return "vision" if l == "none" else "combined"
+
+    prev = None
+    for i, (m, l) in enumerate(zip(models, llms)):
+        g = group(m, l)
+        if prev and g != prev:
+            ax.axvline(i - 0.5, color="#bbbbbb", linewidth=1.2, linestyle="--", zorder=2)
+        prev = g
+
+
+def bar_panel(ax, metrics_df, col, title, ylabel):
+    present = metrics_df[metrics_df[col].notna()].reset_index(drop=True)
+    if present.empty:
+        ax.set_visible(False)
+        return
+
+    x    = np.arange(len(present))
+    bars = ax.bar(x, present[col], color=present["color"].tolist(),
+                  width=0.62, zorder=3, edgecolor="white", linewidth=0.8)
+
+    _add_group_dividers(ax, present)
+
+    ax.set_ylim(0, 118)
+    ax.set_ylabel(ylabel, fontsize=10.5)
+    ax.set_title(title, fontsize=11, pad=9, fontweight="bold")
+    ax.set_xticks(x)
+    ax.set_xticklabels(present["label"].tolist(), fontsize=8.5)
+    ax.yaxis.grid(True, alpha=0.3, zorder=0)
+    ax.set_axisbelow(True)
+    ax.spines[["top", "right"]].set_visible(False)
+
+    for bar, val in zip(bars, present[col]):
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1.5,
+                f"{val:.1f}%", ha="center", va="bottom",
+                fontsize=8, fontweight="bold", color="#222222")
+
+
+def plot_performance(metrics_df, n_images):
+    has_precision = metrics_df["precision"].notna().any()
+    n_panels      = 3 if has_precision else 1
+    fig, axes     = plt.subplots(1, n_panels, figsize=(5.5 * n_panels + 1, 6.2))
     if n_panels == 1:
         axes = [axes]
 
-    ax1 = axes[0]
-    ax2 = None
-    ax3 = axes[1] if has_speed else None
+    # F1 leads — balances recall and precision into one honest score
+    bar_panel(axes[0], metrics_df, "f1",
+              "F1 Score (↑ better)\nBalances catching danger vs. over-flagging safe species",
+              "F1 (%)")
 
-    # ── Panel 1: Safety Recall grouped bar ───────────────────────────────────
-    models_present = [m for m in MODEL_ORDER if m in recall_df["model"].values]
-    x = np.arange(len(models_present))
-    width = 0.35
+    if has_precision and n_panels >= 3:
+        bar_panel(axes[1], metrics_df, "recall",
+                  "Safety Recall (↑ better)\nHow many dangerous species were correctly flagged?",
+                  "Dangerous species flagged (%)")
 
-    none_vals   = [recall_df[(recall_df["model"] == m) & (recall_df["llm"] == "none")  ]["recall"].values[0]
-                   if len(recall_df[(recall_df["model"] == m) & (recall_df["llm"] == "none")]) > 0 else 0
-                   for m in models_present]
-    gemini_vals = [recall_df[(recall_df["model"] == m) & (recall_df["llm"] == "gemini")]["recall"].values[0]
-                   if len(recall_df[(recall_df["model"] == m) & (recall_df["llm"] == "gemini")]) > 0 else 0
-                   for m in models_present]
+        # Add FPR warning to the LLM-only x-axis label — high recall is misleading without it
+        llm_row = metrics_df[metrics_df["model"] == "LLM Only"]
+        if not llm_row.empty and llm_row["fpr"].notna().any():
+            present  = metrics_df[metrics_df["recall"].notna()].reset_index(drop=True)
+            llm_idx  = list(present["model"]).index("LLM Only")
+            fpr      = llm_row["fpr"].values[0]
+            labels   = [t.get_text() for t in axes[1].get_xticklabels()]
+            if llm_idx < len(labels):
+                labels[llm_idx] = f"Gemini\n(LLM only)\n⚠ FPR: {fpr:.0f}%"
+                axes[1].set_xticklabels(labels, fontsize=8.5)
+                axes[1].get_xticklabels()[llm_idx].set_color("#C0392B")
 
-    bars_none   = ax1.bar(x - width / 2, none_vals,   width, color=COLOR_NONE,   label="No LLM audit",         zorder=3)
-    bars_gemini = ax1.bar(x + width / 2, gemini_vals, width, color=COLOR_GEMINI, label="With Gemini visual audit", zorder=3)
+        bar_panel(axes[2], metrics_df, "fpr",
+                  "False Positive Rate (↓ better)\nHow often were safe species wrongly flagged?",
+                  "Safe species incorrectly flagged (%)")
 
-    ax1.set_ylim(0, 115)
-    ax1.set_ylabel("Dangerous species caught (%)", fontsize=12)
-    ax1.set_title("Dangerous Species Caught by the Pipeline\n(Higher is better)", fontsize=12, pad=10)
-    ax1.set_xticks(x)
-    ax1.set_xticklabels([MODEL_LABELS.get(m, m) for m in models_present], fontsize=10)
-    ax1.yaxis.grid(True, alpha=0.4, zorder=0)
-    ax1.set_axisbelow(True)
-    ax1.legend(fontsize=10, loc="upper left")
-    ax1.text(0.02, 0.01,
-             "\"No LLM audit\" = confidence threshold rule only\n(predictions <70% confidence auto-flagged HIGH)",
-             transform=ax1.transAxes, fontsize=7.5, va="bottom", color="#666666",
-             bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#cccccc", alpha=0.8))
+    legend_patches = [
+        mpatches.Patch(color="#4C72B0", label="Vision only"),
+        mpatches.Patch(color="#9B59B6", label="LLM only (Gemini)"),
+        mpatches.Patch(color="#DD8452", label="Vision + Gemini"),
+    ]
+    fig.legend(handles=legend_patches, loc="upper center", ncol=3,
+               fontsize=10, bbox_to_anchor=(0.5, 1.03), frameon=True,
+               edgecolor="#cccccc")
 
-    # Value labels + LLM lift annotations
-    for bar, nv, gv in zip(bars_none, none_vals, gemini_vals):
-        h = bar.get_height()
-        ax1.text(bar.get_x() + bar.get_width() / 2, h + 1.5, f"{h:.1f}%",
-                 ha="center", va="bottom", fontsize=9, color=COLOR_NONE, fontweight="bold")
-    for bar, nv, gv in zip(bars_gemini, none_vals, gemini_vals):
-        h = bar.get_height()
-        ax1.text(bar.get_x() + bar.get_width() / 2, h + 1.5, f"{h:.1f}%",
-                 ha="center", va="bottom", fontsize=9, color=COLOR_GEMINI, fontweight="bold")
-        lift = gv - nv
-        if lift > 0:
-            mid_x = bar.get_x() + bar.get_width() / 2
-            ax1.annotate(f"+{lift:.0f}pp", xy=(mid_x, gv + 5.5),
-                         ha="center", va="bottom", fontsize=8,
-                         color="#888888", style="italic")
-
-    # ── Panel 2: Inference Speed horizontal bar ───────────────────────────────
-    if ax3 is not None and len(speed_df) > 0:
-        sp_models = [m for m in MODEL_ORDER if m in speed_df["model"].values]
-        sp_medians = [speed_df[speed_df["model"] == m]["median"].values[0] for m in sp_models]
-        y = np.arange(len(sp_models))
-
-        bars_sp = ax3.barh(y, sp_medians, color=COLOR_SPEED, height=0.5, zorder=3)
-        ax3.set_xlabel("Median inference time (ms)", fontsize=12)
-        ax3.set_title("Vision Model Inference Speed\n(Lower is better, excl. LLM)", fontsize=12, pad=10)
-        ax3.set_yticks(y)
-        ax3.set_yticklabels([MODEL_LABELS.get(m, m) for m in sp_models], fontsize=10)
-        ax3.xaxis.grid(True, alpha=0.4, zorder=0)
-        ax3.set_axisbelow(True)
-
-        for bar, val in zip(bars_sp, sp_medians):
-            ax3.text(val + 0.5, bar.get_y() + bar.get_height() / 2,
-                     f"{val:.1f} ms", va="center", ha="left", fontsize=10, fontweight="bold")
-
-        ax3.set_xlim(0, max(sp_medians) * 1.35)
-
-    n_images = recall_df["n"].max() if len(recall_df) else 0
     fig.suptitle(
-        f"Ablation: Vision Model × LLM Safety Evaluation  (n={n_images} images/combo)",
-        fontsize=13, fontweight="bold", y=1.01,
+        f"Ablation Study: Vision Model × LLM Safety Evaluation  "
+        f"(n≈{n_images} dangerous images/condition)",
+        fontsize=12, fontweight="bold", y=1.08,
     )
+    plt.tight_layout(rect=[0, 0, 1, 0.97])
+    fig.savefig(OUT_PERF, dpi=150, bbox_inches="tight")
+    print(f"Saved: {OUT_PERF}")
+    plt.close(fig)
+
+
+def plot_speed(speed_df):
+    if speed_df.empty:
+        print("No speed data — skipping ablation_speed.png")
+        return
+
+    fig, ax  = plt.subplots(figsize=(6, 3.5))
+    models   = speed_df["model"].tolist()
+    medians  = speed_df["median"].tolist()
+    colors   = [SPEED_COLORS.get(m, "#4C72B0") for m in models]
+    y        = np.arange(len(models))
+
+    bars = ax.barh(y, medians, color=colors, height=0.5, zorder=3, edgecolor="white")
+    ax.set_xlabel("Median inference time (ms)", fontsize=11)
+    ax.set_title("Vision Model Inference Speed\n"
+                 "(Lower is better — LLM API latency excluded, model-independent)",
+                 fontsize=11, fontweight="bold")
+    ax.set_yticks(y)
+    ax.set_yticklabels(models, fontsize=10)
+    ax.xaxis.grid(True, alpha=0.35, zorder=0)
+    ax.set_axisbelow(True)
+    ax.spines[["top", "right"]].set_visible(False)
+
+    for bar, val in zip(bars, medians):
+        ax.text(val + 0.3, bar.get_y() + bar.get_height() / 2,
+                f"{val:.1f} ms", va="center", ha="left",
+                fontsize=10, fontweight="bold", color="#222222")
+    ax.set_xlim(0, max(medians) * 1.45)
+
     plt.tight_layout()
-    RESULTS_DIR.mkdir(exist_ok=True)
-    fig.savefig(OUT_PATH, dpi=150, bbox_inches="tight")
-    print(f"Figure saved: {OUT_PATH}")
+    fig.savefig(OUT_SPEED, dpi=150, bbox_inches="tight")
+    print(f"Saved: {OUT_SPEED}")
     plt.close(fig)
 
 
 def main():
-    df          = load_data()
-    toxicity_map = load_context() if CONTEXT_CSV.exists() else {}
-    recall_df   = compute_recall(df)
-    speed_df    = compute_speed(df)
-    m2_df       = compute_metric2(df, toxicity_map)
+    df         = load_data()
+    metrics_df = compute_metrics(df)
+    speed_df   = compute_speed(df)
 
-    print("\nMetric 1 — Safety Recall:")
-    print(recall_df.to_string(index=False))
+    print("\nPerformance Metrics:")
+    print(metrics_df[["label", "recall", "precision", "f1",
+                       "n_danger", "n_safe"]].to_string(index=False))
 
-    print("\nMetric 2 — HC Misclassification Recall (primary):")
-    print(m2_df.to_string(index=False))
-
-    if len(speed_df):
-        print("\nInference speed (warmup outliers excluded where >3x median):")
-        print(speed_df.to_string(index=False))
-
-    plot(recall_df, speed_df, m2_df)
+    n_images = int(metrics_df["n_danger"].max()) if len(metrics_df) else 0
+    plot_performance(metrics_df, n_images)
+    plot_speed(speed_df)
 
 
 if __name__ == "__main__":

@@ -45,14 +45,14 @@ Source: Picek et al. — [Danish Fungi 2020 (WACV 2022)](https://openaccess.thec
 
 ### Our Results
 
-| Model | Top-1 | Top-3 | Notes |
-|:------|:------|:------|:------|
-| ViT-Large/16 | 67.52% | 84.46% | Picek et al. baseline |
-| ViT-Base/16 | 65.33% | 82.44% | Picek et al. baseline |
-| SE-ResNeXt-101 | 62.42% | 80.71% | Picek et al. baseline |
-| **YOLOv26n-cls (ours)** | **60.17%** | **78.93%** | imgsz=224, fine-tuned from yolo26n-cls.pt, early stop epoch 37 |
-| EfficientNet-B3 | 59.31% | 78.79% | Picek et al. baseline |
-| EfficientNet-B0 | 58.58% | 77.01% | Picek et al. baseline |
+| Model | Top-1 | Top-3 | F1 | Notes |
+|:------|:------|:------|:---|:------|
+| ViT-Large/16 | 67.52% | 84.46% | 55.90% | Picek et al. baseline |
+| ViT-Base/16 | 65.33% | 82.44% | 52.28% | Picek et al. baseline |
+| SE-ResNeXt-101 | 62.42% | 80.71% | 50.01% | Picek et al. baseline |
+| **YOLOv26n-cls (ours)** | **60.17%** | **78.93%** | **48.60%** | imgsz=224, fine-tuned from yolo26n-cls.pt, early stop epoch 37 |
+| EfficientNet-B3 | 59.31% | 78.79% | 47.83% | Picek et al. baseline |
+| EfficientNet-B0 | 58.58% | 77.01% | 46.00% | Picek et al. baseline |
 
 YOLOv26n outperforms both EfficientNet baselines on Top-1 and Top-3 while being significantly smaller. The gap versus ViT-Large/16 is expected — ViT-Large has ~300M parameters vs YOLOv26n's ~1.7M.
 

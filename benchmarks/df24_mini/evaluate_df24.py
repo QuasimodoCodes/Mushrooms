@@ -1,6 +1,6 @@
 """
 Evaluates the fine-tuned YOLOv26n on the DF24-Mini validation set.
-Calculates Top-1 and Top-3 accuracy to match the published baselines.
+Calculates Top-1, Top-3 accuracy and macro F1 to match the published baselines.
 """
 
 import torch
@@ -33,6 +33,8 @@ def evaluate():
     top3_correct = 0
     total = 0
     skipped = 0
+    all_true = []
+    all_pred = []
 
     species_dirs = sorted(VAL_DIR.iterdir())
 
@@ -62,6 +64,8 @@ def evaluate():
             if true_idx in top5_idxs[:3]:
                 top3_correct += 1
 
+            all_true.append(true_idx)
+            all_pred.append(top1_idx)
             total += 1
 
     if total == 0:
@@ -71,21 +75,33 @@ def evaluate():
     top1 = top1_correct / total * 100
     top3 = top3_correct / total * 100
 
-    print(f"\n{'='*45}")
+    classes = set(all_true)
+    f1_per_class = []
+    for c in classes:
+        tp = sum(1 for t, p in zip(all_true, all_pred) if t == c and p == c)
+        fp = sum(1 for t, p in zip(all_true, all_pred) if t != c and p == c)
+        fn = sum(1 for t, p in zip(all_true, all_pred) if t == c and p != c)
+        prec = tp / (tp + fp) if (tp + fp) > 0 else 0
+        rec  = tp / (tp + fn) if (tp + fn) > 0 else 0
+        f1_per_class.append(2 * prec * rec / (prec + rec) if (prec + rec) > 0 else 0)
+    f1 = sum(f1_per_class) / len(f1_per_class) * 100
+
+    print(f"\n{'='*55}")
     print(f"  Results on DF24-Mini validation set")
-    print(f"{'='*45}")
+    print(f"{'='*55}")
     print(f"  Images evaluated : {total}")
     print(f"  Skipped classes  : {skipped}")
     print(f"  Top-1 Accuracy   : {top1:.2f}%")
     print(f"  Top-3 Accuracy   : {top3:.2f}%")
-    print(f"{'='*45}")
+    print(f"  Macro F1         : {f1:.2f}%")
+    print(f"{'='*55}")
     print(f"\nPublished baselines (224x224):")
-    print(f"  ViT-Large/16     : 67.52% Top-1 | 84.46% Top-3")
-    print(f"  ViT-Base/16      : 65.33% Top-1 | 82.44% Top-3")
-    print(f"  SE-ResNeXt-101   : 62.42% Top-1 | 80.71% Top-3")
-    print(f"  EfficientNet-B3  : 59.31% Top-1 | 78.79% Top-3")
-    print(f"  EfficientNet-B0  : 58.58% Top-1 | 77.01% Top-3")
-    print(f"  YOLOv26n (ours)  : {top1:.2f}% Top-1 | {top3:.2f}% Top-3")
+    print(f"  ViT-Large/16     : 67.52% Top-1 | 84.46% Top-3 | 55.90% F1")
+    print(f"  ViT-Base/16      : 65.33% Top-1 | 82.44% Top-3 | 52.28% F1")
+    print(f"  SE-ResNeXt-101   : 62.42% Top-1 | 80.71% Top-3 | 50.01% F1")
+    print(f"  EfficientNet-B3  : 59.31% Top-1 | 78.79% Top-3 | 47.83% F1")
+    print(f"  EfficientNet-B0  : 58.58% Top-1 | 77.01% Top-3 | 46.00% F1")
+    print(f"  YOLOv26n (ours)  : {top1:.2f}% Top-1 | {top3:.2f}% Top-3 | {f1:.2f}% F1")
 
 
 if __name__ == "__main__":

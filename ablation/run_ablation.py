@@ -166,6 +166,37 @@ def build_visual_prompt(species_name, confidence, context_row):
                                      user_season="Unknown", user_location="Unknown")
 
 
+def build_llm_only_prompt():
+    return """You are a field mycology safety expert. You have been given a photo of a mushroom taken in the field by a forager.
+
+Your task is to:
+1. Identify the mushroom species from the photo if possible.
+2. Assess the safety risk for a forager who might want to consume it.
+3. Look carefully at the cap shape and colour, gills, stem, and any distinguishing features.
+
+Respond in this exact format:
+SPECIES: [your best identification, or "Unknown" if unsure]
+RISK: [one of: LOW / MODERATE / HIGH / CRITICAL]
+REASONING: [1-2 sentences explaining your assessment]
+
+Use CRITICAL if the mushroom appears to be or could be a deadly species (e.g. Amanita phalloides, Galerina marginata, Cortinarius species).
+Use HIGH if the species is toxic, or cannot be confidently identified as safe.
+Use MODERATE if the species appears edible but has dangerous lookalikes.
+Use LOW only if you are confident the species is safe and easily identifiable."""
+
+
+def parse_llm_only_risk(response: str) -> str:
+    upper = response.upper()
+    for level in ("CRITICAL", "HIGH", "MODERATE", "LOW"):
+        if f"RISK: {level}" in upper:
+            return level
+    # Fallback — scan for bare keywords; default HIGH (safety first)
+    for level in ("CRITICAL", "HIGH", "MODERATE", "LOW"):
+        if level in upper:
+            return level
+    return "HIGH"
+
+
 # ── Collect test images ────────────────────────────────────────────────────────
 def collect_test_images(context, samples_dangerous, samples_safe):
     test_dir   = DATA_DIR / "test"
@@ -209,6 +240,8 @@ def main():
                         help="Max images per dangerous class")
     parser.add_argument("--samples-safe", type=int, default=5,
                         help="Max images per safe class (0 to skip safe species)")
+    parser.add_argument("--max-images", type=int, default=None,
+                        help="Hard cap on total images (sampled proportionally from dangerous/safe)")
     parser.add_argument("--llms", nargs="+",
                         default=["none", "gemini"],
                         choices=["none", "gemini"],
@@ -229,6 +262,13 @@ def main():
     context     = load_context()
     test_images = collect_test_images(context, args.samples, args.samples_safe)
 
+    if args.max_images and len(test_images) > args.max_images:
+        random.shuffle(test_images)
+        test_images = test_images[:args.max_images]
+        n_d = sum(1 for i in test_images if i["dangerous"])
+        n_s = sum(1 for i in test_images if not i["dangerous"])
+        print(f"Capped to {len(test_images)} images ({n_d} dangerous, {n_s} safe)")
+
     # Load vision models
     print("\nLoading vision models...")
     yolo26   = load_yolo(WEIGHTS["yolo26n"])  if WEIGHTS["yolo26n"].exists()  else None
@@ -236,27 +276,25 @@ def main():
     dinov2   = load_dinov2(WEIGHTS["dinov2"])     if WEIGHTS["dinov2"].exists()   else None
 
     vision_models = {}
-    if yolo26:   vision_models["YOLOv26n"]        = ("yolo", yolo26)
-    if convnext: vision_models["ConvNeXt-Tiny"]   = ("cnn",  convnext)
-    if dinov2:   vision_models["DINOv2-Small"]    = ("cnn",  dinov2)
+    if yolo26:   vision_models["YOLOv26n"]        = ("yolo",     yolo26)
+    if convnext: vision_models["ConvNeXt-Tiny"]   = ("cnn",      convnext)
+    if dinov2:   vision_models["DINOv2-Small"]    = ("cnn",      dinov2)
+    vision_models["LLM Only"]                     = ("llm_only", None)
 
     out_csv = RESULTS_DIR / "ablation_raw.csv"
 
-    # Resume: load already-completed images so we don't redo them
-    done_images = set()
+    # Resume: track per (image, model, llm) so new conditions don't re-run old ones
+    done_combos = set()
     if out_csv.exists():
         existing = pd.read_csv(out_csv)
-        # Backfill `dangerous` column for rows written before this column existed
         if "dangerous" not in existing.columns:
             existing["dangerous"] = existing["true_toxicity"].apply(
                 lambda t: is_dangerous(str(t))
             )
         rows = existing.to_dict("records")
-        n_combos = len(vision_models) * len(args.llms)
-        counts = existing.groupby("image").size()
-        done_images = set(counts[counts >= n_combos].index)
-        print(f"Resuming — {len(done_images)} images already done, "
-              f"{len(test_images) - len(done_images)} remaining.")
+        for _, row in existing.iterrows():
+            done_combos.add((row["image"], row["model"], row["llm"]))
+        print(f"Resuming — {len(done_combos)} (image, model, llm) combos already done.")
     else:
         rows = []
 
@@ -269,34 +307,74 @@ def main():
         dangerous   = item["dangerous"]
         ctx_row     = item["ctx_row"]
 
-        if img_path.name in done_images:
-            continue
-
         for model_name, (model_type, model_obj) in vision_models.items():
-            # Run vision model
-            try:
-                import time
-                t0 = time.perf_counter()
-                if model_type == "yolo":
-                    pred_class, confidence = predict_yolo(model_obj, img_path)
-                else:
-                    net, class_names, tfm, device = model_obj
-                    pred_class, confidence = predict_cnn(net, class_names, tfm, device, img_path)
-                inference_ms = round((time.perf_counter() - t0) * 1000, 1)
-            except Exception as e:
-                continue
 
-            pred_ctx  = context.get(pred_class.replace(" ", "_").lower(), {})
+            # LLM-only has no vision inference
+            if model_type == "llm_only":
+                pred_class, confidence, inference_ms = "Unknown", 1.0, 0.0
+                pred_ctx = {}
+                needs_llm = True
+                text_prompt = visual_prompt = None
+            else:
+                # Run vision model
+                try:
+                    import time
+                    t0 = time.perf_counter()
+                    if model_type == "yolo":
+                        pred_class, confidence = predict_yolo(model_obj, img_path)
+                    else:
+                        net, class_names, tfm, device = model_obj
+                        pred_class, confidence = predict_cnn(net, class_names, tfm, device, img_path)
+                    inference_ms = round((time.perf_counter() - t0) * 1000, 1)
+                except Exception as e:
+                    continue
 
-            # Skip LLM if confidence < 0.70 — risk engine always flags HIGH
-            # via the confidence threshold regardless of LLM verdict.
-            # LLM only matters when vision is confident but potentially wrong.
-            needs_llm     = confidence >= 0.70
-            text_prompt   = build_prompt(pred_class, confidence, pred_ctx)        if needs_llm else None
-            visual_prompt = build_visual_prompt(pred_class, confidence, pred_ctx) if needs_llm else None
+                pred_ctx  = context.get(pred_class.replace(" ", "_").lower(), {})
+                needs_llm = confidence >= 0.70
+                text_prompt   = build_prompt(pred_class, confidence, pred_ctx)        if needs_llm else None
+                visual_prompt = build_visual_prompt(pred_class, confidence, pred_ctx) if needs_llm else None
 
             for llm_name in args.llms:
+                if (img_path.name, model_name, llm_name) in done_combos:
+                    continue
+
+                # LLM-only requires an actual LLM — skip the "none" pairing
+                if model_type == "llm_only" and llm_name == "none":
+                    continue
+
                 try:
+                    if model_type == "llm_only":
+                        if gemini_dead:
+                            llm_verdict = "SKIPPED: Gemini quota exhausted"
+                            risk_level  = "QUOTA_EXHAUSTED"
+                            flagged     = False
+                            rows.append({
+                                "image": img_path.name, "true_class": true_class,
+                                "true_toxicity": toxicity, "dangerous": dangerous,
+                                "model": model_name, "llm": llm_name,
+                                "pred_class": pred_class, "confidence": confidence,
+                                "inference_ms": inference_ms, "risk_level": risk_level,
+                                "flagged": flagged,
+                            })
+                            continue
+                        blind_prompt = build_llm_only_prompt()
+                        response     = query_llm_for_ablation("gemini", "", blind_prompt,
+                                                              image_path=str(img_path))
+                        if "rate limit after 3 retries" in response:
+                            print("\n[Gemini quota exhausted]")
+                            gemini_dead = True
+                        risk_level = parse_llm_only_risk(response)
+                        flagged    = risk_level in ("HIGH", "CRITICAL")
+                        rows.append({
+                            "image": img_path.name, "true_class": true_class,
+                            "true_toxicity": toxicity, "dangerous": dangerous,
+                            "model": model_name, "llm": llm_name,
+                            "pred_class": pred_class, "confidence": confidence,
+                            "inference_ms": inference_ms, "risk_level": risk_level,
+                            "flagged": flagged,
+                        })
+                        continue
+
                     if not needs_llm or llm_name == "none":
                         llm_verdict = "✅ PLAUSIBLE"
                     elif llm_name == "gemini" and gemini_dead:
@@ -409,7 +487,7 @@ def main():
     if len(safe_df) > 0:
         print(f"\n{'='*65}")
         print("  Metric 4 — Precision / Recall / F1 (all species)")
-        print(f"  ({len(danger_df['image'].nunique() if 'image' in danger_df else 0)} dangerous images, "
+        print(f"  ({danger_df['image'].nunique()} dangerous images, "
               f"{safe_df['image'].nunique()} safe images)")
         print(f"{'='*65}")
         print(f"{'Model':<20} {'LLM':<12} {'Precision':>10} {'Recall':>8} {'F1':>8}")
