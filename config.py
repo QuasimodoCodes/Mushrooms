@@ -16,17 +16,15 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 #  The name must match a folder inside docs/yolo_runs/.
 # ─────────────────────────────────────────────────────────────────────────────
 
-# YOLO_RUN_NAME = "yolo26_tflite"
-YOLO_RUN_NAME = "yolo11_classifier_v1"
+YOLO_RUN_NAME = "yolo26_tflite"
 # Other options already trained:  "mushroom_classifier_v1"  (YOLOv8n baseline)
 
 # "pt"     → full PyTorch weights  (~1.5 GB Docker image, requires torch)
 # "tflite" → exported TFLite model (~200 MB Docker image, no PyTorch needed)
-# MODEL_FORMAT = os.environ.get("MODEL_FORMAT", "pt").lower()
-MODEL_FORMAT = os.environ.get("MODEL_FORMAT", "tflite").lower()
+MODEL_FORMAT = os.environ.get("MODEL_FORMAT", "pt").lower()
 
 # Resolved automatically from the two settings above — do not edit these.
-_weights = os.path.join(PROJECT_ROOT, "docs", "yolo11_results", YOLO_RUN_NAME, "weights")
+_weights = os.path.join(PROJECT_ROOT, "docs", "yolo_runs", YOLO_RUN_NAME, "weights")
 MODEL_PATH = (os.path.join(_weights, "best_float16.tflite")
               if MODEL_FORMAT == "tflite"
               else os.path.join(_weights, "best.pt"))
