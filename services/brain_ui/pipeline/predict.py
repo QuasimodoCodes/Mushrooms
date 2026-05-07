@@ -7,7 +7,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # URL of our new Vision API
 # We default to localhost for local testing, but Docker Compose will override this!
 # VISION_API_URL = os.environ.get("VISION_API_URL", "http://127.0.0.1:8000/predict")
-VISION_API_URL = os.environ.get("VISION_API_URL", "http://localhost:5001/predict")
+VISION_API_URL = os.environ.get("VISION_API_URL", "http://localhost:8000/predict")
 def predict_image(image_path):
     print(f"Sending image to Vision API at: {VISION_API_URL}")
     print(f"Running inference on image: {image_path}")

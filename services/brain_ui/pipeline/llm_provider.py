@@ -8,9 +8,13 @@ Currently active: Ollama (local)
 To switch to Gemini: Change ACTIVE_PROVIDER to "gemini" and set your API key.
 """
 
+
+
 import os
 import requests
 import json
+from dotenv import load_dotenv
+load_dotenv()
 
 # ============================================================
 # CONFIGURATION - Change these to switch LLM providers
@@ -25,7 +29,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_MODEL = "gemini-3.1-flash-lite-preview"
 
 
-def query_llm(prompt):
+def query_llm(prompt, image_path=None):
     """
     Sends a prompt to whichever LLM backend is currently active.
     Returns the LLM's text response as a string.
