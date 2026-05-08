@@ -1,293 +1,214 @@
-# A Multimodal Mushroom Classification System
+# Mushroom Safety Classifier
 
-A production-grade, microservice-based AI safety system that identifies mushroom species visually (YOLOv26) and cross-references them with ecological context using an LLM audit layer. Built with end-to-end MLOps, CI/CD, and serverless cloud deployment.
-
----
-
-## How to Operate the System
-
-Whether you are retraining the vision model or spinning up the microservices locally, here is your quick-start guide:
-
-### 1. Syncing the Massive Dataset (DVC)
-
-Since the 12GB+ dataset and heavy Pytorch weights are stored in the cloud (Hugging Face / Google Cloud or S3) to keep this repository small, use DVC to fetch them:
-
-```bash
-# Pull all raw data and weights into the local workspace
-dvc pull
-```
-
-### 2. Training the YOLO Model Locally
-
-If you want to train the model from scratch on your own GPU:
-
-```bash
-# Ensure your virtual environment is active
-.\.venv\Scripts\Activate.ps1
-
-# Run the training script directly
-python scripts/training/train_yolo.py
-
-# Expected Output: A new run folder inside docs/yolo_runs/ containing fresh .pt weights and metrics
-```
-
-### 3. Experimenting with Your Own Model (Contributors)
-
-Want to train your own version of YOLOv26 with different hyperparameters? Follow these steps:
-
-**Step 1: Clone & Setup**
-
-```bash
-git clone https://github.com/QuasimodoCodes/Mushrooms.git
-cd Mushrooms
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1          # Windows (use source .venv/bin/activate on Mac/Linux)
-pip install -r requirements.txt
-dvc pull                               # Download the 12GB+ dataset from cloud storage
-```
-
-**Step 2: Create a new branch**
-
-```bash
-git checkout -b my-experiment
-```
-
-**Step  3: Edit the training parameters**
-
-Open `scripts/training/train_yolo.py` and tweak the hyperparameters in `model.train(...)`:
-
-| Parameter  | Default                  | What it controls                                                |
-| :--------- | :----------------------- | :-------------------------------------------------------------- |
-| `epochs`   | 50                       | Maximum training epochs                                         |
-| `imgsz`    | 224                      | Input image resolution (higher = more detail, slower)           |
-| `patience` | 10                       | Early stopping — halts if val/loss doesn't improve for N epochs |
-| `cos_lr`   | True                     | Cosine learning rate schedule                                   |
-| `name`     | `"yolo26_classifier_v1"` | **You must change this** to avoid overwriting the baseline run  |
-
-> ⚠️ **Important:** Always set a unique `name` (e.g., `"yolo26_experiment_v2"`) so your run saves to its own folder under `docs/yolo_runs/`.
-
-Example with adjusted parameters:
-
-```bash
-results = model.train(
-    data=data_dir,
-    epochs=100,           # Train longer
-    imgsz=320,            # Higher resolution
-    device=device,
-    exist_ok=True,
-    patience=15,          # More patience before early stop
-    cos_lr=True,
-    lr0=0.005,            # Lower starting learning rate
-    project=...,
-    name="yolo26_experiment_v2"
-)
-```
-
-**Step 4: Train**
-
-```bash
-python scripts/training/train_yolo.py
-```
-
-> Requires an Nvidia GPU with CUDA. CPU training on 169 mushroom classes would take an extremely long time.
-
-**Step 5: Push & Open a Pull Request**
-
-```bash
-git add .
-git commit -m "Trained YOLOv26 with new hyperparameters"
-git push origin my-experiment
-```
-
-Then open a Pull Request on GitHub (or run `gh pr create`). The **CML bot will automatically post** your training graphs, confusion matrix, and final metrics as a comment on the PR — no extra work needed.
-
-From there, the team reviews your metrics against the baseline and merges if the model improves.
+A production-grade AI system that identifies mushroom species from a photo and gives a safety verdict. It combines a fast on-device vision model (YOLOv26) with an LLM safety audit (Gemini) and a knowledge base of ecological rules to catch dangerous look-alikes.
 
 ---
 
-### 4. Running Microservices Locally (Docker)
+## Live App
 
-You can boot up the entire architecture on your local laptop using Docker Compose. This starts the TFLite Vision API (slim), Gradio UI layer, and the MLOps monitoring stack simultaneously, bridging them over an internal Docker network.
+| Service | URL |
+|:--------|:----|
+| **Brain UI** (the app) | https://brain-ui-849718487429.us-central1.run.app |
+| **Vision API** (backend) | https://vision-api-849718487429.us-central1.run.app |
+
+The Brain UI is what you open in a browser. The Vision API is the backend it calls — you do not need to interact with it directly.
+
+---
+
+## Using the App
+
+1. Open the Brain UI link above.
+2. Upload a photo of a mushroom (drag-and-drop or click to browse).
+3. Select the current **season** from the dropdown.
+4. Type your **location** (e.g. `Norway`, `Pacific Northwest`, `Denmark`).
+5. Click **Submit**.
+
+The app streams its progress in real time:
+
+- Sends the image to the Vision API → YOLO identifies the species and confidence score
+- Looks up the species in the knowledge base (toxicity, habitat, season, region, warnings)
+- Asks Gemini to audit whether the visual prediction makes sense given your location and season
+- Runs hard safety rules (confidence < 70% → automatic unsafe flag regardless of LLM verdict)
+- Returns a final **SAFE / UNSAFE / UNCERTAIN** verdict with an explanation
+
+**What the output tells you:**
+- The predicted species name and confidence score
+- Ecological context (toxicity type, typical habitat, season, region)
+- The LLM's reasoning about whether the prediction fits your environment
+- The final risk decision and any warnings
+
+> The app is a safety aid, not a substitute for expert identification. Never eat a wild mushroom based on an AI verdict alone.
+
+---
+
+## How to Run Locally
+
+### Option A — Docker (recommended, runs everything)
 
 ```bash
-# Build and launch all containers (uses TFLite slim image by default)
+# Start the Vision API, Brain UI, Prometheus, and Grafana together
 docker-compose -f deploy/docker-compose.yml up --build -d
-
-# What to see:
-# -> The Gradio UI will be available at http://localhost:7860
-# -> The Vision API (TFLite) will be listening on http://localhost:8000
-# -> The API Metrics will be scraping at http://localhost:8000/metrics
-# -> Prometheus will be available at http://localhost:9090
-# -> Grafana Dashboards will be available at http://localhost:3000 (admin/admin)
 ```
 
-> To switch back to the full PyTorch image, change the `dockerfile` path in `deploy/docker-compose.yml` from `services/vision_api/slim/Dockerfile` to `services/vision_api/Dockerfile`.
+| Service | Local URL |
+|:--------|:----------|
+| Brain UI | http://localhost:7860 |
+| Vision API | http://localhost:8000 |
+| Vision API metrics | http://localhost:8000/metrics |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3000 (login: admin / admin) |
 
-### 5. Running Microservices Locally (Python/Terminal)
-
-If you don't want to use Docker and prefer two raw Python terminal tabs:
+### Option B — Python terminals (no Docker)
 
 ```bash
-# Terminal 1: Boot the Vision API
-cd services/vision_api/
+# Terminal 1: Vision API
+cd services/vision_api
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
-# Terminal 2: Boot the Web UI
-cd services/brain_ui/
+# Terminal 2: Brain UI
+cd services/brain_ui
 python app.py
 ```
 
-### 6. Deploying to the Cloud & Reviewing Models
+Then open http://localhost:7860.
 
-Because we set up CI/CD using GitHub Actions, deployment and model evaluation are completely hands-off!
+### Prerequisites
 
-**To review model metrics (CML):**
+- Python 3.12
+- Docker + Docker Compose (for Option A)
+- A `.env` file in the project root with:
 
-```bash
-# Push your code to any new branch to open a Pull Request
-git checkout -b new-model-update
-git add .
-git commit -m "Trained a new YOLO model"
-git push origin new-model-update
+```
+GEMINI_API_KEY=your_key_here
 ```
 
-> _Behind the scenes: CML will automatically run and post the new model's confusion matrices and training graphs directly to your GitHub PR so your team can review the accuracy._
-
-**To deploy the live application:**
+- Model weights and dataset pulled via DVC:
 
 ```bash
-# Merge your PR or push directly to the 'master' branch
-git checkout master
-git merge new-model-update
+dvc pull
+```
+
+---
+
+## Deployment
+
+Deployment is fully automated. Push to `master` and GitHub Actions handles the rest:
+
+```bash
 git push origin master
 ```
 
-> _Behind the scenes: GitHub Actions will detect the push to master, trigger Google Cloud Build to compile your Docker images, and roll out the new containers serverlessly to Google Cloud Run._
+This triggers `.github/workflows/deploy.yml`, which:
+1. Authenticates with Google Cloud using the `GCP_CREDENTIALS` secret
+2. Runs Cloud Build to build both Docker images
+3. Deploys them to Cloud Run in `us-central1`
 
----
+The Brain UI container receives the Vision API URL and Gemini key as environment variables — no config changes needed.
 
-## Project Structure
+To check the status of a running service:
 
-```text
-Mushroom/
-├── .github/workflows/        ← CI/CD Automations (GitHub Actions & CML)
-├── data/
-│   ├── dataset.yaml          ← YOLO class mapping config
-│   ├── mushroom_context.csv  ← Ecological rules (Knowledge Base)
-│   └── drift_images/         ← Auto-saved low-confidence field data
-├── deploy/                   ← Infrastructure as Code
-│   ├── docker-compose.yml    ← Local multi-container orchestration
-│   └── prometheus.yml        ← Prometheus metrics scraping config
-├── docs/
-│   ├── planning/             ← Brainstorms and schema planners
-│   └── yolo_runs/            ← YOLO metrics, loss graphs, PR curves
-├── scripts/
-│   ├── setup/                ← Scripts for scraping data & managing HF uploads
-│   └── training/             ← YOLO model training logic
-├── services/                 ← Containerized Microservices
-│   ├── brain_ui/             ← Gradio UI, LLM Audit, Risk Engine (app.py)
-│   │   ├── Dockerfile
-│   │   └── pipeline/         ← Core evaluation logic scripts
-│   └── vision_api/           ← FastAPI Vision Server
-│       ├── main.py           ← PyTorch inference (ultralytics)
-│       ├── Dockerfile        ← Full-size PyTorch image
-│       └── slim/             ← TFLite-only deployment (no PyTorch)
-│           ├── main.py       ← Standalone TFLite inference
-│           ├── Dockerfile    ← Lightweight image (~200MB vs ~1.5GB)
-│           └── requirements.txt
-├── README.md                 ← You are here
-└── dvc.yaml                  ← Data Version Control pipelines
-
----
-
-## 🏗️ System Architecture & Workflow
-
-This project has evolved from a local Python script into a robust, cloud-ready microservice architecture. Here is how the whole pipeline works end-to-end:
-
-### 1. The Vision API (FastAPI + YOLOv26)
-
-Instead of loading massive PyTorch models directly into the user interface, we decoupled the vision logic into its own containerized microservice: the **Vision API**.
-
-- A field user uploads an image of a mushroom via the web UI.
-- The UI sends a fast HTTP POST request to the Vision API (`services/vision_api/`).
-- **YOLOv26 Nano** processes the image, extracting the `Top 1 Predicted Class` (e.g., _Amanita muscaria_) and its `Confidence Score` (e.g., _0.91_ or 91%) trained on the mushroom dataset (50 epochs).
-
-**Deployment modes:**
-
-| Mode | Path | Runtime | Docker Image |
-|:-----|:-----|:--------|:-------------|
-| **Full (PyTorch)** | `services/vision_api/` | ultralytics + torch | ~1.5 GB |
-| **Slim (TFLite)** | `services/vision_api/slim/` | ai-edge-litert only | ~200 MB |
-
-Both produce identical predictions (Top-1: 88.09%, Top-5: 98.37%). The slim deployment is the default for Docker and Google Cloud — it drops PyTorch entirely and runs the exported `best_float16.tflite` model directly, cutting the image size by ~7x.
-
-### 2. Context Fetching (CSV Knowledge Base)
-
-Visual identification alone is incredibly dangerous in the wild. A mushroom might look edible, but if it is growing on the wrong type of wood or in the wrong season, it is likely a toxic look-alike.
-
-- Instead of trying to teach YOLO abstract ecological rules, we maintain a structured **Knowledge Base (`data/mushroom_context.csv`)**.
-- We use `pandas` to take YOLO's top prediction and fetch its toxicity status, primary growing season, geographic region, and key warnings from the CSV.
-
-### 3. The LLM Audit Layer (Llama3 / Gemini)
-
-This is the "Reasoning" phase of the pipeline.
-
-- We merge the YOLO visual prediction, the structured CSV ecological rules, and the field user's provided metadata (GPS location & current season) into a formatted text prompt.
-- An **LLM (Large Language Model)** acts as a safety auditor. We ask it: _"Does this visual prediction logically make sense given the user's current environment?"_
-- If a user is situated in Norway in the dead of Winter, but the YOLO model predicts a Summer mushroom native to Brazil, the LLM intelligently catches the hallucination and flags the prediction as unsafe!
-
-### 4. Risk-Aware Decision Engine
-
-While AI systems probabilistically hallucinate, hard-coded software rules do not. We mapped specific safety gates as a final fallback:
-
-- **Rule 1:** If the **YOLO Confidence** is below 70%, the system aborts and warns the user of an unsafe visual lock.
-- **Rule 2:** If the **LLM Audit Layer** detects an ecological mismatch, the system vetoes the prediction, regardless of how confident the Vision model was.
-
----
-
-## ☁️ Cloud Deployment & Microservices
-
-To make the application globally accessible and horizontally scalable, the architecture is entirely containerized and deployed to the cloud:
-
-1. **Dockerization:** Both the Vision API and Brain UI have their own unique `Dockerfile`s. The Vision API ships with a **TFLite slim image** by default (~200MB), eliminating the ~1.5GB PyTorch dependency entirely while maintaining identical accuracy. The original PyTorch Dockerfile is preserved for local development or GPU workflows.
-2. **Google Cloud Run:** Using **Google Cloud Build**, the Docker containers are compiled into images and hosted serverlessly on Cloud Run, scaling instantly with user traffic. The slim TFLite image starts faster and costs less per instance.
-3. **Environment Injection:** The UI reaches the remote Vision API securely via public cloud URLs injected into the container's environment variables (`VISION_API_URL`).
-
----
-
-## 🚀 MLOps & Production Engineering
-
-Machine Learning doesn't stop when you save a `.pt` weights file. We implemented strict MLOps principles across the repository:
-
-### Data Version Control (DVC) + Hugging Face
-
-Git was fundamentally built for code text, not 12 Gigabyte datasets of images or heavy 50MB PyTorch binaries.
-
-- We utilize **DVC (Data Version Control)** to independently track the system's massive image datasets and computed `best.pt` model weights.
-- DVC natively uploads these heavy assets to a **Hugging Face bucket (Cloud Storage)**, leaving only tiny `.dvc` text-based pointers/hashes inside this Git repository.
-- **Why?** This keeps standard `git clone` operations lightning fast, entirely avoids GitHub's harsh 100MB file limits, and massively accelerates development portability. If we ever rent a blank Cloud GPU to retrain the model, that new machine can simply run `dvc pull` to instantly restore the entire data ecosystem directly from Hugging Face!
-
-### Continuous Integration / Deployment (CI/CD)
-
-- The repository is rigged with **GitHub Actions** (`.github/workflows/deploy.yml`). Pushing a validated code update to the `main` branch automatically triggers cloud runners to spin up newly patched Docker images and roll them out live to the Google Cloud Run production environment.
-
-### Observability, Logging & Health Checks
-
-- **Centralized Logging:** Legacy monolithic `print()` logic was upgraded to Python's robust `logging` module so we can view streaming cloud outputs.
-- **API Health Endpoints:** The Vision API instances feature a root `/health` heartbeat endpoint that allows Google Cloud's load balancers to easily verify that a container is still actively resolving requests.
-
-### Model Drift Detection
-
-- Machine learning models naturally degrade in production environments when exposed to new conditions (e.g. dirty camera lenses, crushed mushroom caps).
-- The pipeline handles this using active **Drift Detection**: Any time a user submits an image and the YOLO model yields an uncertain confidence score **< 0.70**, the architecture natively intercepts the transmission and seamlessly saves the input image to an isolated `data/drift_images/` staging pool. These failure cases manually construct our next dataset for future model fine-tuning!
-
-### Continuous Machine Learning (CML)
-- We use **CML (Continuous Machine Learning)** to automatically generate and post model evaluation reports.
-- Whenever code is pushed to a Pull Request on the `master` branch, a GitHub Action triggered by `iterative/setup-cml` automatically creates a Markdown report (`report.md`) embedding the visual accuracy charts (like confusion matrices and loss curves) generated by our YOLO training runs and tracked by DVC.
-- It then executes `cml comment create report.md` to post these visual analytics directly into the PR timeline, bringing ML model evaluation natively into standard code review.
-
-### Model Monitoring (Prometheus & Grafana)
-- Production insights are gathered at the microservice level. We instrumented the FastAPI application to natively expose real-time metrics on a `/metrics` endpoint using `prometheus-fastapi-instrumentator`.
-- This automatically tracks standard HTTP metrics like `http_requests_total`, `http_request_duration_seconds`, and error counts without any custom application code.
-- Our local `docker-compose` architecture spins up **Prometheus** (configured via `prometheus.yml` to actively scrape the Vision API every 15 seconds) and **Grafana** (to construct flexible, visual dashboards over the Prometheus timeseries data). This allows us to track API latency, usage spikes, and system health in a centralized visualization layer.
+```bash
+gcloud run services describe vision-api --region us-central1
+gcloud run services describe brain-ui --region us-central1
 ```
+
+---
+
+## Training a New Model
+
+```bash
+# 1. Create a branch
+git checkout -b my-experiment
+
+# 2. Edit hyperparameters in scripts/training/train_yolo.py
+#    Change `name` to avoid overwriting the baseline run
+
+# 3. Pull the dataset (12 GB+)
+dvc pull
+
+# 4. Train (requires CUDA GPU)
+python scripts/training/train_yolo.py
+# Output saved to docs/yolo_runs/<name>/
+
+# 5. Push and open a PR
+git push origin my-experiment
+```
+
+Opening a PR automatically triggers the CML workflow, which posts confusion matrices and training curves as a comment on the PR.
+
+---
+
+## What Each Service Does
+
+| Service | Path | What it does |
+|:--------|:-----|:-------------|
+| **Vision API** | `services/vision_api/` | FastAPI server. Accepts a mushroom image, runs YOLOv26, returns species name + confidence. Default image uses TFLite (~200 MB). Full PyTorch image also available. |
+| **Brain UI** | `services/brain_ui/` | Gradio web UI. Orchestrates the full pipeline: calls Vision API, fetches ecological context, runs LLM audit, applies safety rules, streams results to the user. |
+| **Pipeline modules** | `services/brain_ui/pipeline/` | `predict.py` — calls Vision API. `integration.py` — knowledge base lookup. `audit_layer.py` — LLM safety audit. `risk_engine.py` — final decision logic. `llm_provider.py` — Gemini / Ollama abstraction. |
+
+---
+
+## Directory Guide
+
+```
+Mushroom/
+├── services/
+│   ├── vision_api/           ← FastAPI prediction server
+│   │   ├── main.py           ← PyTorch/ultralytics inference
+│   │   ├── Dockerfile        ← Full PyTorch image (~1.5 GB)
+│   │   ├── cloudbuild.yaml   ← Google Cloud Build config
+│   │   └── slim/             ← TFLite-only image (~200 MB, default for cloud)
+│   └── brain_ui/
+│       ├── app.py            ← Gradio UI + pipeline orchestration
+│       ├── Dockerfile
+│       ├── cloudbuild.yaml
+│       └── pipeline/         ← predict, integration, audit, risk, llm modules
+│
+├── data/
+│   ├── mushroom_context.csv  ← Knowledge base: toxicity, habitat, season, region
+│   ├── mushroom_species.json ← Species list
+│   ├── dataset.yaml          ← YOLO class config
+│   └── drift_images/         ← Auto-saved low-confidence images (gitignored)
+│
+├── scripts/
+│   ├── training/             ← YOLO training scripts
+│   └── setup/                ← Dataset scraping and Hugging Face upload scripts
+│
+├── docs/
+│   ├── yolo_runs/            ← Training outputs: weights, metrics, loss curves
+│   │   └── yolo26_classifier_v1/weights/best.pt  ← Production weights
+│   ├── cloud_deployment_pipeline.md  ← Full deployment walkthrough
+│   ├── model_comparison.md
+│   └── problems_log.md
+│
+├── ablation/                 ← Ablation study: vision model × LLM combinations
+│   └── README.md             ← Study methodology and findings
+│
+├── benchmarks/               ← Speed and accuracy benchmarks
+│
+├── deploy/
+│   ├── docker-compose.yml    ← Local multi-container setup
+│   └── prometheus.yml        ← Prometheus scrape config
+│
+├── .github/workflows/
+│   ├── deploy.yml            ← CI/CD: build + deploy on push to master
+│   └── cml.yml               ← Auto-generates model report on PRs
+│
+├── config.py                 ← Central config (paths, thresholds, LLM provider)
+├── dvc.yaml                  ← DVC pipeline for dataset and weights versioning
+└── prometheus.yml            ← Prometheus config for local monitoring
+```
+
+---
+
+## MLOps Features
+
+| Feature | Where | What it does |
+|:--------|:------|:-------------|
+| **DVC** | `dvc.yaml`, `.dvc/` | Tracks the 12 GB+ dataset and model weights in Hugging Face. Run `dvc pull` to restore. |
+| **CI/CD** | `.github/workflows/deploy.yml` | Push to master → automatic Cloud Run deployment. |
+| **CML** | `.github/workflows/cml.yml` | Opens a PR → training graphs posted as a PR comment automatically. |
+| **Drift detection** | `services/brain_ui/app.py` | Confidence < 70% → image saved to `data/drift_images/` for future retraining. |
+| **Prometheus metrics** | `services/vision_api/main.py` | `/metrics` endpoint exposes request counts, latency, error rates. |
+| **Grafana** | `deploy/docker-compose.yml` | Dashboard over Prometheus data. Available at localhost:3000 when running locally. |
+| **Health check** | `services/vision_api/main.py` | `GET /health` returns `{"status": "healthy"}` — used by Cloud Run load balancer. |
