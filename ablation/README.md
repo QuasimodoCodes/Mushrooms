@@ -70,7 +70,7 @@ The Gemini API call takes 500–1500ms regardless of which vision model is used,
 
 ### Why Llama3.2 was excluded
 
-Llama gave unrealistically high safety scores. The reason: our audit prompt tells the model to warn about toxic species — and the prompt also includes the toxicity information from our database. Llama was simply reading the toxicity label and repeating it back as a warning, not actually looking at the image or reasoning about it.
+Llama gave unrealistically high safety scores. The reason: our audit prompt tells the model to warn about toxic species and the prompt also includes the toxicity information from our database. Llama was simply reading the toxicity label and repeating it back as a warning, not actually looking at the image or reasoning about it.
 
 ### Why Gemma4:e2b was excluded
 
