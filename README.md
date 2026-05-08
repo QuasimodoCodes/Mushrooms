@@ -52,7 +52,7 @@ dvc pull                               # Download the 12GB+ dataset from cloud s
 git checkout -b my-experiment
 ```
 
-**Step 3: Edit the training parameters**
+**Step  3: Edit the training parameters**
 
 Open `scripts/training/train_yolo.py` and tweak the hyperparameters in `model.train(...)`:
 
