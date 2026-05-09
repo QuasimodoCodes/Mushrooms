@@ -1,5 +1,5 @@
 """
-config.py — Runtime switches for the Mushroom Safety System.
+config.py — Runtime switches for the Mushroom System.
 
 This is the only file you ever need to touch to change how the app behaves.
 Training hyperparameters live inside each training script — they're not here
@@ -16,7 +16,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 #  The name must match a folder inside docs/yolo_runs/.
 # ─────────────────────────────────────────────────────────────────────────────
 
-YOLO_RUN_NAME = "yolo26_tflite"
+YOLO_RUN_NAME = os.environ.get("YOLO_RUN_NAME", "yolo26_tflite")
 # Other options already trained:  "mushroom_classifier_v1"  (YOLOv8n baseline)
 
 # "pt"     → full PyTorch weights  (~1.5 GB Docker image, requires torch)
@@ -49,7 +49,7 @@ GEMINI_MODEL   = "gemini-3-flash-preview"
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
 # ─────────────────────────────────────────────────────────────────────────────
-#  SAFETY THRESHOLDS
+#  THRESHOLDS
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Model confidence below this → risk escalates to HIGH.  Range: 0.0 – 1.0

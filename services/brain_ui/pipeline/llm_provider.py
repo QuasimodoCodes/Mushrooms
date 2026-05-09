@@ -25,15 +25,15 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_MODEL = "gemini-3.1-flash-lite-preview"
 
 
-def query_llm(prompt):
+def query_llm(prompt, image_path=None):
     """
     Sends a prompt to whichever LLM backend is currently active.
     Returns the LLM's text response as a string.
     """
     if ACTIVE_PROVIDER == "ollama":
-        return _query_ollama(prompt)
+        return _query_ollama(prompt, image_path=image_path)
     elif ACTIVE_PROVIDER == "gemini":
-        return _query_gemini(prompt)
+        return _query_gemini(prompt, image_path=image_path)
     else:
         return f"Error: Unknown provider '{ACTIVE_PROVIDER}'"
 
@@ -77,7 +77,7 @@ def _query_gemini(prompt, image_path=None):
         warnings.filterwarnings("ignore")
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
-        gen_config = genai.types.GenerationConfig(max_output_tokens=250)
+        gen_config = genai.types.GenerationConfig(max_output_tokens=600)
         model = genai.GenerativeModel(GEMINI_MODEL)
 
         if image_path:

@@ -1,5 +1,5 @@
 """
-launch.py — Start the full Mushroom Safety System with one command.
+launch.py — Start the full Mushroom System with one command.
 
 Usage:
     python launch.py

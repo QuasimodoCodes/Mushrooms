@@ -4,7 +4,7 @@ Ablation Study — Figure Generator (v2)
 Produces two publication-quality figures from ablation/results/ablation_raw.csv:
 
   Figure 1 — ablation_performance.png
-    Panel A: Safety Recall on dangerous species   (all 7 conditions)
+    Panel A: Recall on dangerous species   (all 7 conditions)
     Panel B: Precision                            (all 7 conditions)
     Panel C: F1 Score                             (all 7 conditions)
 
@@ -163,7 +163,7 @@ def plot_performance(metrics_df, n_images):
 
     if has_precision and n_panels >= 3:
         bar_panel(axes[1], metrics_df, "recall",
-                  "Safety Recall (↑ better)\nHow many dangerous species were correctly flagged?",
+                  "Recall (↑ better)\nHow many dangerous species were correctly flagged?",
                   "Dangerous species flagged (%)")
 
         # Add FPR warning to the LLM-only x-axis label — high recall is misleading without it
@@ -192,7 +192,7 @@ def plot_performance(metrics_df, n_images):
                edgecolor="#cccccc")
 
     fig.suptitle(
-        f"Ablation Study: Vision Model × LLM Safety Evaluation  "
+        f"Ablation Study: Vision Model × LLM Evaluation  "
         f"(n≈{n_images} dangerous images/condition)",
         fontsize=12, fontweight="bold", y=1.08,
     )

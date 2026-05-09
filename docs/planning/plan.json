@@ -63,12 +63,12 @@
     "description": "Implement risk-aware decision logic to override YOLO predictions and warn the user if confidence is low or the LLM audit finds discrepancies.",
     "status": "complete",
     "detailed_tasks": [
-      "Write Python 'if/else' statements to act as your safety net.",
+      "Write Python 'if/else' statements to act as your guardrail.",
       "Rule 1: IF yolo_confidence < 0.70, THEN final_output = 'WARNING: YOLO visual identification unsafe due to low confidence. Do not eat.'",
       "Rule 2: IF LLM_audit_result contains 'NO' (context mismatch), THEN final_output = 'WARNING: Ecological context does not match prediction. Do not eat.'",
       "Rule 3: IF both pass, THEN final_output = 'Classification successful. Toxicity: [insert from CSV] - [insert LLM Explanation].'"
     ],
-    "student_explanation": "Why are we doing this? This is the core 'Safety Decision Support'. In real life, an overconfident vision model can be deadly. By hardcoding these safety thresholds, you guarantee that if YOLO gets confused by a damaged mushroom, the system defaults to keeping the user safe."
+    "student_explanation": "Why are we doing this? This is the core 'Risk Decision Logic'. In real life, an overconfident vision model can be deadly. By hardcoding these thresholds, you guarantee that if YOLO gets confused by a damaged mushroom, the system defaults to flagging the result as unreliable."
   },
   {
     "step_number": 6,

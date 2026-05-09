@@ -1,15 +1,15 @@
 """
 Risk-Aware Decision Logic
 ==========================
-This module contains the hard-coded safety rules that determine the final
+This module contains the hard-coded rules that determine the final
 verdict for the user. These rules CANNOT be overridden by the LLM — they
-are deterministic Python if/else statements that act as the ultimate safety net.
+are deterministic Python if/else statements that act as the ultimate guardrail.
 
 The philosophy: the LLM provides *explanations*, but Python provides *guarantees*.
 """
 
 # ============================================================
-# SAFETY THRESHOLDS — loaded from config.py at the project root
+# THRESHOLDS — loaded from config.py at the project root
 # ============================================================
 import os, sys
 _ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
@@ -19,7 +19,7 @@ from config import CONFIDENCE_THRESHOLD, DEADLY_KEYWORDS
 
 def assess_risk(species_name, confidence, context, llm_verdict):
     """
-    Takes all the evidence and produces a final safety decision.
+    Takes all the evidence and produces a final risk decision.
     
     Args:
         species_name (str): The species YOLO predicted
@@ -48,7 +48,7 @@ def assess_risk(species_name, confidence, context, llm_verdict):
     # A model that is less than 70% sure is essentially guessing.
     if confidence < CONFIDENCE_THRESHOLD:
         risk_level = max_risk(risk_level, "HIGH")
-        risk_factors.append(f"⚠️ LOW CONFIDENCE: YOLO is only {confidence*100:.1f}% sure. This is below the {CONFIDENCE_THRESHOLD*100:.0f}% safety threshold.")
+        risk_factors.append(f"⚠️ LOW CONFIDENCE: YOLO is only {confidence*100:.1f}% sure. This is below the {CONFIDENCE_THRESHOLD*100:.0f}% confidence threshold.")
     
     # ─── RULE 3: Did the LLM flag a mismatch? ───
     # Handles both text-only verdicts (SUSPICIOUS) and visual verdicts (DISAGREE).

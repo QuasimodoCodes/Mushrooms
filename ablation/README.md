@@ -1,8 +1,8 @@
-# Ablation Study — Vision Model × LLM Safety Evaluation
+# Ablation Study — Vision Model × LLM Evaluation
 
 ## What This Study Does
 
-We tested every combination of vision model and AI auditor — including the AI auditor working alone with no vision model — to find out how much each part contributes to safety. The goal is to show that neither part works well alone, and that our chosen combination (YOLO + Gemini) is the right one for a phone-based app.
+We tested every combination of vision model and AI auditor — including the AI auditor working alone with no vision model — to find out how much each part contributes. The goal is to show that neither part works well alone, and that our chosen combination (YOLO + Gemini) is the right one for a phone-based app.
 
 ---
 
@@ -24,11 +24,11 @@ Vision models on their own miss 70–86% of dangerous species. Gemini alone catc
 
 ### Finding 2 — Once Gemini is added, all vision models perform about the same
 
-YOLO + Gemini, ConvNeXt + Gemini, and DINOv2 + Gemini all score within 2 F1 points of each other (80.0–81.9%). Adding Gemini closes the gap between a small cheap model and a large expensive one. This means choosing the vision model is not a safety decision — it is a practical one about what runs on a phone.
+YOLO + Gemini, ConvNeXt + Gemini, and DINOv2 + Gemini all score within 2 F1 points of each other (80.0–81.9%). Adding Gemini closes the gap between a small cheap model and a large expensive one. This means choosing the vision model is not a model-quality decision — it is a practical one about what runs on a phone.
 
 ### Finding 3 — YOLO is safer than ConvNeXt and DINOv2 when Gemini is unavailable
 
-If the internet is down or the API fails, the app falls back to the vision model alone. In that scenario, YOLO catches 30% of dangerous species — more than double the 14–15% from ConvNeXt and DINOv2. This is not because YOLO is more accurate. It is because ConvNeXt and DINOv2 are overconfident: they almost always give a high-confidence prediction, so our automatic low-confidence safety warning never triggers. YOLO is less certain more often, and uncertainty always triggers a warning.
+If the internet is down or the API fails, the app falls back to the vision model alone. In that scenario, YOLO catches 30% of dangerous species — more than double the 14–15% from ConvNeXt and DINOv2. This is not because YOLO is more accurate. It is because ConvNeXt and DINOv2 are overconfident: they almost always give a high-confidence prediction, so our automatic low-confidence warning never triggers. YOLO is less certain more often, and uncertainty always triggers a warning.
 
 **A highly accurate but overconfident model is the most dangerous fallback — it gives the user a confident wrong answer with no warning.**
 
@@ -38,7 +38,7 @@ Gemini alone flags 70.7% of safe mushrooms as dangerous. In practice this means 
 
 ### Finding 5 — YOLO + Gemini is the right choice for production
 
-All three Vision + Gemini combinations achieve similar safety scores (F1 80–82%). Within that, YOLO is the clear winner for a phone app:
+All three Vision + Gemini combinations achieve similar scores (F1 80–82%). Within that, YOLO is the clear winner for a phone app:
 
 | Model | F1 | Speed | Size | Needs GPU? |
 |:------|---:|------:|-----:|:-----------|
@@ -70,7 +70,7 @@ The Gemini API call takes 500–1500ms regardless of which vision model is used,
 
 ### Why Llama3.2 was excluded
 
-Llama gave unrealistically high safety scores. The reason: our audit prompt tells the model to warn about toxic species and the prompt also includes the toxicity information from our database. Llama was simply reading the toxicity label and repeating it back as a warning, not actually looking at the image or reasoning about it.
+Llama gave unrealistically high scores. The reason: our audit prompt tells the model to warn about toxic species and the prompt also includes the toxicity information from our database. Llama was simply reading the toxicity label and repeating it back as a warning, not actually looking at the image or reasoning about it.
 
 ### Why Gemma4:e2b was excluded
 
@@ -84,7 +84,7 @@ Small local models (Llama, Gemma) are not good enough for visual mushroom identi
 
 ## How We Measure Performance
 
-### Safety Recall
+### Recall
 Out of all dangerous mushroom photos, what percentage did the system correctly flag as dangerous? Higher is better.
 
 ### False Positive Rate

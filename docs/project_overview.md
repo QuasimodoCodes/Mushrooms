@@ -1,4 +1,4 @@
-# Mushroom Safety Classification System — Project Overview
+# Mushroom Classification System — Project Overview
 
 A full account of what was built, what was trained, what was found, and how each piece works.
 
@@ -15,7 +15,7 @@ A full account of what was built, what was trained, what was found, and how each
    - [EfficientNet-B0 — Classification-Native CNN](#43-efficientnet-b0--classification-native-cnn)
    - [TaxonomicYOLO26 — The Franken Model](#44-taxonomicyolo26--the-franken-model)
    - [Model Comparison](#45-model-comparison)
-5. [Safety Pipeline](#5-safety-pipeline)
+5. [Risk Pipeline](#5-risk-pipeline)
 6. [MLOps & Deployment](#6-mlops--deployment)
 7. [Project Structure](#7-project-structure)
 
@@ -23,14 +23,14 @@ A full account of what was built, what was trained, what was found, and how each
 
 ## 1. Project Goal
 
-The system is a **safety tool for foragers**. The core problem: a vision model alone is not trustworthy enough for life-or-death mushroom identification. A single high-confidence wrong prediction could be fatal.
+The system is a **tool for foragers**. The core problem: a vision model alone is not trustworthy enough for life-or-death mushroom identification. A single high-confidence wrong prediction could be fatal.
 
 The solution is a layered pipeline where no single component makes the final call:
 
 - A **vision model** identifies the species and emits a confidence score
 - An **ecological database** cross-references the prediction against known habitat, season, and region rules
 - An **LLM audit layer** verifies whether the identification makes environmental sense
-- A **deterministic risk engine** produces the final safety verdict using hard-coded Python rules the LLM cannot override
+- A **deterministic risk engine** produces the final verdict using hard-coded Python rules the LLM cannot override
 
 > The philosophy: *the LLM provides explanations, Python provides guarantees.*
 
@@ -94,7 +94,7 @@ User uploads image + season + location
     └──────────┬──────────┘
                │
                ▼
-        Safety Report
+        Report
    CRITICAL / HIGH / MODERATE / LOW
 ```
 
@@ -277,7 +277,7 @@ No prior model in this project uses the biological taxonomy of mushrooms as a tr
 
 ---
 
-## 5. Safety Pipeline
+## 5. Risk Pipeline
 
 The pipeline runs after every vision model prediction. All logic lives in `services/brain_ui/pipeline/`.
 
@@ -455,7 +455,7 @@ Mushroom/
 │           ├── predict.py             HTTP call to Vision API
 │           ├── integration.py         CSV ecological context lookup
 │           ├── audit_layer.py         LLM prompt construction + Gemini call
-│           └── risk_engine.py         Deterministic safety rules
+│           └── risk_engine.py         Deterministic risk rules
 │
 ├── deploy/
 │   └── docker-compose.yml             Local multi-container orchestration

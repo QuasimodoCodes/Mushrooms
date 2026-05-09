@@ -1,9 +1,9 @@
 """
-Mushroom Safety Classification System - Main Pipeline
+Mushroom Classification System - Main Pipeline
 ======================================================
 This is the single entry point that chains every module together:
 
-  Image → YOLO (Vision) → CSV (Knowledge) → LLM (Reasoning) → Risk Engine (Safety) → Final Report
+  Image → YOLO (Vision) → CSV (Knowledge) → LLM (Reasoning) → Risk Engine → Final Report
 
 Usage:
   python main.py                          # Uses a demo image from the test set
@@ -25,7 +25,7 @@ from risk_engine import assess_risk
 
 def run_pipeline(image_path, user_season="Unknown", user_location="Unknown"):
     """
-    Runs the full mushroom safety pipeline on a single image.
+    Runs the full mushroom pipeline on a single image.
     
     Args:
         image_path (str): Path to the mushroom image
@@ -33,7 +33,7 @@ def run_pipeline(image_path, user_season="Unknown", user_location="Unknown"):
         user_location (str): The user's geographic location
     
     Returns:
-        dict: Complete safety report
+        dict: Complete report
     """
     base_dir = os.path.dirname(__file__)
     csv_path = os.path.join(base_dir, "data", "mushroom_context.csv")
@@ -41,7 +41,7 @@ def run_pipeline(image_path, user_season="Unknown", user_location="Unknown"):
     
     # ─── STEP 1: YOLO Vision ───
     print("\n" + "="*50)
-    print("  🍄 MUSHROOM SAFETY CLASSIFICATION SYSTEM 🍄")
+    print("  🍄 MUSHROOM CLASSIFICATION SYSTEM 🍄")
     print("="*50)
     print(f"\n📸 Image: {os.path.basename(image_path)}")
     print(f"📍 Location: {user_location} | 🗓️ Season: {user_season}")
@@ -56,7 +56,7 @@ def run_pipeline(image_path, user_season="Unknown", user_location="Unknown"):
     
     if "error" in context:
         print(f"  ❌ {context['error']}")
-        print("  Falling back to safety-first approach...")
+        print("  Falling back to cautious approach...")
         context = {"toxicity_type": "Unknown", "habitat": "Unknown", "season": "Unknown", "region": "Unknown", "key_warnings": "Species not found in database. Treat as potentially dangerous."}
     
     # ─── STEP 3: LLM Audit ───

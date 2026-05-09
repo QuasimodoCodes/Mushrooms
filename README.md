@@ -1,6 +1,6 @@
-# Mushroom Safety Classifier
+# Mushroom Classifier
 
-A production-grade AI system that identifies mushroom species from a photo and gives a safety verdict. It combines a fast on-device vision model (YOLOv26) with an LLM safety audit (Gemini) and a knowledge base of ecological rules to catch dangerous look-alikes.
+A production-grade AI system that identifies mushroom species from a photo and gives a verdict. It combines a fast on-device vision model (YOLOv26) with an LLM audit (Gemini) and a knowledge base of ecological rules to catch dangerous look-alikes.
 
 ---
 
@@ -28,7 +28,7 @@ The app streams its progress in real time:
 - Sends the image to the Vision API → YOLO identifies the species and confidence score
 - Looks up the species in the knowledge base (toxicity, habitat, season, region, warnings)
 - Asks Gemini to audit whether the visual prediction makes sense given your location and season
-- Runs hard safety rules (confidence < 70% → automatic unsafe flag regardless of LLM verdict)
+- Runs hard rules (confidence < 70% → automatic unsafe flag regardless of LLM verdict)
 - Returns a final **SAFE / UNSAFE / UNCERTAIN** verdict with an explanation
 
 **What the output tells you:**
@@ -37,7 +37,7 @@ The app streams its progress in real time:
 - The LLM's reasoning about whether the prediction fits your environment
 - The final risk decision and any warnings
 
-> The app is a safety aid, not a substitute for expert identification. Never eat a wild mushroom based on an AI verdict alone.
+> The app is an aid, not a substitute for expert identification. Never eat a wild mushroom based on an AI verdict alone.
 
 ---
 
@@ -143,8 +143,8 @@ Opening a PR automatically triggers the CML workflow, which posts confusion matr
 | Service | Path | What it does |
 |:--------|:-----|:-------------|
 | **Vision API** | `services/vision_api/` | FastAPI server. Accepts a mushroom image, runs YOLOv26, returns species name + confidence. Default image uses TFLite (~200 MB). Full PyTorch image also available. |
-| **Brain UI** | `services/brain_ui/` | Gradio web UI. Orchestrates the full pipeline: calls Vision API, fetches ecological context, runs LLM audit, applies safety rules, streams results to the user. |
-| **Pipeline modules** | `services/brain_ui/pipeline/` | `predict.py` — calls Vision API. `integration.py` — knowledge base lookup. `audit_layer.py` — LLM safety audit. `risk_engine.py` — final decision logic. `llm_provider.py` — Gemini / Ollama abstraction. |
+| **Brain UI** | `services/brain_ui/` | Gradio web UI. Orchestrates the full pipeline: calls Vision API, fetches ecological context, runs LLM audit, applies risk rules, streams results to the user. |
+| **Pipeline modules** | `services/brain_ui/pipeline/` | `predict.py` — calls Vision API. `integration.py` — knowledge base lookup. `audit_layer.py` — LLM audit. `risk_engine.py` — final decision logic. `llm_provider.py` — Gemini / Ollama abstraction. |
 
 ---
 

@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 def build_audit_prompt(species_name, confidence, context, user_season, user_location):
     """Ecological plausibility prompt — used by text-only providers (ollama)."""
-    return f"""You are a mycology safety auditor AI. Your job is to verify whether a visual mushroom identification is plausible given the environmental context.
+    return f"""You are a mycology auditor AI. Your job is to verify whether a visual mushroom identification is plausible given the environmental context.
 
 Here is the evidence:
 
@@ -41,7 +41,7 @@ Here is the evidence:
 **Your Task:**
 1. State whether the identification is PLAUSIBLE or SUSPICIOUS based on the environmental match.
 2. If the confidence score is below 50%, flag that the model is uncertain.
-3. If the species is toxic or deadly, issue a clear safety warning regardless of plausibility.
+3. If the species is toxic or deadly, issue a clear warning regardless of plausibility.
 4. Keep your response concise (3-5 sentences max).
 
 Begin your response with either "✅ PLAUSIBLE" or "⚠️ SUSPICIOUS" or "🚨 DANGER"
@@ -75,7 +75,7 @@ def build_visual_audit_prompt(species_name, confidence, context, user_season, us
     if lookalikes: features.append(f"- Dangerous lookalikes: {lookalikes}")
     features_block = "\n".join(features) if features else "- See key warnings below."
 
-    return f"""You are a field mycology safety auditor. You have been given a photo of a mushroom taken in the field.
+    return f"""You are a field mycology auditor. You have been given a photo of a mushroom taken in the field.
 
 A computer vision model identified it as **{species_name}** with {confidence * 100:.1f}% confidence.
 
@@ -97,7 +97,7 @@ A computer vision model identified it as **{species_name}** with {confidence * 1
 2. Comment on what you can see — cap shape/colour, gill colour, stem, any bruising or staining.
 3. Mention relevant field checks the user should do in person (e.g. "check if the gills are free from the stem", "look for a ring on the stem", "smell for an ink/phenol odour", "check for nearby oak trees").
 4. State AGREE if the photo is consistent with {species_name}, or DISAGREE if something looks wrong.
-5. If the species is toxic or deadly, issue a clear safety warning.
+5. If the species is toxic or deadly, issue a clear warning.
 
 Begin your response with "✅ AGREE", "⚠️ DISAGREE", or "🚨 DANGER", then give your field assessment.
 """

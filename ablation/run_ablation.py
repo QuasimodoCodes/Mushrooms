@@ -1,8 +1,8 @@
 """
-Ablation Study — Vision Model x LLM Safety Evaluation
+Ablation Study — Vision Model x LLM Evaluation
 =======================================================
 Evaluates every combination of vision model and LLM against a held-out test
-set, measuring safety recall on toxic/deadly species.
+set, measuring recall on toxic/deadly species.
 
 Matrix:
     Vision models : YOLOv26n | ConvNeXt-Tiny (PEFT) | DINOv2-Small
@@ -167,11 +167,11 @@ def build_visual_prompt(species_name, confidence, context_row):
 
 
 def build_llm_only_prompt():
-    return """You are a field mycology safety expert. You have been given a photo of a mushroom taken in the field by a forager.
+    return """You are a field mycology expert. You have been given a photo of a mushroom taken in the field by a forager.
 
 Your task is to:
 1. Identify the mushroom species from the photo if possible.
-2. Assess the safety risk for a forager who might want to consume it.
+2. Assess the risk for a forager who might want to consume it.
 3. Look carefully at the cap shape and colour, gills, stem, and any distinguishing features.
 
 Respond in this exact format:
@@ -190,7 +190,7 @@ def parse_llm_only_risk(response: str) -> str:
     for level in ("CRITICAL", "HIGH", "MODERATE", "LOW"):
         if f"RISK: {level}" in upper:
             return level
-    # Fallback — scan for bare keywords; default HIGH (safety first)
+    # Fallback — scan for bare keywords; default HIGH (cautious)
     for level in ("CRITICAL", "HIGH", "MODERATE", "LOW"):
         if level in upper:
             return level
@@ -253,7 +253,7 @@ def main():
     RESULTS_DIR.mkdir(exist_ok=True)
 
     print("=" * 55)
-    print("  Ablation Study — Vision x LLM Safety Evaluation")
+    print("  Ablation Study — Vision x LLM Evaluation")
     print("=" * 55)
     print(f"LLMs to evaluate  : {args.llms}")
     print(f"Samples dangerous : {args.samples}")
@@ -437,9 +437,9 @@ def main():
     danger_df = results_df[results_df["dangerous"] == True]
     safe_df   = results_df[results_df["dangerous"] == False]
 
-    # ── Metric 1: Overall safety recall (dangerous species only) ─────────────
+    # ── Metric 1: Overall recall (dangerous species only) ────────────────────
     print("\n" + "=" * 65)
-    print("  Metric 1 — Safety Recall on Dangerous Species")
+    print("  Metric 1 — Recall on Dangerous Species")
     print("=" * 65)
     print(f"{'Model':<20} {'LLM':<12} {'Recall':>8} {'False Safe':>11} {'N':>6}")
     print("-" * 65)
@@ -452,7 +452,7 @@ def main():
         print(f"{model:<20} {llm:<12} {recall:>7.1f}% {false_safe:>10.1f}% {len(grp):>6}")
         summary_rows.append({
             "model": model, "llm": llm,
-            "metric": "safety_recall",
+            "metric": "recall",
             "value_%": round(recall, 2),
             "n_images": len(grp),
         })

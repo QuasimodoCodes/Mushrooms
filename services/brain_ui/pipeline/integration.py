@@ -48,7 +48,7 @@ def get_mushroom_context(species_name, csv_path):
 
 def main():
     print("=========================================")
-    print("   Mushroom Safety: End-to-End Pipeline  ")
+    print("   Mushroom: End-to-End Pipeline  ")
     print("=========================================")
     
     # 1. Setup paths

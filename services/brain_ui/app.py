@@ -1,7 +1,7 @@
 """
-Mushroom Safety Classifier - Gradio Web UI
+Mushroom Classifier - Gradio Web UI
 ============================================
-A simple drag-and-drop interface for the mushroom safety pipeline.
+A simple drag-and-drop interface for the mushroom pipeline.
 Run this script and open the URL in your browser.
 
 Usage:
@@ -129,8 +129,8 @@ def classify_mushroom(image, season, location, progress=None):
         }
     
     # Step 3: LLM Audit
-    yield f"### 🍄 Requesting Safety Audit from LLM for **{formatted_species}**..."
-    if progress: progress(0.7, desc="🍄 Requesting Safety Audit from LLM (Llama3/Gemini)...")
+    yield f"### 🍄 Requesting LLM Audit for **{formatted_species}**..."
+    if progress: progress(0.7, desc="🍄 Requesting LLM Audit (Llama3/Gemini)...")
     llm_verdict = audit_prediction(formatted_species, confidence, context, season, location, image_path=image)
     
     # Step 4: Risk Decision
@@ -138,8 +138,8 @@ def classify_mushroom(image, season, location, progress=None):
     if progress: progress(0.9, desc="🍄 Calculating final risk level...")
     decision = assess_risk(formatted_species, confidence, context, llm_verdict)
     
-    yield "### 🍄 Generating Safety Report..."
-    if progress: progress(1.0, desc="🍄 Generating Safety Report...")
+    yield "### 🍄 Generating Report..."
+    if progress: progress(1.0, desc="🍄 Generating Report...")
     # Build the output report
     risk_emoji = {"CRITICAL": "🚨", "HIGH": "⚠️", "MODERATE": "⚠️", "LOW": "✅"}
     
@@ -179,10 +179,10 @@ CSS = """
               background: #374151; color: #f9fafb; }
 """
 
-with gr.Blocks(title="🍄 Mushroom Safety Classification System", css=CSS) as demo:
+with gr.Blocks(title="🍄 Mushroom Classification System", css=CSS) as demo:
     gr.Markdown(
-        "# 🍄 Mushroom Safety Classification System\n"
-        "Upload a photo of a mushroom to identify it and receive a safety assessment. "
+        "# 🍄 Mushroom Classification System\n"
+        "Upload a photo of a mushroom to identify it and receive an assessment. "
         "The system uses YOLOv26 for visual identification, an ecological database for context, "
         "and an LLM to verify the results."
     )
@@ -212,11 +212,11 @@ with gr.Blocks(title="🍄 Mushroom Safety Classification System", css=CSS) as d
             yolo_box = gr.Markdown(value="", label="🔍 YOLO Identification",
                                    elem_classes=["scroll-panel"], visible=False)
 
-        # LLM audit + safety report
+        # LLM audit + report
         with gr.Column(scale=1):
             llm_status = gr.Textbox(value="", label="⏳ LLM Audit", interactive=False,
                                     elem_classes=["status-bar"], visible=False)
-            llm_box = gr.Markdown(value="", label="🧠 Safety Report",
+            llm_box = gr.Markdown(value="", label="🧠 Report",
                                   elem_classes=["scroll-panel"], visible=False)
             flag_btn = gr.Button("Flag", visible=False)
 

@@ -1,6 +1,6 @@
 # ConvNeXt-Tiny — Model Experiment Report
 
-**Project:** Mushroom Guardian — Multimodal AI Safety System  
+**Project:** Mushroom Guardian — Multimodal AI System  
 **Dataset:** zlatan599/mushroom1 — 169 species, ~689,000 images (80/10/10 split)  
 **Hardware:** NVIDIA GeForce RTX 3070 Ti (8 GB VRAM)  
 **Experiment goal:** Determine whether a modern CNN architecture (ConvNeXt-Tiny) can exceed the accuracy of the existing project models, and whether PEFT-based training makes the 28.6M parameter model practical to train.
