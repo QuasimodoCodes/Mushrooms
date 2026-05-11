@@ -11,8 +11,7 @@
     "stem_description": "Tall (10-20cm), thick, white; features a large, persistent, skirt-like ring.",
     "smell": "Strongly of anise or almonds.",
     "lookalikes": "Agaricus xanthodermus (stains bright yellow, smells of phenol/ink).",
-    "environment_tips": "Check for proximity to spruce or pine; often found in leaf litter or needles near path edges.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for proximity to spruce or pine; often found in leaf litter or needles near path edges."
   },
   {
     "species_name": "Agaricus xanthodermus",
@@ -26,8 +25,7 @@
     "stem_description": "White, bulbous base; stains immediate chrome yellow at the base when cut or bruised.",
     "smell": "Unpleasant, like ink, phenol, or library paste.",
     "lookalikes": "Edible Agaricus arvensis (stains yellow slowly, smells of anise).",
-    "environment_tips": "Commonly found in man-made environments like lawns and compost heaps after rain.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly found in man-made environments like lawns and compost heaps after rain."
   },
   {
     "species_name": "Amanita amerirubescens",
@@ -41,8 +39,7 @@
     "stem_description": "White to pinkish, with a bulbous base and a white, skirt-like ring; bruises red.",
     "smell": "Mild, non-distinct.",
     "lookalikes": "Amanita pantherina (highly toxic, lacks reddish bruising, has distinct 'booted' volva).",
-    "environment_tips": "Look for oak or pine trees; check for red staining in insect-damaged areas of the stem.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for oak or pine trees; check for red staining in insect-damaged areas of the stem."
   },
   {
     "species_name": "Amanita augusta",
@@ -56,8 +53,7 @@
     "stem_description": "Pale yellow, becoming darker at the base; features a delicate, yellow-tinted ring.",
     "smell": "Mild to slightly pungent.",
     "lookalikes": "None significant, but the yellow warts on brown cap are a key warning sign for Amanitas.",
-    "environment_tips": "Found under hemlock and Douglas-fir; watch for yellow veil fragments on the cap margin.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found under hemlock and Douglas-fir; watch for yellow veil fragments on the cap margin."
   },
   {
     "species_name": "Amanita brunnescens",
@@ -71,8 +67,7 @@
     "stem_description": "White, staining brown; base has a prominent bulb with a vertical 'cleft' or split.",
     "smell": "Distinctly of raw potato.",
     "lookalikes": "Amanita phalloides (deadly, olive cap, non-split bulb).",
-    "environment_tips": "Check the base of the stem for the vertical split in the bulb, a critical identification feature.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check the base of the stem for the vertical split in the bulb, a critical identification feature."
   },
   {
     "species_name": "Amanita calyptroderma",
@@ -86,8 +81,7 @@
     "stem_description": "Thick, white; features a large sac-like volva at the base and a fragile ring.",
     "smell": "Mild when young, becoming slightly unpleasant with age.",
     "lookalikes": "Amanita phalloides (deadly, usually lacks the single thick patch, has olive-green tones).",
-    "environment_tips": "Almost always associated with Madrone or Douglas-fir on the West Coast.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Almost always associated with Madrone or Douglas-fir on the West Coast."
   },
   {
     "species_name": "Amanita citrina",
@@ -101,8 +95,7 @@
     "stem_description": "White, with a distinct, sharply-edged bulb at the base and a pale yellow ring.",
     "smell": "Strong and distinctive smell of raw potatoes.",
     "lookalikes": "Amanita phalloides (deadly, lacks potato smell, has a sac-like volva).",
-    "environment_tips": "Check the bulb at the base; it should be 'abrupt' with a narrow gutter around the stem.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check the bulb at the base; it should be 'abrupt' with a narrow gutter around the stem."
   },
   {
     "species_name": "Amanita flavoconia",
@@ -116,8 +109,7 @@
     "stem_description": "Yellowish, slender; base is slightly bulbous with yellow powdery remnants; features a fragile ring.",
     "smell": "Mild, non-distinct.",
     "lookalikes": "Amanita muscaria var. guessowii (larger, has more prominent concentric rings on the bulb).",
-    "environment_tips": "Commonly found near hemlock trees in mossy areas or leaf litter.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly found near hemlock trees in mossy areas or leaf litter."
   },
   {
     "species_name": "Amanita muscaria",
@@ -131,8 +123,7 @@
     "stem_description": "Tall, white; bulbous base with 2-4 concentric rings of warts; features a large, white ring.",
     "smell": "Mild, non-distinct.",
     "lookalikes": "Amanita caesarea (edible, orange-red but has yellow gills and stem and a large sac-like volva).",
-    "environment_tips": "Look for the classic white spots (veil fragments) and the shaggy concentric rings at the stem base.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the classic white spots (veil fragments) and the shaggy concentric rings at the stem base."
   },
   {
     "species_name": "Amanita pantherina",
@@ -146,8 +137,7 @@
     "stem_description": "White, with a prominent 'booted' volva forming a distinct rim around the bulb; white ring present.",
     "smell": "Faintly of raw potato.",
     "lookalikes": "Amanita rubescens (edible, bruises red, has dirty-grey warts).",
-    "environment_tips": "Check for the 'collar' or 'rim' at the top of the bulb, a key feature of this deadly species.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for the 'collar' or 'rim' at the top of the bulb, a key feature of this deadly species."
   },
   {
     "species_name": "Amanita persicina",
@@ -161,8 +151,7 @@
     "stem_description": "White to pale peach; bulbous base with shaggy yellow patches; features a thin ring.",
     "smell": "Mild, non-distinct.",
     "lookalikes": "Amanita muscaria (redder cap, white warts).",
-    "environment_tips": "Specifically found in the Southeast US, typically under pine or mixed oak-pine stands.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Specifically found in the Southeast US, typically under pine or mixed oak-pine stands."
   },
   {
     "species_name": "Amanita phalloides",
@@ -176,8 +165,7 @@
     "stem_description": "White with olive-grey scales; large white ring; base has a deep, white, sac-like volva.",
     "smell": "Sickly sweet (like rotting honey) when mature, mild when young.",
     "lookalikes": "Agaricus species (pink/brown gills, no volva), Volvopluteus gloiocephalus (pink spores, no ring).",
-    "environment_tips": "EXTREME CAUTION: Always dig up the entire base to check for the sac-like volva under the soil.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "EXTREME CAUTION: Always dig up the entire base to check for the sac-like volva under the soil."
   },
   {
     "species_name": "Amanita rubescens",
@@ -191,8 +179,7 @@
     "stem_description": "Pinkish-white, bulbous; base and flesh turn slowly wine-red when cut or insect-damaged.",
     "smell": "Mild, non-distinct.",
     "lookalikes": "Amanita pantherina (highly toxic, does not bruise red, has pure white warts).",
-    "environment_tips": "Look for pinkish/reddish tones in the stem base or where maggots have tunneled through the flesh.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for pinkish/reddish tones in the stem base or where maggots have tunneled through the flesh."
   },
   {
     "species_name": "Amanita velosa",
@@ -206,8 +193,7 @@
     "stem_description": "White, fragile; no ring; base features a deep, white, sac-like volva.",
     "smell": "Mild when young, fishy with age.",
     "lookalikes": "Amanita phalloides (deadly, has a ring, olive tones, non-striate margin).",
-    "environment_tips": "Found under oak trees in the spring; check for the deeply lined cap margin which is characteristic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found under oak trees in the spring; check for the deeply lined cap margin which is characteristic."
   },
   {
     "species_name": "Apioperdon pyriforme",
@@ -221,8 +207,7 @@
     "stem_description": "Short, sterile base attached to the wood by white mycelial cords.",
     "smell": "Mild, mushroomy.",
     "lookalikes": "Scleroderma species (toxic, dark purple/black interior even when young).",
-    "environment_tips": "Grows in large clusters exclusively on wood; check that the interior is solid and pure white like marshmallow.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Grows in large clusters exclusively on wood; check that the interior is solid and pure white like marshmallow."
   },
   {
     "species_name": "Armillaria borealis",
@@ -236,8 +221,7 @@
     "stem_description": "Fibrous, brownish; features a white, persistent ring; base often fused with others in clusters.",
     "smell": "Mildly sweet.",
     "lookalikes": "Galerina marginata (deadly, grows on wood, has rusty brown spores, lacks hair-like scales).",
-    "environment_tips": "Look for black, shoestring-like rhizomorphs under the bark of the host tree.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for black, shoestring-like rhizomorphs under the bark of the host tree."
   },
   {
     "species_name": "Armillaria mellea",
@@ -251,8 +235,7 @@
     "stem_description": "Tough, fibrous, yellowish-brown; has a thick, white, persistent ring; grows in large clusters.",
     "smell": "Mild, slightly sour or mushroomy.",
     "lookalikes": "Galerina marginata (deadly, rusty spores, smaller, fragile ring).",
-    "environment_tips": "Check for white spore prints on lower caps in a cluster to distinguish from brown-spored lookalikes.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for white spore prints on lower caps in a cluster to distinguish from brown-spored lookalikes."
   },
   {
     "species_name": "Armillaria tabescens",
@@ -266,8 +249,7 @@
     "stem_description": "Tough, fibrous, brownish; lacks any ring; grows in dense, large clusters.",
     "smell": "Mildly sweet or non-distinct.",
     "lookalikes": "Omphalotus illudens (toxic, orange cap/gills, larger, non-scaly cap).",
-    "environment_tips": "Grows in huge 'bouquets' from buried roots or at the base of oak trees.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Grows in huge 'bouquets' from buried roots or at the base of oak trees."
   },
   {
     "species_name": "Artomyces pyxidatus",
@@ -281,8 +263,7 @@
     "stem_description": "Short, tough, brownish base; branches repeatedly in a candelabra-like fashion.",
     "smell": "Mild, slightly of raw potato.",
     "lookalikes": "Other coral fungi (Ramaria), but the 'crown' tips on wood are diagnostic for this species.",
-    "environment_tips": "Exclusively found on decaying wood, unlike many other coral fungi which grow on soil.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Exclusively found on decaying wood, unlike many other coral fungi which grow on soil."
   },
   {
     "species_name": "Bjerkandera adusta",
@@ -296,8 +277,7 @@
     "stem_description": "Absent; grows directly attached to the wood.",
     "smell": "Mildly mushroomy or sour.",
     "lookalikes": "Trametes versicolor (Turkey Tail), but the grey/black pore surface is a key difference.",
-    "environment_tips": "Found on stumps and logs; the 'smoky' grey pore surface is the best field identifier.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found on stumps and logs; the 'smoky' grey pore surface is the best field identifier."
   },
   {
     "species_name": "Bolbitius titubans",
@@ -311,8 +291,7 @@
     "stem_description": "Very slender, white to pale yellow; hollow and extremely fragile.",
     "smell": "Mild, non-distinct.",
     "lookalikes": "None significant due to its extreme fragility and habitat on dung/grass.",
-    "environment_tips": "Often found in recently mown lawns or on manure heaps; look for the bright yellow 'slime' on young caps.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found in recently mown lawns or on manure heaps; look for the bright yellow 'slime' on young caps."
   },
   {
     "species_name": "Boletus edulis",
@@ -326,8 +305,7 @@
     "stem_description": "Thick, club-shaped; light brown with a fine, white, raised net-like pattern (reticulation) near the top.",
     "smell": "Pleasantly nutty and earthy.",
     "lookalikes": "Tylopilus felleus (extremely bitter, pinkish pores, dark brown reticulation).",
-    "environment_tips": "Often associated with spruce or pine (conifers) and oak or beech (hardwoods).",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often associated with spruce or pine (conifers) and oak or beech (hardwoods)."
   },
   {
     "species_name": "Boletus pallidus",
@@ -341,8 +319,7 @@
     "stem_description": "White to pale buff; lacks reticulation or is only very slightly reticulated at the very top.",
     "smell": "Mild, non-distinct.",
     "lookalikes": "Boletus edulis (darker cap, prominent reticulation).",
-    "environment_tips": "Specifically found under oak and beech; the unusually pale 'ghost-like' appearance is diagnostic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Specifically found under oak and beech; the unusually pale 'ghost-like' appearance is diagnostic."
   },
   {
     "species_name": "Boletus reticulatus",
@@ -356,8 +333,7 @@
     "stem_description": "Thick, bulbous; pale brown with a very prominent, raised white network covering most of the stem.",
     "smell": "Strongly nutty and pleasant.",
     "lookalikes": "Boletus edulis (smoother cap, reticulation usually only at the top).",
-    "environment_tips": "Found in warmer months than B. edulis, almost exclusively under hardwood trees like oak.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found in warmer months than B. edulis, almost exclusively under hardwood trees like oak."
   },
   {
     "species_name": "Boletus rex-veris",
@@ -371,8 +347,7 @@
     "stem_description": "Massive, bulbous; white to brownish; features a white reticulation at least on the upper half.",
     "smell": "Mild, earthy.",
     "lookalikes": "Boletus edulis (fruits in autumn, cap is usually lighter).",
-    "environment_tips": "Look for 'mushrumps' (bumps in the soil/needles) near melting snowbanks in high-elevation conifer forests.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for 'mushrumps' (bumps in the soil/needles) near melting snowbanks in high-elevation conifer forests."
   },
   {
     "species_name": "Calocera viscosa",
@@ -386,8 +361,7 @@
     "stem_description": "Tough, rooting base; branches are repeatedly forked at the tips.",
     "smell": "None.",
     "lookalikes": "Clavulinopsis species (grow on soil, not wood; brittle, not rubbery).",
-    "environment_tips": "Exclusively found on decaying conifer wood; the rubbery, 'viscous' texture is a key identifier.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Exclusively found on decaying conifer wood; the rubbery, 'viscous' texture is a key identifier."
   },
   {
     "species_name": "Calycina citrina",
@@ -401,8 +375,7 @@
     "stem_description": "Virtually absent; attached directly to the wood.",
     "smell": "None.",
     "lookalikes": "Chlorociboria aeruginascens (blue-green instead of yellow).",
-    "environment_tips": "Check for mass clusters on de-barked hardwood logs in damp conditions.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for mass clusters on de-barked hardwood logs in damp conditions."
   },
   {
     "species_name": "Cantharellus californicus",
@@ -416,8 +389,7 @@
     "stem_description": "Thick, solid, yellowish; lacks a ring.",
     "smell": "Distinctly of apricots.",
     "lookalikes": "Omphalotus olivascens (toxic, true gills, grows on wood, flesh is orange throughout).",
-    "environment_tips": "Found under Live Oak trees; often partially buried in deep leaf litter.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found under Live Oak trees; often partially buried in deep leaf litter."
   },
   {
     "species_name": "Cantharellus cibarius",
@@ -431,8 +403,7 @@
     "stem_description": "Solid, tapering downward; yellow; flesh is white and peels like string cheese.",
     "smell": "Faintly of apricots or peaches.",
     "lookalikes": "Omphalotus illudens (toxic, true gills, grows in clusters on wood, smells unpleasantly).",
-    "environment_tips": "Check for white flesh inside the stem; toxic lookalikes have orange flesh throughout.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for white flesh inside the stem; toxic lookalikes have orange flesh throughout."
   },
   {
     "species_name": "Cantharellus cinnabarinus",
@@ -446,8 +417,7 @@
     "stem_description": "Slender, solid; reddish-pink; lacks a ring.",
     "smell": "Mildly of apricots.",
     "lookalikes": "None; the bright pink-red color and false gills are unique among small woodland mushrooms.",
-    "environment_tips": "Often found in mossy areas or along edges of hardwood forest paths.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found in mossy areas or along edges of hardwood forest paths."
   },
   {
     "species_name": "Cerioporus squamosus",
@@ -461,8 +431,7 @@
     "stem_description": "Short, thick, lateral; base is usually black and velvety.",
     "smell": "Strongly of watermelon rind or cucumber.",
     "lookalikes": "None; the combination of large size, dark scales, and watermelon smell is diagnostic.",
-    "environment_tips": "Check for soft, white flesh; if a knife won't cut it like butter, it's too old to eat.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for soft, white flesh; if a knife won't cut it like butter, it's too old to eat."
   },
   {
     "species_name": "Cetraria islandica",
@@ -476,8 +445,7 @@
     "stem_description": "Flat, strap-like branches with small white spots (pseudocyphellae) on the underside.",
     "smell": "Earthy, seaweed-like when wet.",
     "lookalikes": "None significant.",
-    "environment_tips": "Found on the ground in high-altitude or arctic environments among mosses.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found on the ground in high-altitude or arctic environments among mosses."
   },
   {
     "species_name": "Chlorociboria aeruginascens",
@@ -491,8 +459,7 @@
     "stem_description": "Minute, lateral or central, same color as the cup.",
     "smell": "None.",
     "lookalikes": "Chlorociboria aeruginosa (virtually identical, requires microscopy).",
-    "environment_tips": "The mushroom is rare, but the 'blue-green' stained wood it produces is very common and easily spotted.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "The mushroom is rare, but the 'blue-green' stained wood it produces is very common and easily spotted."
   },
   {
     "species_name": "Chlorophyllum brunneum",
@@ -506,8 +473,7 @@
     "stem_description": "Short, very thick at the base; features a prominent, movable white ring; base is 'abruptly' bulbous.",
     "smell": "Mild, pleasant.",
     "lookalikes": "Macrolepiota procera (edible, tall stem with 'snakeskin' pattern).",
-    "environment_tips": "Check the stem base; it should be very thick and bulbous compared to the edible Parasol.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check the stem base; it should be very thick and bulbous compared to the edible Parasol."
   },
   {
     "species_name": "Chlorophyllum molybdites",
@@ -521,8 +487,7 @@
     "stem_description": "White, staining brownish; features a large, double-edged movable ring.",
     "smell": "Mild, non-distinct.",
     "lookalikes": "Macrolepiota procera (edible, white/cream spore print), Chlorophyllum rhacodes (edible, white spores).",
-    "environment_tips": "ALWAYS perform a spore print; if the print is green, it is this toxic species.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "ALWAYS perform a spore print; if the print is green, it is this toxic species."
   },
   {
     "species_name": "Chondrostereum purpureum",
@@ -536,8 +501,7 @@
     "stem_description": "Absent; attached directly to the wood.",
     "smell": "None.",
     "lookalikes": "Stereum species (underrside is yellow or brown, never purple).",
-    "environment_tips": "Causes 'Silverleaf disease' in living fruit trees; look for the characteristic purple underside.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Causes 'Silverleaf disease' in living fruit trees; look for the characteristic purple underside."
   },
   {
     "species_name": "Cladonia fimbriata",
@@ -551,8 +515,7 @@
     "stem_description": "The entire structure is covered in a fine, floury green powder (soredia).",
     "smell": "None.",
     "lookalikes": "Other Cladonia species (some have red tips or different cup shapes).",
-    "environment_tips": "Commonly found on old, mossy stumps in shady forests.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly found on old, mossy stumps in shady forests."
   },
   {
     "species_name": "Cladonia rangiferina",
@@ -566,8 +529,7 @@
     "stem_description": "Hollow, cylindrical branches; texture is somewhat brittle when dry, spongey when wet.",
     "smell": "Faintly earthy.",
     "lookalikes": "Cladonia stellaris (more dome-shaped clusters, yellowish-green tint).",
-    "environment_tips": "Forms large, greyish 'carpets' on the forest floor in northern regions.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Forms large, greyish 'carpets' on the forest floor in northern regions."
   },
   {
     "species_name": "Cladonia stellaris",
@@ -581,8 +543,7 @@
     "stem_description": "Very densely branched; lacks a main 'trunk'.",
     "smell": "None.",
     "lookalikes": "Cladonia rangiferina (ash-grey, not dome-shaped).",
-    "environment_tips": "Look for the very neat, rounded 'pompom' growth form on the ground.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the very neat, rounded 'pompom' growth form on the ground."
   },
   {
     "species_name": "Clitocybe nebularis",
@@ -596,8 +557,7 @@
     "stem_description": "Thick, club-shaped; greyish-white; fibrous and solid.",
     "smell": "Strong and unpleasant; sweetish but sickly, often compared to coal gas.",
     "lookalikes": "Entoloma sinuatum (toxic, pink spores, non-decurrent gills).",
-    "environment_tips": "Often grows in large 'fairy rings' in leaf litter or pine needles.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often grows in large 'fairy rings' in leaf litter or pine needles."
   },
   {
     "species_name": "Clitocybe nuda",
@@ -611,8 +571,7 @@
     "stem_description": "Thick, fibrous, violet to greyish-lilac; base is often swollen and covered in violet-tinted mycelium.",
     "smell": "Strong and distinctive; floral, fruity, or like frozen orange juice.",
     "lookalikes": "Cortinarius species (toxic, have a web-like cortina and rusty brown spore prints).",
-    "environment_tips": "Often found in 'fairy rings' in garden mulch or thick leaf litter; always check for a white/pinkish spore print.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found in 'fairy rings' in garden mulch or thick leaf litter; always check for a white/pinkish spore print."
   },
   {
     "species_name": "Coltricia perennis",
@@ -626,8 +585,7 @@
     "stem_description": "Central, tough, velvety, and brownish-rust colored.",
     "smell": "None.",
     "lookalikes": "Phaeolus schweinitzii (larger, grows at the base of trees, stains black with KOH).",
-    "environment_tips": "Commonly found on sandy, nutrient-poor soil along the edges of forest trails.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly found on sandy, nutrient-poor soil along the edges of forest trails."
   },
   {
     "species_name": "Coprinellus disseminatus",
@@ -641,8 +599,7 @@
     "stem_description": "Slender, white, translucent, and very fragile.",
     "smell": "None.",
     "lookalikes": "Other small Mycena species, but the dense clusters on wood are characteristic.",
-    "environment_tips": "Grows in massive, spectacular 'armies' of hundreds of individuals on or around old stumps.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Grows in massive, spectacular 'armies' of hundreds of individuals on or around old stumps."
   },
   {
     "species_name": "Coprinellus micaceus",
@@ -656,8 +613,7 @@
     "stem_description": "Slender, white, hollow, and fragile.",
     "smell": "Mild.",
     "lookalikes": "Coprinopsis atramentaria (larger, lacks glistening granules, toxic with alcohol).",
-    "environment_tips": "Look for the glistening 'mica' particles on the cap, though they can wash off in rain.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the glistening 'mica' particles on the cap, though they can wash off in rain."
   },
   {
     "species_name": "Coprinopsis atramentaria",
@@ -671,8 +627,7 @@
     "stem_description": "White, hollow; features a very faint, narrow ring-like zone near the base.",
     "smell": "Mild.",
     "lookalikes": "Coprinus comatus (larger, much more shaggy, non-toxic with alcohol).",
-    "environment_tips": "Often fruits in large clusters near buried wood or old stumps in parks and gardens.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often fruits in large clusters near buried wood or old stumps in parks and gardens."
   },
   {
     "species_name": "Coprinopsis lagopus",
@@ -686,8 +641,7 @@
     "stem_description": "Very slender, white, and covered in delicate white hairs (flocculose).",
     "smell": "None.",
     "lookalikes": "Coprinopsis nivea (grows on dung, much whiter and more mealy).",
-    "environment_tips": "Fruits and disappears within a few hours, usually early in the morning after rain.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Fruits and disappears within a few hours, usually early in the morning after rain."
   },
   {
     "species_name": "Coprinus comatus",
@@ -701,8 +655,7 @@
     "stem_description": "Tall, white, hollow; features a movable white ring.",
     "smell": "Mild, pleasant.",
     "lookalikes": "Coprinopsis atramentaria (grey, not shaggy, toxic with alcohol).",
-    "environment_tips": "Look for them in freshly disturbed soil or parks; the tall, shaggy 'lawyer's wig' look is unmistakable.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for them in freshly disturbed soil or parks; the tall, shaggy 'lawyer's wig' look is unmistakable."
   },
   {
     "species_name": "Crucibulum laeve",
@@ -716,8 +669,7 @@
     "stem_description": "Absent; attached directly to the substrate.",
     "smell": "None.",
     "lookalikes": "Cyathus striatus (greyish, with distinct grooves inside the cup).",
-    "environment_tips": "Often found in garden mulch or on decaying twigs in moist, shaded areas.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found in garden mulch or on decaying twigs in moist, shaded areas."
   },
   {
     "species_name": "Cryptoporus volvatus",
@@ -731,8 +683,7 @@
     "stem_description": "Absent; attached directly to the bark of conifers.",
     "smell": "Mild.",
     "lookalikes": "None; the unique 'pocket' or 'veil' covering the pores is diagnostic.",
-    "environment_tips": "Almost always found on recently dead conifers, often after forest fires; look for the small hole in the 'veil' where insects enter.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Almost always found on recently dead conifers, often after forest fires; look for the small hole in the 'veil' where insects enter."
   },
   {
     "species_name": "Daedaleopsis confragosa",
@@ -746,8 +697,7 @@
     "stem_description": "Absent.",
     "smell": "Faintly mushroomy.",
     "lookalikes": "Daedaleopsis tricolor (underrside is much more gill-like and cap is darker red).",
-    "environment_tips": "Common on dead willow and birch branches; the reddish bruising of the pore surface is a key field test.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Common on dead willow and birch branches; the reddish bruising of the pore surface is a key field test."
   },
   {
     "species_name": "Daedaleopsis tricolor",
@@ -761,8 +711,7 @@
     "stem_description": "Absent.",
     "smell": "None.",
     "lookalikes": "Daedaleopsis confragosa (underrside has maze-like pores rather than gills).",
-    "environment_tips": "Look for the strikingly regular 'gills' on a polypore growing from hardwood branches.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the strikingly regular 'gills' on a polypore growing from hardwood branches."
   },
   {
     "species_name": "Entoloma abortivum",
@@ -776,8 +725,7 @@
     "stem_description": "Gilled form: Grey-brown, fibrous. Aborted form: Indistinct.",
     "smell": "Faintly mealy (like flour).",
     "lookalikes": "Normal gilled form looks like toxic Entoloma sinuatum. Only the 'white popcorn' lumps are safe.",
-    "environment_tips": "Always found in the presence of Honey Mushrooms (Armillaria), which this fungus parasitizes.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Always found in the presence of Honey Mushrooms (Armillaria), which this fungus parasitizes."
   },
   {
     "species_name": "Evernia mesomorpha",
@@ -791,8 +739,7 @@
     "stem_description": "Branches are irregular, somewhat flattened, and covered in tiny, grainy spots (soredia).",
     "smell": "Mildly earthy.",
     "lookalikes": "Evernia prunastri (flatter branches, paler underside).",
-    "environment_tips": "Commonly hangs from the branches of spruce and fir trees in boreal forests.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly hangs from the branches of spruce and fir trees in boreal forests."
   },
   {
     "species_name": "Evernia prunastri",
@@ -806,8 +753,7 @@
     "stem_description": "Soft and pliable when wet, brittle when dry.",
     "smell": "Strongly earthy and 'mossy' when processed; used as a base note in perfumes.",
     "lookalikes": "Ramalina species (same color on both sides of the branches).",
-    "environment_tips": "Look for the distinct color contrast between the top and bottom of the flattened branches.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the distinct color contrast between the top and bottom of the flattened branches."
   },
   {
     "species_name": "Flammulina velutipes",
@@ -821,8 +767,7 @@
     "stem_description": "Tough, dark brown to black and velvety, especially at the base; lacks a ring.",
     "smell": "Mild, pleasant.",
     "lookalikes": "Galerina marginata (deadly, has a ring, brown spores, non-velvety stem).",
-    "environment_tips": "DANGER: Always check for a white spore print and a velvety stem; if it has brown spores, it is deadly.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "DANGER: Always check for a white spore print and a velvety stem; if it has brown spores, it is deadly."
   },
   {
     "species_name": "Fomes fomentarius",
@@ -836,8 +781,7 @@
     "stem_description": "Absent; grows directly as a bracket from the tree trunk.",
     "smell": "Mildly fruity or of wood.",
     "lookalikes": "Phellinus igniarius (darker, more cracked surface, grows on willow).",
-    "environment_tips": "Extremely hard; cannot be crushed by hand. Look for the 'horse-hoof' shape on dead birch.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Extremely hard; cannot be crushed by hand. Look for the 'horse-hoof' shape on dead birch."
   },
   {
     "species_name": "Fomitopsis betulina",
@@ -851,8 +795,7 @@
     "stem_description": "Absent or a very short, lateral nub.",
     "smell": "Strongly mushroomy/acidic.",
     "lookalikes": "None; the smooth, 'kidney-shaped' brown bracket on birch is unique.",
-    "environment_tips": "Found exclusively on birch trees; the flesh is white, corky, and very bitter if tasted.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found exclusively on birch trees; the flesh is white, corky, and very bitter if tasted."
   },
   {
     "species_name": "Fomitopsis mounceae",
@@ -866,8 +809,7 @@
     "stem_description": "Absent.",
     "smell": "Strong and unpleasant, like fermenting fruit or old gym socks.",
     "lookalikes": "Fomitopsis pinicola (European equivalent; requires chemical tests to distinguish).",
-    "environment_tips": "Look for the striking 'red belt' near the margin of the cap on dead conifer logs.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the striking 'red belt' near the margin of the cap on dead conifer logs."
   },
   {
     "species_name": "Fomitopsis pinicola",
@@ -881,8 +823,7 @@
     "stem_description": "Absent.",
     "smell": "Sour, acidic, or mildly fruity.",
     "lookalikes": "Ganoderma applanatum (pores stain brown when scratched, no red belt).",
-    "environment_tips": "Very common on dead conifers; the hard, resinous surface will melt if a match is held to it.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Very common on dead conifers; the hard, resinous surface will melt if a match is held to it."
   },
   {
     "species_name": "Galerina marginata",
@@ -896,8 +837,7 @@
     "stem_description": "Slender, brownish; features a small, fragile, brownish ring; base is often covered in white fibrils.",
     "smell": "Faintly mealy (like flour).",
     "lookalikes": "Flammulina velutipes (edible, white spores, no ring), Armillaria species (white spores, larger).",
-    "environment_tips": "DEADLY: Always perform a spore print for small brown mushrooms on wood; rusty-brown = DANGER.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "DEADLY: Always perform a spore print for small brown mushrooms on wood; rusty-brown = DANGER."
   },
   {
     "species_name": "Ganoderma applanatum",
@@ -911,8 +851,7 @@
     "stem_description": "Absent; attached broadly to the tree trunk.",
     "smell": "Mildly mushroomy.",
     "lookalikes": "Fomitopsis pinicola (pores do not stain brown, has a red belt).",
-    "environment_tips": "Used by artists for 'drawing' on the pore surface; found on dead or dying hardwoods like beech and maple.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Used by artists for 'drawing' on the pore surface; found on dead or dying hardwoods like beech and maple."
   },
   {
     "species_name": "Ganoderma curtisii",
@@ -926,8 +865,7 @@
     "stem_description": "Usually present, lateral, long, and brownish; also features a shiny, varnished surface.",
     "smell": "Mild.",
     "lookalikes": "Ganoderma lucidum (European Reishi; G. curtisii is more common in the eastern US).",
-    "environment_tips": "Check for the 'varnished' look on both the cap and the stem; grows near the base of oak trees.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for the 'varnished' look on both the cap and the stem; grows near the base of oak trees."
   },
   {
     "species_name": "Ganoderma oregonense",
@@ -941,8 +879,7 @@
     "stem_description": "Absent or a short, thick, lateral nub; also varnished.",
     "smell": "Mildly sweet or mushroomy.",
     "lookalikes": "Ganoderma tsugae (grows on hemlock, smaller).",
-    "environment_tips": "Look for massive, glossy red-brown brackets on dead fir or spruce in the Pacific Northwest.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for massive, glossy red-brown brackets on dead fir or spruce in the Pacific Northwest."
   },
   {
     "species_name": "Ganoderma tsugae",
@@ -956,8 +893,7 @@
     "stem_description": "Lateral, short, and varnished; same color as the cap.",
     "smell": "Mild.",
     "lookalikes": "Ganoderma lucidum (grows on hardwood, not hemlock).",
-    "environment_tips": "Exclusively found on hemlock trees (Tsuga); the white flesh distinguishes it from some other Ganoderma species.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Exclusively found on hemlock trees (Tsuga); the white flesh distinguishes it from some other Ganoderma species."
   },
   {
     "species_name": "Gliophorus psittacinus",
@@ -971,8 +907,7 @@
     "stem_description": "Slender, green (especially at the top), and extremely slimy/viscid.",
     "smell": "None.",
     "lookalikes": "None; the bright green color and intense sliminess are unique.",
-    "environment_tips": "Found in old, nutrient-poor grasslands; the 'parrot-like' variety of colors in one patch is characteristic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found in old, nutrient-poor grasslands; the 'parrot-like' variety of colors in one patch is characteristic."
   },
   {
     "species_name": "Gloeophyllum sepiarium",
@@ -986,8 +921,7 @@
     "stem_description": "Absent.",
     "smell": "None.",
     "lookalikes": "Trametes species (underrside has true pores, not gill-like structures).",
-    "environment_tips": "Commonly found on sun-exposed conifer logs, fence posts, and even railroad ties.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly found on sun-exposed conifer logs, fence posts, and even railroad ties."
   },
   {
     "species_name": "Graphis scripta",
@@ -1001,8 +935,7 @@
     "stem_description": "Absent.",
     "smell": "None.",
     "lookalikes": "Other 'Script' lichens (require chemical tests or microscopy to distinguish).",
-    "environment_tips": "Look for the appearance of black 'hieroglyphs' or 'Morse code' on smooth bark like beech or hazel.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the appearance of black 'hieroglyphs' or 'Morse code' on smooth bark like beech or hazel."
   },
   {
     "species_name": "Grifola frondosa",
@@ -1016,8 +949,7 @@
     "stem_description": "Many-branched from a single, thick, white base; branches are short and white.",
     "smell": "Strongly mushroomy, earthy, and pleasant.",
     "lookalikes": "Meripilus sumstinei (Black-staining Polypore; caps stain black when bruised).",
-    "environment_tips": "Check for clusters at the very base of old oak trees; the many 'ruffled' caps give it a 'hen-like' appearance.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for clusters at the very base of old oak trees; the many 'ruffled' caps give it a 'hen-like' appearance."
   },
   {
     "species_name": "Gymnopilus luteofolius",
@@ -1031,8 +963,7 @@
     "stem_description": "Yellowish, often with a slight purple tint at the base; features a delicate, soon-disappearing ring.",
     "smell": "Mildly fruity.",
     "lookalikes": "Tricholomopsis rutilans (non-bitter, white spores, lacks rusty gills).",
-    "environment_tips": "Check for blue-green staining at the base of the stem or on the cap (though often faint); the taste is extremely bitter.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for blue-green staining at the base of the stem or on the cap (though often faint); the taste is extremely bitter."
   },
   {
     "species_name": "Gyromitra esculenta",
@@ -1046,8 +977,7 @@
     "stem_description": "Thick, whitish to tan, and chambered or folded inside; the cap is attached only at the top of the stem.",
     "smell": "Mildly sweet.",
     "lookalikes": "True Morels (Morchella; cap is pitted like a honeycomb, not brain-like; cap is attached to the stem at the base).",
-    "environment_tips": "DANGER: Never consume. If testing, cut vertically to see if the cap is brain-like and the stem is solid/chambered.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "DANGER: Never consume. If testing, cut vertically to see if the cap is brain-like and the stem is solid/chambered."
   },
   {
     "species_name": "Gyromitra gigas",
@@ -1061,8 +991,7 @@
     "stem_description": "Short, very thick, and whitish; often nearly as wide as the cap.",
     "smell": "Mild.",
     "lookalikes": "Gyromitra esculenta (darker reddish-brown cap, more slender stem).",
-    "environment_tips": "Found in high-elevation forests in early spring, often right at the edge of snowbanks.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found in high-elevation forests in early spring, often right at the edge of snowbanks."
   },
   {
     "species_name": "Gyromitra infula",
@@ -1076,8 +1005,7 @@
     "stem_description": "Thin, hollow, whitish to brownish, and often slightly flattened.",
     "smell": "Mild.",
     "lookalikes": "Helvella species (smaller, stem is often deeply fluted/grooved).",
-    "environment_tips": "Fruits in autumn rather than spring, typically found on well-rotted conifer wood or woodchips.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Fruits in autumn rather than spring, typically found on well-rotted conifer wood or woodchips."
   },
   {
     "species_name": "Hericium coralloides",
@@ -1091,8 +1019,7 @@
     "stem_description": "Main branches arise from a single, tough base attached to the log.",
     "smell": "Mildly sweet or nutty.",
     "lookalikes": "Hericium americanum (spines are much longer, in 'pompom' clusters).",
-    "environment_tips": "Look for brilliant white 'ice-sculptures' on decaying hardwood; avoid if they have turned yellowish or brown.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for brilliant white 'ice-sculptures' on decaying hardwood; avoid if they have turned yellowish or brown."
   },
   {
     "species_name": "Hericium erinaceus",
@@ -1106,8 +1033,7 @@
     "stem_description": "Tough, solid base attached directly to the tree wound or log.",
     "smell": "Mild, slightly seafood-like when cooked.",
     "lookalikes": "None; the unbranched, shaggy white mass is unique.",
-    "environment_tips": "Often grows high up in the wounds of living oak or beech trees; can be seen from a distance.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often grows high up in the wounds of living oak or beech trees; can be seen from a distance."
   },
   {
     "species_name": "Hygrophoropsis aurantiaca",
@@ -1121,8 +1047,7 @@
     "stem_description": "Slender, same color as cap or slightly darker brown at the base; hollow.",
     "smell": "Mildly mushroomy.",
     "lookalikes": "Cantharellus cibarius (Choice edible, false gills/ridges, white flesh inside, smells of apricots).",
-    "environment_tips": "Check the gills; if they are true, thin, forked gills and the flesh is orange, it is the False Chanterelle.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check the gills; if they are true, thin, forked gills and the flesh is orange, it is the False Chanterelle."
   },
   {
     "species_name": "Hypholoma fasciculare",
@@ -1136,8 +1061,7 @@
     "stem_description": "Slender, yellowish, often with a faint greenish tint; grows in large, dense clusters.",
     "smell": "Mildly unpleasant.",
     "lookalikes": "Hypholoma lateritium (edible, brick-red cap, no greenish gills).",
-    "environment_tips": "DANGER: Always check for the greenish-grey gill color; the taste is instantly and overwhelmingly bitter.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "DANGER: Always check for the greenish-grey gill color; the taste is instantly and overwhelmingly bitter."
   },
   {
     "species_name": "Hypholoma lateritium",
@@ -1151,8 +1075,7 @@
     "stem_description": "Whitish to brownish; often has white veil fragments on the cap margin when young.",
     "smell": "Mild.",
     "lookalikes": "Hypholoma fasciculare (toxic, bright yellow cap, greenish gills, extremely bitter).",
-    "environment_tips": "Look for large clusters on hardwood stumps in late autumn; the brick-red cap is the best identifier.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for large clusters on hardwood stumps in late autumn; the brick-red cap is the best identifier."
   },
   {
     "species_name": "Hypogymnia physodes",
@@ -1166,8 +1089,7 @@
     "stem_description": "Absent; underside is black and wrinkled.",
     "smell": "None.",
     "lookalikes": "Parmelia sulcata (lobes are not puffy or hollow).",
-    "environment_tips": "One of the most common lichens; the 'puffy' hollow lobes that look like inflated pillows are diagnostic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "One of the most common lichens; the 'puffy' hollow lobes that look like inflated pillows are diagnostic."
   },
   {
     "species_name": "Hypomyces lactifluorum",
@@ -1181,8 +1103,7 @@
     "stem_description": "The entire host mushroom is covered in the orange crust, becoming very firm and heavy.",
     "smell": "Distinctly seafood-like (like cooked lobster or shrimp).",
     "lookalikes": "None; the brilliant orange, sandpaper-like surface on a deformed mushroom is unmistakable.",
-    "environment_tips": "Found where the host mushrooms (Russula brevipes or Lactarius) grow; often partially buried in soil.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found where the host mushrooms (Russula brevipes or Lactarius) grow; often partially buried in soil."
   },
   {
     "species_name": "Imleria badia",
@@ -1196,8 +1117,7 @@
     "stem_description": "Slender to slightly club-shaped, brownish; lacks any net-like pattern (reticulation).",
     "smell": "Mildly fruity or mushroomy.",
     "lookalikes": "Boletus edulis (pores don't stain blue, has reticulated stem).",
-    "environment_tips": "Look for them in conifer needles or moss; the immediate blue-green pore staining is the key test.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for them in conifer needles or moss; the immediate blue-green pore staining is the key test."
   },
   {
     "species_name": "Inonotus obliquus",
@@ -1211,8 +1131,7 @@
     "stem_description": "Absent; grows as an irregular protrusion from the trunk of birch trees.",
     "smell": "Mildly earthy or non-distinct.",
     "lookalikes": "Tree burls (which are part of the wood and not a fungus).",
-    "environment_tips": "Look for the golden-orange internal color when a small piece is chipped off the black 'charred' exterior.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the golden-orange internal color when a small piece is chipped off the black 'charred' exterior."
   },
   {
     "species_name": "Ischnoderma resinosum",
@@ -1226,8 +1145,7 @@
     "stem_description": "Absent.",
     "smell": "Mildly sweet or anise-like.",
     "lookalikes": "Ischnoderma benzoinum (grows on conifers, otherwise very similar).",
-    "environment_tips": "Look for the 'sweating' amber droplets on the white margin in early autumn; the flesh is soft and juicy when edible.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the 'sweating' amber droplets on the white margin in early autumn; the flesh is soft and juicy when edible."
   },
   {
     "species_name": "Kuehneromyces mutabilis",
@@ -1241,8 +1159,7 @@
     "stem_description": "Slender, brownish; features a small ring; below the ring, the stem is covered in distinct, recurved brownish scales.",
     "smell": "Pleasant, mushroomy.",
     "lookalikes": "Galerina marginata (deadly, stem is fibrous/silky, not scaly below the ring).",
-    "environment_tips": "EXTREME DANGER: The scaly stem below the ring is the primary identifier to distinguish it from the deadly Galerina.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "EXTREME DANGER: The scaly stem below the ring is the primary identifier to distinguish it from the deadly Galerina."
   },
   {
     "species_name": "Laccaria ochropurpurea",
@@ -1256,8 +1173,7 @@
     "stem_description": "Tall, thick, and very fibrous; same color as the cap.",
     "smell": "Mild.",
     "lookalikes": "Cortinarius species (toxic, have a cobweb-like veil and rusty brown spores).",
-    "environment_tips": "Always confirm a white spore print; the brilliant purple gills and very tough, fibrous stem are diagnostic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Always confirm a white spore print; the brilliant purple gills and very tough, fibrous stem are diagnostic."
   },
   {
     "species_name": "Lactarius deliciosus",
@@ -1271,8 +1187,7 @@
     "stem_description": "White to orange, often with darker orange 'pits' (scrobiculae) on the surface; exuded orange milk.",
     "smell": "Faintly fruity.",
     "lookalikes": "Lactarius deterrimus (grows under spruce, also edible but less prized).",
-    "environment_tips": "Exclusively found under pine trees; the combination of orange milk and green staining is unique and safe.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Exclusively found under pine trees; the combination of orange milk and green staining is unique and safe."
   },
   {
     "species_name": "Lactarius torminosus",
@@ -1286,8 +1201,7 @@
     "stem_description": "White to pale pink, often with orange-buff pits; hollow.",
     "smell": "Mildly fruity.",
     "lookalikes": "Lactarius pubescens (paler, lacks concentric zones, also associated with birch).",
-    "environment_tips": "Almost always found under birch trees; the 'shaggy' or 'woolly' cap margin is the most striking feature.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Almost always found under birch trees; the 'shaggy' or 'woolly' cap margin is the most striking feature."
   },
   {
     "species_name": "Lactarius turpis",
@@ -1301,8 +1215,7 @@
     "stem_description": "Short, thick, and same color as the cap (olive-brown).",
     "smell": "Mildly pungent.",
     "lookalikes": "None; its 'ugly' dark olive-green to blackish appearance is quite unique.",
-    "environment_tips": "Common in wet, mossy areas under birch; historically eaten in some regions, but now known to be mutagenic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Common in wet, mossy areas under birch; historically eaten in some regions, but now known to be mutagenic."
   },
   {
     "species_name": "Laetiporus sulphureus",
@@ -1316,8 +1229,7 @@
     "stem_description": "Absent; attached directly to the wood.",
     "smell": "Mild, mushroomy.",
     "lookalikes": "Laetiporus gilbertsonii (grows on eucalyptus, higher risk of toxicity).",
-    "environment_tips": "The bright orange color fades to white as it ages; only the tender outer edges should be harvested.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "The bright orange color fades to white as it ages; only the tender outer edges should be harvested."
   },
   {
     "species_name": "Leccinum albostipitatum",
@@ -1331,8 +1243,7 @@
     "stem_description": "Tall, thick, and covered in white scales (scabers) that do not turn black (unlike many other Leccinums).",
     "smell": "Mild.",
     "lookalikes": "Leccinum aurantiacum (stem scales turn reddish-brown then black).",
-    "environment_tips": "Exclusively found under aspen or poplar; the white stem scales on an orange-capped bolete are diagnostic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Exclusively found under aspen or poplar; the white stem scales on an orange-capped bolete are diagnostic."
   },
   {
     "species_name": "Leccinum aurantiacum",
@@ -1346,8 +1257,7 @@
     "stem_description": "White, covered in small scales (scabers) that are initially white then turn reddish-brown or black.",
     "smell": "Mild.",
     "lookalikes": "Leccinum scabrum (brown cap, associated with birch).",
-    "environment_tips": "Flesh turns purple-grey then black when cut; this is normal for this species but requires thorough cooking.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Flesh turns purple-grey then black when cut; this is normal for this species but requires thorough cooking."
   },
   {
     "species_name": "Leccinum scabrum",
@@ -1361,8 +1271,7 @@
     "stem_description": "Tall, slender, white; covered in dense, small black scales (scabers).",
     "smell": "Mild.",
     "lookalikes": "None; the brown cap and black-scaled stem under birch are classic markers.",
-    "environment_tips": "Always associated with birch; the stem is very tough and fibrous, while the cap is soft.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Always associated with birch; the stem is very tough and fibrous, while the cap is soft."
   },
   {
     "species_name": "Leccinum versipelle",
@@ -1376,8 +1285,7 @@
     "stem_description": "Tall, thick, and white; covered in prominent black scales (scabers).",
     "smell": "Mild.",
     "lookalikes": "Leccinum aurantiacum (grows under aspen, has reddish-brown stem scales).",
-    "environment_tips": "Found under birch; flesh turns wine-red then blackish when cut; ensure thorough cooking to neutralize toxins.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found under birch; flesh turns wine-red then blackish when cut; ensure thorough cooking to neutralize toxins."
   },
   {
     "species_name": "Lepista nuda",
@@ -1391,8 +1299,7 @@
     "stem_description": "Thick, violet, fibrous; lacks a ring.",
     "smell": "Fruity or floral, similar to frozen orange juice.",
     "lookalikes": "Toxic violet Cortinarius (have rusty spores and a cobweb-like veil).",
-    "environment_tips": "Check for white to pale pink spore print; Cortinarius will have rusty-brown spore print.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for white to pale pink spore print; Cortinarius will have rusty-brown spore print."
   },
   {
     "species_name": "Leratiomyces ceres",
@@ -1406,8 +1313,7 @@
     "stem_description": "White to yellowish-tan, often with reddish stains; features a faint ring-like zone.",
     "smell": "Mildly earthy.",
     "lookalikes": "None; the brilliant red cap in woodchips is a very distinctive urban identifier.",
-    "environment_tips": "Look for the white 'pustules' or veil fragments around the edge of the bright red cap.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the white 'pustules' or veil fragments around the edge of the bright red cap."
   },
   {
     "species_name": "Leucoagaricus americanus",
@@ -1421,8 +1327,7 @@
     "stem_description": "Thick, often club-shaped or swollen; white, but stains bright yellow then red when handled.",
     "smell": "Mild.",
     "lookalikes": "Chlorophyllum molybdites (toxic, green spores, does not stain red).",
-    "environment_tips": "Check for the yellow-then-red color change when the stem is scratched; often grows in dense clusters.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check for the yellow-then-red color change when the stem is scratched; often grows in dense clusters."
   },
   {
     "species_name": "Leucoagaricus leucothites",
@@ -1436,8 +1341,7 @@
     "stem_description": "Tall, white, hollow; features a white, movable ring; base is slightly swollen but lacks a sac (volva).",
     "smell": "Mild, pleasant.",
     "lookalikes": "Deadly Amanita bisporigera (Destroying Angel; has a sac-like volva at the base).",
-    "environment_tips": "EXTREME DANGER: Always dig up the entire base to confirm the ABSENCE of a volva; avoid if unsure.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "EXTREME DANGER: Always dig up the entire base to confirm the ABSENCE of a volva; avoid if unsure."
   },
   {
     "species_name": "Lobaria pulmonaria",
@@ -1451,8 +1355,7 @@
     "stem_description": "Attached broadly to the bark; underside is pale and fuzzy (tomentose) with white spots.",
     "smell": "None.",
     "lookalikes": "None; the resemblance to human lung tissue is very striking.",
-    "environment_tips": "Only found in clean, unpolluted old-growth forests; look for it on the trunks of maple and oak.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Only found in clean, unpolluted old-growth forests; look for it on the trunks of maple and oak."
   },
   {
     "species_name": "Lycogala epidendrum",
@@ -1466,8 +1369,7 @@
     "stem_description": "Absent; grows as small, scattered or clustered dots on logs.",
     "smell": "None.",
     "lookalikes": "Immature puffballs (but Lycogala is much smaller and has pink 'milk').",
-    "environment_tips": "Common on well-rotted logs; poke a young pink specimen to see the 'wolf's milk' exude.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Common on well-rotted logs; poke a young pink specimen to see the 'wolf's milk' exude."
   },
   {
     "species_name": "Lycoperdon perlatum",
@@ -1481,8 +1383,7 @@
     "stem_description": "Indistinct; a sterile, tapering base that is also white and firm when young.",
     "smell": "Mild, pleasant.",
     "lookalikes": "Amanita eggs (DANGER: cutting in half reveals a developing mushroom inside; puffballs are solid white).",
-    "environment_tips": "Check that the interior is as white and solid as cream cheese; if it is yellow, green, or brown, it is inedible.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check that the interior is as white and solid as cream cheese; if it is yellow, green, or brown, it is inedible."
   },
   {
     "species_name": "Lycoperdon pyriforme",
@@ -1496,8 +1397,7 @@
     "stem_description": "Tapering, sterile base attached to wood by white mycelial strands (rhizomorphs).",
     "smell": "Mildly mushroomy.",
     "lookalikes": "Scleroderma species (toxic, dark interior when young).",
-    "environment_tips": "Grows in large, dense clusters exclusively on wood, unlike the Common Puffball which grows on soil.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Grows in large, dense clusters exclusively on wood, unlike the Common Puffball which grows on soil."
   },
   {
     "species_name": "Macrolepiota procera",
@@ -1511,8 +1411,7 @@
     "stem_description": "Very tall (15-40cm), slender; features a distinct brownish 'snakeskin' pattern and a large, movable double ring.",
     "smell": "Pleasantly nutty.",
     "lookalikes": "Chlorophyllum molybdites (toxic, green spores, lacks snakeskin stem pattern).",
-    "environment_tips": "Check the stem for the 'snakeskin' pattern; if the stem is smooth and the spores are green, it is toxic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Check the stem for the 'snakeskin' pattern; if the stem is smooth and the spores are green, it is toxic."
   },
   {
     "species_name": "Merulius tremellosus",
@@ -1526,8 +1425,7 @@
     "stem_description": "Absent; grows flat against the wood.",
     "smell": "None.",
     "lookalikes": "Phlebia radiata (more brilliantly orange and wrinkled).",
-    "environment_tips": "Found on the underside of wet hardwood logs; the 'trembling' gelatinous texture is characteristic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found on the underside of wet hardwood logs; the 'trembling' gelatinous texture is characteristic."
   },
   {
     "species_name": "Mutinus ravenelii",
@@ -1541,8 +1439,7 @@
     "stem_description": "Slender, spongy stalk (5-10cm); bright pink to red; the tip is pointed and the gleba is restricted to the upper part.",
     "smell": "Extremely foul, like rotting meat or carrion.",
     "lookalikes": "Mutinus caninus (paler orange stalk, head is less distinct).",
-    "environment_tips": "Often found in urban mulch; look for the bright pink 'fingers' emerging from white 'eggs' in the soil.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found in urban mulch; look for the bright pink 'fingers' emerging from white 'eggs' in the soil."
   },
   {
     "species_name": "Mycena haematopus",
@@ -1556,8 +1453,7 @@
     "stem_description": "Slender, hollow, same color as the cap; snaps easily to release a dark burgundy 'blood'.",
     "smell": "Mildly acidic or non-distinct.",
     "lookalikes": "Other Mycena species, but the dark red 'bleeding' latex is unique.",
-    "environment_tips": "Grows in small clusters on well-rotted logs; the bleeding stem is the definitive field test.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Grows in small clusters on well-rotted logs; the bleeding stem is the definitive field test."
   },
   {
     "species_name": "Mycena leaiana",
@@ -1571,8 +1467,7 @@
     "stem_description": "Slender, orange, and extremely slimy; often found in large, dense clusters.",
     "smell": "Mildly mealy.",
     "lookalikes": "None; the brilliant orange color and intense sliminess on hardwood are very distinctive.",
-    "environment_tips": "Look for dense orange clusters on logs; the orange color will stain your fingers when handled.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for dense orange clusters on logs; the orange color will stain your fingers when handled."
   },
   {
     "species_name": "Nectria cinnabarina",
@@ -1586,8 +1481,7 @@
     "stem_description": "Absent; the tiny bumps are attached directly to the bark of dead twigs.",
     "smell": "None.",
     "lookalikes": "None; the tiny 'pink dots' on hardwood branches are very characteristic of this plant pathogen.",
-    "environment_tips": "Extremely common on fallen branches of sycamore, beech, and horse chestnut.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Extremely common on fallen branches of sycamore, beech, and horse chestnut."
   },
   {
     "species_name": "Omphalotus illudens",
@@ -1601,8 +1495,7 @@
     "stem_description": "Tall, tapering toward the base; orange; grows in large, dense clusters from a central point.",
     "smell": "Unpleasant, often described as sweet but sickly or like overripe fruit.",
     "lookalikes": "Cantharellus cibarius (edible, false gills, white flesh, smells of apricots, grows singly on soil).",
-    "environment_tips": "DANGER: Check the flesh; if it is orange throughout and growing in a cluster on wood, it is toxic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "DANGER: Check the flesh; if it is orange throughout and growing in a cluster on wood, it is toxic."
   },
   {
     "species_name": "Omphalotus olivascens",
@@ -1616,8 +1509,7 @@
     "stem_description": "Thick, tapering; olive-orange; grows in dense clusters at the base of trees.",
     "smell": "Unpleasant, metallic or sickly sweet.",
     "lookalikes": "Cantharellus californicus (Choice edible, much brighter yellow, false gills, white flesh).",
-    "environment_tips": "Commonly found under Live Oak and Eucalyptus; the olive-green tint in the orange gills is diagnostic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly found under Live Oak and Eucalyptus; the olive-green tint in the orange gills is diagnostic."
   },
   {
     "species_name": "Panaeolus papilionaceus",
@@ -1631,8 +1523,7 @@
     "stem_description": "Tall, slender, greyish-brown; brittle and straight.",
     "smell": "Mildly earthy.",
     "lookalikes": "Panaeolus cinctulus (hallucinogenic, has a darker band around the cap margin).",
-    "environment_tips": "Found directly on old dung; the white veil fragments hanging from the cap edge are the best field mark.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found directly on old dung; the white veil fragments hanging from the cap edge are the best field mark."
   },
   {
     "species_name": "Panellus stipticus",
@@ -1646,8 +1537,7 @@
     "stem_description": "Very short, lateral, and tough; same color as the cap.",
     "smell": "Mildly fruity.",
     "lookalikes": "Pleurotus species (larger, white/lilac spores, not bitter).",
-    "environment_tips": "Look for small tan 'ears' on logs; the taste is so bitter it will numb the tongue for minutes.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for small tan 'ears' on logs; the taste is so bitter it will numb the tongue for minutes."
   },
   {
     "species_name": "Parmelia sulcata",
@@ -1661,8 +1551,7 @@
     "stem_description": "Absent; underside is black with dark, root-like anchors (rhizines) that reach the edge.",
     "smell": "None.",
     "lookalikes": "Hypogymnia physodes (lobes are puffy and hollow).",
-    "environment_tips": "One of the most common lichens on city trees; the white 'netted' lines on the blue-grey lobes are diagnostic.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "One of the most common lichens on city trees; the white 'netted' lines on the blue-grey lobes are diagnostic."
   },
   {
     "species_name": "Paxillus involutus",
@@ -1676,8 +1565,7 @@
     "stem_description": "Thick, brownish, often shorter than cap diameter; lacks a ring.",
     "smell": "Mildly sour or fruity.",
     "lookalikes": "Lactarius species (exude milk, gills don't rub off cap easily).",
-    "environment_tips": "DEADLY: The deeply inrolled, fuzzy cap margin and the dark brown staining of the yellow gills are critical warnings.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "DEADLY: The deeply inrolled, fuzzy cap margin and the dark brown staining of the yellow gills are critical warnings."
   },
   {
     "species_name": "Peltigera aphthosa",
@@ -1691,8 +1579,7 @@
     "stem_description": "Absent; underside is white with a network of prominent veins and dark rhizines.",
     "smell": "None.",
     "lookalikes": "Peltigera britannica (similar, but black bumps are restricted to specific areas).",
-    "environment_tips": "Common in mossy conifer forests; the bright green color when wet is very distinctive.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Common in mossy conifer forests; the bright green color when wet is very distinctive."
   },
   {
     "species_name": "Peltigera praetextata",
@@ -1706,8 +1593,7 @@
     "stem_description": "Absent; underside has pale veins and long, slender rhizines.",
     "smell": "None.",
     "lookalikes": "Peltigera canina (lacks the scale-like isidia on the margins).",
-    "environment_tips": "Often found growing over moss on damp logs or soil in shaded forests.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found growing over moss on damp logs or soil in shaded forests."
   },
   {
     "species_name": "Phaeolus schweinitzii",
@@ -1721,8 +1607,7 @@
     "stem_description": "Usually short, thick, and central or lateral; dark brown and velvety.",
     "smell": "Mildly mushroomy.",
     "lookalikes": "Inonotus species (grow on hardwood, not conifers).",
-    "environment_tips": "Look for the velvety 'cow-pie' shaped mushroom at the base of old pines or Douglas-firs.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for the velvety 'cow-pie' shaped mushroom at the base of old pines or Douglas-firs."
   },
   {
     "species_name": "Phaeophyscia orbicularis",
@@ -1736,8 +1621,7 @@
     "stem_description": "Absent; underside is black with black rhizines.",
     "smell": "None.",
     "lookalikes": "Physcia species (usually have a white underside).",
-    "environment_tips": "Very tolerant of air pollution; commonly found on tree trunks in urban centers.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Very tolerant of air pollution; commonly found on tree trunks in urban centers."
   },
   {
     "species_name": "Phallus impudicus",
@@ -1751,8 +1635,7 @@
     "stem_description": "Tall (10-20cm), white, and very porous (like a sponge); emerges from a gelatinous white 'egg'.",
     "smell": "Incredibly foul, like rotting meat or sewage (can be smelled from yards away).",
     "lookalikes": "Morchella species (Morels; have a similar pitted head but never smell foul and lack the slime).",
-    "environment_tips": "Follow your nose! If you smell rotting meat in the woods, look for the tall white stalk nearby.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Follow your nose! If you smell rotting meat in the woods, look for the tall white stalk nearby."
   },
   {
     "species_name": "Phellinus igniarius",
@@ -1766,8 +1649,7 @@
     "stem_description": "Absent.",
     "smell": "None.",
     "lookalikes": "Fomes fomentarius (greyer, smoother surface, grows mostly on birch).",
-    "environment_tips": "Almost exclusively found on willow; the black, 'burnt-looking' cracked surface is a key identifier.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Almost exclusively found on willow; the black, 'burnt-looking' cracked surface is a key identifier."
   },
   {
     "species_name": "Phellinus tremulae",
@@ -1781,8 +1663,7 @@
     "stem_description": "Absent; grows out of the trunk of aspen trees.",
     "smell": "None.",
     "lookalikes": "Phellinus igniarius (larger, more cracked, associated with willow).",
-    "environment_tips": "Exclusively found on Aspen (Populus tremuloides); look for brackets emerging from branch scars on the trunk.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Exclusively found on Aspen (Populus tremuloides); look for brackets emerging from branch scars on the trunk."
   },
   {
     "species_name": "Phlebia radiata",
@@ -1796,8 +1677,7 @@
     "stem_description": "Absent; attached flat to the wood surface.",
     "smell": "None.",
     "lookalikes": "Merulius tremellosus (paler, more gelatinous, white fuzzy margin).",
-    "environment_tips": "Found on de-barked hardwood logs; the striking 'brain-like' wrinkles and bright orange color are unique.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found on de-barked hardwood logs; the striking 'brain-like' wrinkles and bright orange color are unique."
   },
   {
     "species_name": "Phlebia tremellosa",
@@ -1811,8 +1691,7 @@
     "stem_description": "None (attached directly to substrate).",
     "smell": "None to slightly sweet.",
     "lookalikes": "Phlebia radiata (more orange, less hairy), Merulius tremellosus (synonym).",
-    "environment_tips": "Often found on the underside of logs or on fallen branches.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found on the underside of logs or on fallen branches."
   },
   {
     "species_name": "Pholiota aurivella",
@@ -1826,8 +1705,7 @@
     "stem_description": "5-10cm, yellow, often scaly below the ring zone; becomes rusty-brown at the base.",
     "smell": "None or mild.",
     "lookalikes": "Pholiota squarrosa (drier, more scaly), Pholiota adiposa.",
-    "environment_tips": "Commonly grows high up on tree trunks as well as at the base.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly grows high up on tree trunks as well as at the base."
   },
   {
     "species_name": "Pholiota squarrosa",
@@ -1841,8 +1719,7 @@
     "stem_description": "4-12cm, dry, scaly like the cap; pale yellow above the ring, brownish below.",
     "smell": "Strong, garlic-like, or sometimes like radish.",
     "lookalikes": "Pholiota aurivella (slimy), Pholiota squarrosoides (slimy cap).",
-    "environment_tips": "Often found at the base of birches and aspens.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found at the base of birches and aspens."
   },
   {
     "species_name": "Phyllotopsis nidulans",
@@ -1856,8 +1733,7 @@
     "stem_description": "None (attached laterally).",
     "smell": "Strong, unpleasant (like rotten cabbage or sulfur).",
     "lookalikes": "Pleurotus species (different colors, better smell), Tapinella atrotomentosa.",
-    "environment_tips": "Can be found in large clusters on decaying logs.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Can be found in large clusters on decaying logs."
   },
   {
     "species_name": "Physcia adscendens",
@@ -1871,8 +1747,7 @@
     "stem_description": "None (Lichen).",
     "smell": "None.",
     "lookalikes": "Physcia tenella (cilia but no hooded tips), Physcia stellaris.",
-    "environment_tips": "Often found in sunny, nitrogen-enriched environments like bird perches.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found in sunny, nitrogen-enriched environments like bird perches."
   },
   {
     "species_name": "Platismatia glauca",
@@ -1886,8 +1761,7 @@
     "stem_description": "None (Lichen).",
     "smell": "None.",
     "lookalikes": "Cetrelia species, Parmotrema species.",
-    "environment_tips": "Very common in moist, cool forests.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Very common in moist, cool forests."
   },
   {
     "species_name": "Pleurotus ostreatus",
@@ -1901,8 +1775,7 @@
     "stem_description": "Short or absent, lateral and thick.",
     "smell": "Mild, oyster-like or slightly of anise.",
     "lookalikes": "Pleurotus pulmonarius (summer/warmer weather), Omphalotus illudens (toxic, orange).",
-    "environment_tips": "Found on logs and stumps after rain in cooler months.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Found on logs and stumps after rain in cooler months."
   },
   {
     "species_name": "Pleurotus pulmonarius",
@@ -1916,8 +1789,7 @@
     "stem_description": "Short, lateral, often hairy at the base.",
     "smell": "Sweet, slightly like anise.",
     "lookalikes": "Pleurotus ostreatus (thicker, cooler weather), Pleurocybella porrigens (toxic, on conifer).",
-    "environment_tips": "Look for these on sunny days after rain in early summer.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Look for these on sunny days after rain in early summer."
   },
   {
     "species_name": "Psathyrella candolleana",
@@ -1931,8 +1803,7 @@
     "stem_description": "4-10cm, thin, white, hollow, and very fragile.",
     "smell": "Mild.",
     "lookalikes": "Other Psathyrella species, Agrocybe praecox.",
-    "environment_tips": "Very common in urban areas and gardens.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Very common in urban areas and gardens."
   },
   {
     "species_name": "Pseudevernia furfuracea",
@@ -1946,8 +1817,7 @@
     "stem_description": "None (Lichen).",
     "smell": "None.",
     "lookalikes": "Evernia prunastri (greenish underside, softer), Physcia species.",
-    "environment_tips": "Sensitive to air pollution; used in the perfume industry.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Sensitive to air pollution; used in the perfume industry."
   },
   {
     "species_name": "Pseudohydnum gelatinosum",
@@ -1961,8 +1831,7 @@
     "stem_description": "Short or lateral, often absent, gelatinous.",
     "smell": "Mild or none.",
     "lookalikes": "Various jelly fungi (but the teeth/spines are unique).",
-    "environment_tips": "Often found on very rotten conifer logs.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found on very rotten conifer logs."
   },
   {
     "species_name": "Psilocybe azurescens",
@@ -1976,8 +1845,7 @@
     "stem_description": "9-15cm, white, silky, bruises blue intensely when touched.",
     "smell": "Farinaceous (like flour/starch).",
     "lookalikes": "Galerina marginata (Deadly), other Psilocybe species.",
-    "environment_tips": "Restricted to coastal regions; prefers cold temperatures.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Restricted to coastal regions; prefers cold temperatures."
   },
   {
     "species_name": "Psilocybe caerulescens",
@@ -1991,8 +1859,7 @@
     "stem_description": "5-9cm, white to brownish, bruises blue when damaged.",
     "smell": "Strongly farinaceous.",
     "lookalikes": "Psilocybe cubensis, various Inocybe species (Toxic).",
-    "environment_tips": "Often found in landslide areas in Mexico where soil is disturbed.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found in landslide areas in Mexico where soil is disturbed."
   },
   {
     "species_name": "Psilocybe cubensis",
@@ -2006,8 +1873,7 @@
     "stem_description": "4-15cm, white to yellowish, bruises blue; persistent ring (annulus) present.",
     "smell": "Farinaceous.",
     "lookalikes": "Protostropharia semiglobata, various toxic Chlorophyllum species.",
-    "environment_tips": "Most commonly found in cow pastures after warm rains.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Most commonly found in cow pastures after warm rains."
   },
   {
     "species_name": "Psilocybe cyanescens",
@@ -2021,8 +1887,7 @@
     "stem_description": "3-6cm, white, silky, bruises blue.",
     "smell": "Farinaceous.",
     "lookalikes": "Galerina marginata (Deadly, no blue bruising, rusty spores), Psilocybe allenii.",
-    "environment_tips": "Often found in urban parks where woodchips have been applied.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found in urban parks where woodchips have been applied."
   },
   {
     "species_name": "Psilocybe ovoideocystidiata",
@@ -2036,8 +1901,7 @@
     "stem_description": "3-9cm, white to brownish, bruises blue; often has a faint ring zone.",
     "smell": "Farinaceous.",
     "lookalikes": "Psilocybe caerulipes, Galerina marginata (Deadly).",
-    "environment_tips": "Often found among box elder and sycamore trees in flood zones.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found among box elder and sycamore trees in flood zones."
   },
   {
     "species_name": "Psilocybe pelliculosa",
@@ -2051,8 +1915,7 @@
     "stem_description": "4-8cm, thin, brownish, slightly scaly at the base, bruises blue-green.",
     "smell": "Farinaceous.",
     "lookalikes": "Mycena species, Galerina marginata (Deadly).",
-    "environment_tips": "Prefers mossy ground in coniferous forests.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Prefers mossy ground in coniferous forests."
   },
   {
     "species_name": "Retiboletus ornatipes",
@@ -2066,8 +1929,7 @@
     "stem_description": "5-15cm, bright yellow, covered in a prominent, raised net-like pattern (reticulation).",
     "smell": "Mild.",
     "lookalikes": "Retiboletus griseus (greyer stem), various bitter Tylopilus species.",
-    "environment_tips": "Commonly found in mixed deciduous forests.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly found in mixed deciduous forests."
   },
   {
     "species_name": "Rhytisma acerinum",
@@ -2081,8 +1943,7 @@
     "stem_description": "None.",
     "smell": "None.",
     "lookalikes": "Other tar spot fungi like Rhytisma punctatum.",
-    "environment_tips": "Indicates good air quality as it is sensitive to sulfur dioxide.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Indicates good air quality as it is sensitive to sulfur dioxide."
   },
   {
     "species_name": "Sarcomyxa serotina",
@@ -2096,8 +1957,7 @@
     "stem_description": "Very short, lateral, yellowish and scaly.",
     "smell": "Mild.",
     "lookalikes": "Pleurotus ostreatus (different colors, no olive tint), Panellus stipticus (small, toxic).",
-    "environment_tips": "One of the few edible mushrooms found during freezes in late autumn.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "One of the few edible mushrooms found during freezes in late autumn."
   },
   {
     "species_name": "Sarcoscypha austriaca",
@@ -2111,8 +1971,7 @@
     "stem_description": "Short or absent, white.",
     "smell": "None.",
     "lookalikes": "Sarcoscypha coccinea (requires microscopy to distinguish).",
-    "environment_tips": "One of the first fungi to appear in spring, often while snow is still on the ground.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "One of the first fungi to appear in spring, often while snow is still on the ground."
   },
   {
     "species_name": "Sarcosoma globosum",
@@ -2126,8 +1985,7 @@
     "stem_description": "None.",
     "smell": "None.",
     "lookalikes": "Bulgaria inquinans (smaller, on wood).",
-    "environment_tips": "Often buried in moss, making it hard to spot.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often buried in moss, making it hard to spot."
   },
   {
     "species_name": "Schizophyllum commune",
@@ -2141,8 +1999,7 @@
     "stem_description": "None.",
     "smell": "Mild.",
     "lookalikes": "None, the split gills are unique.",
-    "environment_tips": "One of the most widely distributed fungi in the world.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "One of the most widely distributed fungi in the world."
   },
   {
     "species_name": "Stereum hirsutum",
@@ -2156,8 +2013,7 @@
     "stem_description": "None.",
     "smell": "None.",
     "lookalikes": "Stereum ostrea (larger, less hairy), Trametes versicolor (has pores).",
-    "environment_tips": "Does not turn red when bruised, unlike Stereum sanguinolentum.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Does not turn red when bruised, unlike Stereum sanguinolentum."
   },
   {
     "species_name": "Stereum ostrea",
@@ -2171,8 +2027,7 @@
     "stem_description": "None.",
     "smell": "None.",
     "lookalikes": "Trametes versicolor (has pores), Stereum hirsutum (smaller, more hairy).",
-    "environment_tips": "Often grows in overlapping clusters on logs.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often grows in overlapping clusters on logs."
   },
   {
     "species_name": "Stropharia aeruginosa",
@@ -2186,8 +2041,7 @@
     "stem_description": "4-10cm, blue-green, scaly below the ring.",
     "smell": "Mild or slightly of pepper.",
     "lookalikes": "Stropharia caerulea (fewer scales, different gill edge).",
-    "environment_tips": "Loses its blue color quickly in dry weather.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Loses its blue color quickly in dry weather."
   },
   {
     "species_name": "Stropharia ambigua",
@@ -2201,8 +2055,7 @@
     "stem_description": "8-18cm, white, shaggy/scaly below the ring zone.",
     "smell": "Mild.",
     "lookalikes": "Leratiomyces percevalii, Stropharia coronilla.",
-    "environment_tips": "Common in the coastal forests of the Pacific Northwest.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Common in the coastal forests of the Pacific Northwest."
   },
   {
     "species_name": "Suillus americanus",
@@ -2216,8 +2069,7 @@
     "stem_description": "3-9cm, thin, yellow with reddish dots, no ring.",
     "smell": "Mild.",
     "lookalikes": "Suillus sibiricus, Suillus granulatus.",
-    "environment_tips": "Almost always found under five-needle pines.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Almost always found under five-needle pines."
   },
   {
     "species_name": "Suillus granulatus",
@@ -2231,8 +2083,7 @@
     "stem_description": "4-8cm, pale yellow with small pinkish or brownish granules near the top; no ring.",
     "smell": "Mild or slightly fruity.",
     "lookalikes": "Suillus luteus (has a ring), Suillus americanus (dots are different).",
-    "environment_tips": "One of the most common Suillus species.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "One of the most common Suillus species."
   },
   {
     "species_name": "Suillus grevillei",
@@ -2246,8 +2097,7 @@
     "stem_description": "5-10cm, yellow to reddish-brown, with a distinct whitish or yellowish ring.",
     "smell": "Mild.",
     "lookalikes": "Suillus clintonianus, Suillus luteus.",
-    "environment_tips": "If there are no larch trees nearby, it is not this species.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "If there are no larch trees nearby, it is not this species."
   },
   {
     "species_name": "Suillus luteus",
@@ -2261,8 +2111,7 @@
     "stem_description": "4-10cm, white to yellowish with a large, membrane-like ring that is often dark purple.",
     "smell": "Mild.",
     "lookalikes": "Suillus granulatus (no ring), Suillus grevillei.",
-    "environment_tips": "Often found in large numbers in pine plantations.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found in large numbers in pine plantations."
   },
   {
     "species_name": "Suillus spraguei",
@@ -2276,8 +2125,7 @@
     "stem_description": "4-10cm, scaly like the cap, with a fuzzy ring.",
     "smell": "Mild.",
     "lookalikes": "Suillus cavipes (hollow stem base).",
-    "environment_tips": "Very easy to identify due to its bright red-scaly cap and association with white pine.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Very easy to identify due to its bright red-scaly cap and association with white pine."
   },
   {
     "species_name": "Tapinella atrotomentosa",
@@ -2291,8 +2139,7 @@
     "stem_description": "Short, thick, lateral, and covered in dense, dark brown velvet.",
     "smell": "Mild.",
     "lookalikes": "Paxillus involutus (Toxic, no velvet stem).",
-    "environment_tips": "Almost always found growing on well-decayed conifer wood.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Almost always found growing on well-decayed conifer wood."
   },
   {
     "species_name": "Trametes betulina",
@@ -2306,8 +2153,7 @@
     "stem_description": "None.",
     "smell": "None.",
     "lookalikes": "Trametes versicolor (has pores), Daedaleopsis confragosa.",
-    "environment_tips": "The only Trametes-like fungus with true gills.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "The only Trametes-like fungus with true gills."
   },
   {
     "species_name": "Trametes gibbosa",
@@ -2321,8 +2167,7 @@
     "stem_description": "None.",
     "smell": "None.",
     "lookalikes": "Trametes elegans, Daedaleopsis confragosa.",
-    "environment_tips": "The elongated pores are a key identifying feature.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "The elongated pores are a key identifying feature."
   },
   {
     "species_name": "Trametes hirsuta",
@@ -2336,8 +2181,7 @@
     "stem_description": "None.",
     "smell": "None.",
     "lookalikes": "Trametes versicolor (less hairy, more colorful), Trametes pubescens (less hairy).",
-    "environment_tips": "Often has a thicker, more rigid margin than T. versicolor.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often has a thicker, more rigid margin than T. versicolor."
   },
   {
     "species_name": "Trametes ochracea",
@@ -2351,8 +2195,7 @@
     "stem_description": "None.",
     "smell": "None.",
     "lookalikes": "Trametes versicolor (thinner, more colorful), Trametes hirsuta.",
-    "environment_tips": "Lack of blue or black zones helps distinguish it from T. versicolor.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Lack of blue or black zones helps distinguish it from T. versicolor."
   },
   {
     "species_name": "Trametes versicolor",
@@ -2366,8 +2209,7 @@
     "stem_description": "None.",
     "smell": "Mild, mushroomy.",
     "lookalikes": "Stereum ostrea (no pores), Trametes hirsuta (hairy, less colorful).",
-    "environment_tips": "True Turkey Tail has visible pores on the underside, unlike the 'False' Turkey Tail.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "True Turkey Tail has visible pores on the underside, unlike the 'False' Turkey Tail."
   },
   {
     "species_name": "Tremella mesenterica",
@@ -2381,8 +2223,7 @@
     "stem_description": "None.",
     "smell": "None.",
     "lookalikes": "Dacrymyces chrysospermus (grows on conifer), Tremella aurantia.",
-    "environment_tips": "Commonly found on fallen oak branches.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly found on fallen oak branches."
   },
   {
     "species_name": "Trichaptum biforme",
@@ -2396,8 +2237,7 @@
     "stem_description": "None.",
     "smell": "None.",
     "lookalikes": "Trichaptum abietinum (on conifers), Trametes versicolor.",
-    "environment_tips": "The purple pore surface is the best field mark.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "The purple pore surface is the best field mark."
   },
   {
     "species_name": "Tricholoma murrillianum",
@@ -2411,8 +2251,7 @@
     "stem_description": "5-15cm, thick, white, with a cottony ring that separates the smooth top from the scaly base.",
     "smell": "Strong, distinctive (like spicy cinnamon and old socks).",
     "lookalikes": "Tricholoma magnivelare, Amanita smithiana (Toxic).",
-    "environment_tips": "Highly sought after; often buried deep in the duff.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Highly sought after; often buried deep in the duff."
   },
   {
     "species_name": "Tricholomopsis rutilans",
@@ -2426,8 +2265,7 @@
     "stem_description": "5-10cm, yellow, covered in purplish scales like the cap.",
     "smell": "Mild or slightly of wood.",
     "lookalikes": "Tricholomopsis decora (no purple).",
-    "environment_tips": "One of the most colorful mushrooms found on conifer wood.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "One of the most colorful mushrooms found on conifer wood."
   },
   {
     "species_name": "Tylopilus felleus",
@@ -2441,8 +2279,7 @@
     "stem_description": "5-15cm, thick, with a prominent, dark brown raised net-like pattern (reticulation).",
     "smell": "Mild.",
     "lookalikes": "Boletus edulis (white reticulation, tastes mild/nutty).",
-    "environment_tips": "If in doubt, a tiny taste of the flesh will confirm the bitterness.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "If in doubt, a tiny taste of the flesh will confirm the bitterness."
   },
   {
     "species_name": "Tylopilus rubrobrunneus",
@@ -2456,8 +2293,7 @@
     "stem_description": "8-20cm, thick, brownish, smooth or slightly reticulated at the very top.",
     "smell": "Mild.",
     "lookalikes": "Tylopilus felleus, Tylopilus badiceps (Edible).",
-    "environment_tips": "The reddish-brown cap is darker than T. felleus.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "The reddish-brown cap is darker than T. felleus."
   },
   {
     "species_name": "Urnula craterium",
@@ -2471,8 +2307,7 @@
     "stem_description": "Short, black, attached to wood.",
     "smell": "None.",
     "lookalikes": "None, very distinctive early spring fungus.",
-    "environment_tips": "Often appears at the same time and place as morels.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often appears at the same time and place as morels."
   },
   {
     "species_name": "Verpa bohemica",
@@ -2486,8 +2321,7 @@
     "stem_description": "5-15cm, white to yellowish, brittle, hollow or filled with cottony fibers.",
     "smell": "Mild.",
     "lookalikes": "Morchella species (Morels - cap is attached to stem), Verpa conica.",
-    "environment_tips": "Often found just before true morels appear.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Often found just before true morels appear."
   },
   {
     "species_name": "Volvopluteus gloiocephalus",
@@ -2501,8 +2335,7 @@
     "stem_description": "8-20cm, white, smooth, with a sack-like volva at the base; no ring.",
     "smell": "Radish-like.",
     "lookalikes": "Amanita phalloides (Toxic, has a ring, white spores), Pluteus cervinus.",
-    "environment_tips": "Commonly fruits in enriched garden soil.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Commonly fruits in enriched garden soil."
   },
   {
     "species_name": "Vulpicida pinastri",
@@ -2516,8 +2349,7 @@
     "stem_description": "None (Lichen).",
     "smell": "None.",
     "lookalikes": "Vulpicida canadensis, Xanthoria parietina.",
-    "environment_tips": "Very bright yellow color is a warning of its toxicity.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Very bright yellow color is a warning of its toxicity."
   },
   {
     "species_name": "Xanthoria parietina",
@@ -2531,7 +2363,6 @@
     "stem_description": "None (Lichen).",
     "smell": "None.",
     "lookalikes": "Caloplaca species, Vulpicida pinastri.",
-    "environment_tips": "Highly tolerant of nitrogen pollution.",
-    "data_disclaimer": "AI-GENERATED FOR TESTING ONLY — not verified by a professional mycologist. Do not use for real foraging decisions."
+    "environment_tips": "Highly tolerant of nitrogen pollution."
   }
 ]
