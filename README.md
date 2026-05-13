@@ -175,10 +175,16 @@ Mushroom/
 │   └── setup/                ← Dataset scraping and Hugging Face upload scripts
 │
 ├── docs/
-│   ├── yolo_runs/            ← Training outputs: weights, metrics, loss curves
-│   │   └── yolo26_classifier_v1/weights/best.pt  ← Production weights
+│   ├── yolo_runs/            ← YOLO training outputs: weights, metrics, loss curves
+│   │   └── yolo26_tflite/weights/  ← Production weights (best_float16.tflite / best.pt)
+│   ├── convnext_runs/        ← ConvNeXt experiment outputs
+│   ├── cnn_runs/             ← EfficientNet CNN experiment outputs
+│   ├── dinov2_runs/          ← DINOv2 experiment outputs
+│   ├── taxonomic_yolo26_runs/ ← Taxonomic-head YOLO experiment outputs
+│   ├── assets/               ← Layer visualisations and comparison images
 │   ├── cloud_deployment_pipeline.md  ← Full deployment walkthrough
 │   ├── model_comparison.md
+│   ├── model_experiments.md  ← Experiment log: ConvNeXt / DINOv2 vs baseline
 │   └── problems_log.md
 │
 ├── ablation/                 ← Ablation study: vision model × LLM combinations
@@ -187,8 +193,9 @@ Mushroom/
 ├── benchmarks/               ← Speed and accuracy benchmarks
 │
 ├── deploy/
-│   ├── docker-compose.yml    ← Local multi-container setup
-│   └── prometheus.yml        ← Prometheus scrape config
+│   └── docker-compose.yml    ← Local multi-container setup
+│
+├── prometheus.yml            ← Prometheus scrape config (mounted by docker-compose)
 │
 ├── .github/workflows/
 │   ├── deploy.yml            ← CI/CD: build + deploy on push to master

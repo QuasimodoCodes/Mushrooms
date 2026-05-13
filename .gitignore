@@ -9,8 +9,14 @@ DanishFungiDataset/
 data/dataset_split/
 merged_dataset/
 
-# Large model weights in herman_runs (tracked via Git LFS where needed)
-docs/herman_runs/**/weights/*.pt
+# Root-level pretrained weight downloads (auto-downloaded by ultralytics)
+/*.pt
+
+# Large ConvNeXt weights (>100 MB, exceeds GitHub limit — use DVC or Git LFS)
+docs/convnext_runs/**/weights/*.pt
+
+# DVC auto-generated plots
+dvc_plots/
 
 # Python Virtual Environments
 venv/

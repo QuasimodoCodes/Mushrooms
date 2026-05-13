@@ -1,4 +1,4 @@
-# Herman — New Model Experiments
+# New Model Experiments
 
 This folder explores two architectures that were **not tested anywhere else in this project**.
 The goal is to find out whether either can beat the current production model (YOLOv26n-cls, 88.1% top-1)
@@ -181,17 +181,17 @@ python Herman/convnext/evaluate.py --run convnext_tiny_adamw_ce_smooth
 ```bash
 python Herman/compare.py
 ```
-This scans `docs/cnn_runs/` and `docs/herman_runs/` and prints a single ranked
+This scans `docs/cnn_runs/` and `docs/convnext_runs/` and prints a single ranked
 leaderboard including the YOLO models, EfficientNet, ViT, and ConvNeXt.
 
 ---
 
 ## Output Locations
 
-All training outputs are saved under `docs/herman_runs/<run_name>/`:
+All training outputs are saved under `docs/convnext_runs/<run_name>/`:
 
 ```
-docs/herman_runs/
+docs/convnext_runs/
 ├── vit_small_adamw_ce_smooth/
 │   ├── weights/
 │   │   ├── best.pt          ← best validation top-1 checkpoint
