@@ -1,0 +1,12 @@
+# Web Framework
+gradio>=4.42.0
+
+# Network Communication (for hitting our Vision API)
+requests==2.32.3
+
+# LLM Provider
+google-generativeai
+Pillow
+
+# Telemetry
+prometheus_client

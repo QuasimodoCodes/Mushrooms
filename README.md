@@ -59,7 +59,7 @@ docker-compose -f deploy/docker-compose.yml up --build -d
 | Service | Local URL |
 |:--------|:----------|
 | Brain UI | http://localhost:7860 |
-| Vision API | http://localhost:8000 |
+| Vision API | http://localhost:8000/docs |
 | Vision API metrics | http://localhost:8000/metrics |
 | Prometheus | http://localhost:9090 |
 | Grafana | http://localhost:3000 (login: admin / admin) |
@@ -78,6 +78,8 @@ GEMINI_API_KEY=your_key_here
 
 ```bash
 pip install -r requirements.txt
+pip install -r services/brain_ui/requirements.txt
+pip install -r services/vision_api/requirements.txt
 ```
 
 **Step 2 — Start both services in separate terminals (both must run at the same time):**
