@@ -30,6 +30,9 @@ __pycache__/
 .DS_Store
 .env
 
+# Claude local settings (personal machine paths)
+.claude/settings.local.json
+
 # YOLO auto-generated run outputs
 runs/
 
