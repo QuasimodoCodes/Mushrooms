@@ -22,3 +22,30 @@ gradio
 
 # LLM Provider (Google Gemini)
 google-generativeai
+
+# Web Framework
+gradio>=4.42.0
+
+# Network Communication (for hitting our Vision API)
+requests==2.32.3
+
+# LLM Provider
+google-generativeai
+Pillow
+
+# Telemetry
+prometheus_client
+
+# Core API frameworks
+fastapi==0.115.6
+uvicorn==0.34.0
+python-multipart==0.0.20
+
+# Computer Vision and ML
+ultralytics==8.3.83
+torch==2.6.0
+torchvision==0.21.0
+Pillow>=10.2.0
+
+# Monitoring
+prometheus-fastapi-instrumentator==7.0.0

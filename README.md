@@ -45,6 +45,12 @@ The app streams its progress in real time:
 
 ### Option A — Docker (recommended, runs everything)
 
+**Prerequisites:** Docker + Docker Compose, and a `.env` file in the project root:
+
+```
+GEMINI_API_KEY=your_key_here
+```
+
 ```bash
 # Start the Vision API, Brain UI, Prometheus, and Grafana together
 docker-compose -f deploy/docker-compose.yml up --build -d
@@ -60,35 +66,43 @@ docker-compose -f deploy/docker-compose.yml up --build -d
 
 ### Option B — Python terminals (no Docker)
 
+**Prerequisites:**
+- Python 3.12
+- A `.env` file in the project root containing:
+
+```
+GEMINI_API_KEY=your_key_here
+```
+
+**Step 1 — Install dependencies for each service:**
+
+```bash
+pip install -r requirements.txt
+```
+
+**Step 2 — Start both services in separate terminals (both must run at the same time):**
+
 ```bash
 # Terminal 1: Vision API
 cd services/vision_api
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+# On Windows PowerShell:
+$env:YOLO_RUN_NAME="yolo26_classifier_v1"
+# On macOS/Linux:
+export YOLO_RUN_NAME=yolo26_classifier_v1
 
-# Terminal 2: Brain UI
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+```bash
+# Terminal 2: Brain UI (start after Terminal 1 shows "Uvicorn running on http://0.0.0.0:8000")
 cd services/brain_ui
 python app.py
 ```
 
 Then open http://localhost:7860.
 
-### Prerequisites
+> **Note:** `YOLO_RUN_NAME=yolo26_classifier_v1` points to the PyTorch weights (`best.pt`) that are included in the repository. The default run name (`yolo26_tflite`) only ships with TFLite weights, which require Docker (Option A).
 
-- Python 3.12
-- Docker + Docker Compose (for Option A)
-- A `.env` file in the project root with:
-
-```
-GEMINI_API_KEY=your_key_here
-```
-
-- Model weights and dataset pulled via DVC:
-
-```bash
-dvc pull
-```
-
----
 
 ## Deployment
 
