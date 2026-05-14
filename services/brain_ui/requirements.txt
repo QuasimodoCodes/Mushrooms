@@ -10,3 +10,5 @@ Pillow
 
 # Telemetry
 prometheus_client
+
+python-dotenv
